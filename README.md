@@ -20,7 +20,7 @@ This is the proposed execution plan, informed by the submitted proposal and inst
 
 Last updated: **2026-11-03, America/Los_Angeles**.
 
-**Current stage:** planning published on `main` through the verified **ramimrad** browser session. Implementation and experiments have not started.
+**Current stage:** midpoint implementation in progress. Planning is published on `main`; the active bootstrap claim below covers the current session.
 
 ### Completed
 
@@ -45,7 +45,9 @@ Last updated: **2026-11-03, America/Los_Angeles**.
 
 ### Active work and claims
 
-No implementation tasks are claimed. Suggested workstream allocation, **not yet assigned**:
+**Active claim:** `M1–M3 / M4 preparation | Rami with Codex | main (bootstrap; feature branches thereafter) | 2026-11-03 | runnable prototype, checked results, report draft, recording script | P0 complete`. No teammate work is claimed beyond this bootstrap.
+
+Suggested workstream allocation, **not yet assigned**:
 
 - **A / harness and runs:** proposed lead Kristjan; tasks P2 and harness portion of P3.
 - **B / evaluation and analysis:** proposed lead Ómar; task/data portion of P3, then P5/P6.
