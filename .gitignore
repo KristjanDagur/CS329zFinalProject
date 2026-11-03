@@ -1,2 +1,25 @@
 .env
 .venv
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+auth.json
+credentials.json
+
+# Python/runtime caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+.DS_Store
+
+# Large or mutable experiment outputs; commit manifests and artifact pointers
+/data/raw/
+/artifacts/
+/runs/
+/checkpoints/
+/task-workdirs/
