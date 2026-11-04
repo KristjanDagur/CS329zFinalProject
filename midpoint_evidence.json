@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "dataset": "synthetic-midpoint-v1",
+  "recorded_date": "2026-11-03",
+  "claim": "Engineering feasibility only. Three constructed development tasks do not establish cost/performance equivalence or calibrated risk.",
+  "primary_source_hash": "251a852de85e334a8cf2b21b5e24aa2576be2cf50bbe7fd1eb9a2da452579d3b",
+  "primary_run_ids": [
+    "m1-stable-cheap-v3",
+    "m1-stable-strong-v1",
+    "m1-chunked-cheap-v1",
+    "m1-chunked-strong-v1",
+    "m1-merge-cheap-v1",
+    "m1-merge-strong-v1",
+    "m2-stable-jev-v1",
+    "m2-chunked-jev-v1",
+    "m2-merge-jev-v1"
+  ],
+  "primary_threshold": 0.9,
+  "primary_results": [
+    {
+      "schema_version": 1,
+      "run_id": "m1-stable-cheap-v3",
+      "task": "stable_unique",
+      "split": "development",
+      "policy": "cheap",
+      "selected_model": "qwen/qwen3-coder-next",
+      "gate": {
+        "score": null,
+        "selected_model": "qwen/qwen3-coder-next",
+        "reason": "always_cheap",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 6,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 4,
+      "observed_request_models": [
+        "qwen/qwen3-coder-next"
+      ],
+      "providers": [
+        "Parasail"
+      ],
+      "billed_cost_usd": 0.0023924799999999998,
+      "accounted_cost_usd": 0.0023924799999999998,
+      "costs_complete": true,
+      "elapsed_s": 8.495985915884376,
+      "protocol_hash": "4d5037c443b57c7551699d06dfe3c0027d78978f4bab5e2b9b92fb702e57d93c",
+      "artifact_dir": "m1-stable-cheap-v3",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m1-stable-strong-v1",
+      "task": "stable_unique",
+      "split": "development",
+      "policy": "strong",
+      "selected_model": "openai/gpt-6.1-sol",
+      "gate": {
+        "score": null,
+        "selected_model": "openai/gpt-6.1-sol",
+        "reason": "always_strong",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 6,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 3,
+      "observed_request_models": [
+        "openai/gpt-6.1-sol"
+      ],
+      "providers": [
+        "OpenAI"
+      ],
+      "billed_cost_usd": 0.014745800000000002,
+      "accounted_cost_usd": 0.014745800000000002,
+      "costs_complete": true,
+      "elapsed_s": 10.559412375092506,
+      "protocol_hash": "c25fa4eeb1033d57f894731843bf0449a1ffe152702c6e4fca815d6b61a40a57",
+      "artifact_dir": "m1-stable-strong-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m1-chunked-cheap-v1",
+      "task": "chunked",
+      "split": "development",
+      "policy": "cheap",
+      "selected_model": "qwen/qwen3-coder-next",
+      "gate": {
+        "score": null,
+        "selected_model": "qwen/qwen3-coder-next",
+        "reason": "always_cheap",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 7,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 4,
+      "observed_request_models": [
+        "qwen/qwen3-coder-next"
+      ],
+      "providers": [
+        "Parasail"
+      ],
+      "billed_cost_usd": 0.00267652,
+      "accounted_cost_usd": 0.00267652,
+      "costs_complete": true,
+      "elapsed_s": 10.190997042227536,
+      "protocol_hash": "5ebcb83c32423eb903a87a459ba5c110c0c120302139480c49e25bb6c52d18df",
+      "artifact_dir": "m1-chunked-cheap-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m1-chunked-strong-v1",
+      "task": "chunked",
+      "split": "development",
+      "policy": "strong",
+      "selected_model": "openai/gpt-6.1-sol",
+      "gate": {
+        "score": null,
+        "selected_model": "openai/gpt-6.1-sol",
+        "reason": "always_strong",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 7,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 6,
+      "tool_event_count": 6,
+      "observed_request_models": [
+        "openai/gpt-6.1-sol"
+      ],
+      "providers": [
+        "OpenAI"
+      ],
+      "billed_cost_usd": 0.0203683,
+      "accounted_cost_usd": 0.0203683,
+      "costs_complete": true,
+      "elapsed_s": 12.281895458232611,
+      "protocol_hash": "3638774d0a58a8da23ad6f1804cdc9d207b60081b5c86c705bd4e28288ea35d3",
+      "artifact_dir": "m1-chunked-strong-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m1-merge-cheap-v1",
+      "task": "merge_intervals",
+      "split": "development",
+      "policy": "cheap",
+      "selected_model": "qwen/qwen3-coder-next",
+      "gate": {
+        "score": null,
+        "selected_model": "qwen/qwen3-coder-next",
+        "reason": "always_cheap",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 8,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 4,
+      "observed_request_models": [
+        "qwen/qwen3-coder-next"
+      ],
+      "providers": [
+        "Parasail"
+      ],
+      "billed_cost_usd": 0.00270976,
+      "accounted_cost_usd": 0.00270976,
+      "costs_complete": true,
+      "elapsed_s": 9.475018832832575,
+      "protocol_hash": "ce83d7f3244c9768a182c02b28597403f8442c8a152975020ffca9ff20ba9a2c",
+      "artifact_dir": "m1-merge-cheap-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m1-merge-strong-v1",
+      "task": "merge_intervals",
+      "split": "development",
+      "policy": "strong",
+      "selected_model": "openai/gpt-6.1-sol",
+      "gate": {
+        "score": null,
+        "selected_model": "openai/gpt-6.1-sol",
+        "reason": "always_strong",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 8,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 5,
+      "observed_request_models": [
+        "openai/gpt-6.1-sol"
+      ],
+      "providers": [
+        "OpenAI"
+      ],
+      "billed_cost_usd": 0.0178372,
+      "accounted_cost_usd": 0.0178372,
+      "costs_complete": true,
+      "elapsed_s": 11.584815042093396,
+      "protocol_hash": "3e614afed91a7ac068e16a3788a42a91674356d58d5bc1940acb1c0b8c465bad",
+      "artifact_dir": "m1-merge-strong-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m2-stable-jev-v1",
+      "task": "stable_unique",
+      "split": "development",
+      "policy": "jev",
+      "selected_model": "openai/gpt-6.1-sol",
+      "gate": {
+        "score": 0.79,
+        "selected_model": "openai/gpt-6.1-sol",
+        "reason": "jev_threshold",
+        "latency_s": 0.2749299160204828,
+        "threshold": 0.9,
+        "usage_cost_usd": 1.9068e-05,
+        "cost_accounted_usd": 1.9068e-05,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 6,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 6,
+      "tool_event_count": 6,
+      "observed_request_models": [
+        "openai/gpt-6.1-sol"
+      ],
+      "providers": [
+        "OpenAI"
+      ],
+      "billed_cost_usd": 0.018000868,
+      "accounted_cost_usd": 0.018000868,
+      "costs_complete": true,
+      "elapsed_s": 13.326547249685973,
+      "protocol_hash": "c6a06bff5cab2c59ae4a5ddf5e051ff0fb61e3b7cf06c7256b1793a6a538d7a8",
+      "artifact_dir": "m2-stable-jev-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m2-chunked-jev-v1",
+      "task": "chunked",
+      "split": "development",
+      "policy": "jev",
+      "selected_model": "openai/gpt-6.1-sol",
+      "gate": {
+        "score": 0.59,
+        "selected_model": "openai/gpt-6.1-sol",
+        "reason": "jev_threshold",
+        "latency_s": 0.26185879157856107,
+        "threshold": 0.9,
+        "usage_cost_usd": 2.0916e-05,
+        "cost_accounted_usd": 2.0916e-05,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 7,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 6,
+      "observed_request_models": [
+        "openai/gpt-6.1-sol"
+      ],
+      "providers": [
+        "OpenAI"
+      ],
+      "billed_cost_usd": 0.018303316,
+      "accounted_cost_usd": 0.018303316,
+      "costs_complete": true,
+      "elapsed_s": 11.317964291665703,
+      "protocol_hash": "6694758d8d237ed71c5561529cb6e824270d558af6bed2b3924dac98e93398dd",
+      "artifact_dir": "m2-chunked-jev-v1",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m2-merge-jev-v1",
+      "task": "merge_intervals",
+      "split": "development",
+      "policy": "jev",
+      "selected_model": "openai/gpt-6.1-sol",
+      "gate": {
+        "score": 0.58,
+        "selected_model": "openai/gpt-6.1-sol",
+        "reason": "jev_threshold",
+        "latency_s": 0.19790570763871074,
+        "threshold": 0.9,
+        "usage_cost_usd": 2.2512e-05,
+        "cost_accounted_usd": 2.2512e-05,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 8,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 6,
+      "observed_request_models": [
+        "openai/gpt-6.1-sol"
+      ],
+      "providers": [
+        "OpenAI"
+      ],
+      "billed_cost_usd": 0.018886612,
+      "accounted_cost_usd": 0.018886612,
+      "costs_complete": true,
+      "elapsed_s": 11.687528166919947,
+      "protocol_hash": "7fec7756dab52121a5c70da78433fe71836cfb4f04c61ed1232be6ed32fa7398",
+      "artifact_dir": "m2-merge-jev-v1",
+      "synthetic_pilot_only": true
+    }
+  ],
+  "policy_summary": {
+    "cheap": {
+      "tasks": 3,
+      "successful_tasks": 3,
+      "billed_cost_usd": 0.007778759999999999,
+      "mean_elapsed_s": 9.38733393031483,
+      "providers": [
+        "Parasail"
+      ],
+      "mean_billed_cost_usd": 0.00259292
+    },
+    "strong": {
+      "tasks": 3,
+      "successful_tasks": 3,
+      "billed_cost_usd": 0.0529513,
+      "mean_elapsed_s": 11.47537429180617,
+      "providers": [
+        "OpenAI"
+      ],
+      "mean_billed_cost_usd": 0.017650433333333333
+    },
+    "jev": {
+      "tasks": 3,
+      "successful_tasks": 3,
+      "billed_cost_usd": 0.055190796,
+      "mean_elapsed_s": 12.110679902757207,
+      "providers": [
+        "OpenAI"
+      ],
+      "mean_billed_cost_usd": 0.018396932
+    }
+  },
+  "cheap_coverage": 0.0,
+  "cheap_selective_risk": null,
+  "mean_gate_latency_s": 0.24489813841258487,
+  "gate_scores": {
+    "stable_unique": 0.79,
+    "chunked": 0.59,
+    "merge_intervals": 0.58
+  },
+  "supplementary_results": [
+    {
+      "schema_version": 1,
+      "run_id": "m2-stable-jev-sensitivity075",
+      "task": "stable_unique",
+      "split": "development",
+      "policy": "jev",
+      "selected_model": "qwen/qwen3-coder-next",
+      "gate": {
+        "score": 0.79,
+        "selected_model": "qwen/qwen3-coder-next",
+        "reason": "jev_threshold",
+        "latency_s": 0.317158832680434,
+        "threshold": 0.75,
+        "usage_cost_usd": 1.9068e-05,
+        "cost_accounted_usd": 1.9068e-05,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 6,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 4,
+      "observed_request_models": [
+        "qwen/qwen3-coder-next"
+      ],
+      "providers": [
+        "Parasail"
+      ],
+      "billed_cost_usd": 0.002405508,
+      "accounted_cost_usd": 0.0024055079999999998,
+      "costs_complete": true,
+      "elapsed_s": 8.648832250386477,
+      "protocol_hash": "de75fb0167aeafe8063d919090c86412a347187a2a5d30c85d676aab8cc85c68",
+      "artifact_dir": "m2-stable-jev-sensitivity075",
+      "synthetic_pilot_only": true
+    },
+    {
+      "schema_version": 1,
+      "run_id": "m4-clean-stable-cheap-v1",
+      "task": "stable_unique",
+      "split": "development",
+      "policy": "cheap",
+      "selected_model": "qwen/qwen3-coder-next",
+      "gate": {
+        "score": null,
+        "selected_model": "qwen/qwen3-coder-next",
+        "reason": "always_cheap",
+        "latency_s": 0,
+        "usage_cost_usd": 0,
+        "cost_accounted_usd": 0,
+        "cost_status": "settled"
+      },
+      "passed": true,
+      "tests_run": 6,
+      "baseline_starter_passed": false,
+      "agent_returncode": 0,
+      "timed_out": false,
+      "model_request_count": 5,
+      "tool_event_count": 4,
+      "observed_request_models": [
+        "qwen/qwen3-coder-next"
+      ],
+      "providers": [
+        "Parasail"
+      ],
+      "billed_cost_usd": 0.00242572,
+      "accounted_cost_usd": 0.00242572,
+      "costs_complete": true,
+      "elapsed_s": 10.981298792175949,
+      "protocol_hash": "4d5037c443b57c7551699d06dfe3c0027d78978f4bab5e2b9b92fb702e57d93c",
+      "artifact_dir": "m4-clean-stable-cheap-v1",
+      "synthetic_pilot_only": true
+    }
+  ],
+  "excluded_attempts": {
+    "m1-stable-cheap-v1": "Sandbox prevented the local HTTP server from binding; no API call.",
+    "m1-stable-cheap-v2": "Harness integration failure: wrong effective directory/path rules. Kept in artifacts and total spending, excluded from the post-fix comparison."
+  },
+  "reserved_sanity_tasks_model_run": false,
+  "total_session_accounted_usd": 0.126075004,
+  "unresolved_request_reservations": 0
+}

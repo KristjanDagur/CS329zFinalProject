@@ -1,0 +1,21 @@
+name: Offline prototype checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  correctness:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Offline correctness checks (no API key or model calls)
+        run: python -m unittest -v test_midpoint.py
+      - name: Validate all synthetic fixture graders
+        run: python midpoint.py verify-fixtures

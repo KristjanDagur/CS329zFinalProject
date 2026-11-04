@@ -1,0 +1,14 @@
+\begin{table}[t]
+\centering
+\caption{Synthetic development pilot. Each row contains the same three tasks, one rollout per task. Cost includes all captured model calls and the gate where applicable. These are engineering checks, not benchmark results.}
+\label{tab:pilot}
+\begin{tabular}{lrrr}
+\toprule
+Policy & Passed & Mean cost (USD) & Mean time (s) \\
+\midrule
+Always cheap & 3/3 & 0.002593 & 9.39 \\
+Always strong & 3/3 & 0.017650 & 11.48 \\
+Jev gate ($\tau=0.90$) & 3/3 & 0.018397 & 12.11 \\
+\bottomrule
+\end{tabular}
+\end{table}
