@@ -23,3 +23,9 @@ node_modules/
 /runs/
 /checkpoints/
 /task-workdirs/
+/.runtime/
+/report/*.aux
+/report/*.log
+/report/*.out
+/report/missfont.log
+/report/mfput.log

@@ -1,90 +1,144 @@
 # CS329Z Final Project
 
-**Working title: Can System One routing reduce the cost of a coding agent?**
+**Can System One routing reduce the cost of a coding agent?**
 
 Team: Kristjan Dagur Egilsson, Ómar Ingi Halldórsson, and Rami Ratl Mrad.
 
-We will test whether a small decision model can select when a cheaper coding model is sufficient, using one existing OpenCode harness. The main comparison is task success versus total cost against the same harness running a strong model on every task. The first experiment changes only model selection at task launch. It does not require a new agent architecture.
+The midpoint prototype is implemented and has completed real OpenRouter/OpenCode runs. Jev chooses the model for an existing OpenCode harness; a separate grader checks the resulting patch. This is a small synthetic development pilot, not a final benchmark result.
 
-This is the proposed execution plan, informed by the submitted proposal and instructor feedback. Experimental choices below become final when recorded in a frozen experiment manifest. No empirical results exist yet.
+## Quick start
 
-## Start here
+The implementation is on **`midpoint-prototype`** for review. Use that branch until it is merged.
 
-1. Read this status report and [the end-to-end plan](docs/PROJECT_PLAN.md).
-2. Read [AGENTS.md](AGENTS.md) before using a coding agent.
-3. Claim one task in the work queue below; record your name, branch, and date before starting.
-4. Check dependencies and existing run manifests before implementing or running anything.
-5. Update this README in every work PR and before handing work to another person or agent.
+```bash
+git clone https://github.com/KristjanDagur/CS329zFinalProject.git
+cd CS329zFinalProject
+git switch midpoint-prototype
+python3 --version
+python3 bootstrap.py
+python3 -m unittest -v test_midpoint.py
+python3 midpoint.py verify-fixtures
+```
+
+Python 3.11+ and Git are required. The prototype uses the Python standard library and a project-local, SHA-512-verified OpenCode **1.19.5** binary. The installer makes no global configuration changes. **macOS Apple Silicon is tested**; the installer supports macOS/Linux architectures, but Linux has not been validated. Windows is not supported by the current POSIX process/locking code.
+
+Set your own OpenRouter key in the environment, then run one real task:
+
+```bash
+export OPENROUTER_API_KEY='your-openrouter-key'
+python3 midpoint.py doctor
+python3 midpoint.py run --task stable_unique --policy jev --run-id my-first-demo
+```
+
+The doctor command is read-only and reports the key's spending allowance, not the whole account balance. Do not commit your key. `.env.example` documents the variable; the CLI does not automatically load `.env` files. No Tinker key or credit is needed for the midpoint.
+
+The default run has a **$0.50 task cap, $5 cumulative experiment cap, 180-second timeout, 8 agent steps, 10 API requests, 65,536 request bytes, and 2,048 output tokens/request**. Its output names the selected model, gate score, independent test result, cost, elapsed time, and artifact directory. Real runs require outbound OpenRouter access and permission to bind a loopback metering server. OpenCode starts and executes trusted synthetic task code locally; its tool permissions are not an OS security sandbox for hostile repositories.
+
+Use `--policy cheap` or `--policy strong` for unchanged-harness baselines. The provisional Jev threshold is **0.90**, with strong fallback on invalid/unavailable gate responses. `--threshold 0.75` reproduces the *separately labeled development demonstration* of a cheap route; it is not a calibrated production threshold. Three other fixtures are reserved and require `--allow-sanity` explicitly; do not use them casually for prompt/threshold tuning.
+
+## Reproduce the saved pilot without paid calls
+
+The supplied archive contains sanitized traces, manifests, request-cost receipts, patches, grader outcomes, the spending ledger, and failed setup attempts. Machine-local paths are replaced; its `archive_manifest.json` hashes the sanitized bytes. It contains no credential file or runtime cache.
+
+```bash
+python3 -m zipfile -e midpoint_runs.zip .
+python3 pilot_analysis.py
+```
+
+This regenerates [midpoint_evidence.json](midpoint_evidence.json) from the nine declared primary run IDs. Failed integration attempts, the lower-threshold demonstration, and clean-source reproduction are retained and separately labeled. `python3 midpoint.py summarize` instead summarizes **all** completed runs, including the failed integration run and supplementary runs; do not use that unfiltered summary as the primary comparison.
+
+Reusing an identical completed `--run-id` returns its saved result without another API call. Changed protocol/source settings under the same ID are rejected. Incomplete runs are preserved and require inspection before a new ID is used. Keep the same `--runs-dir` for a shared cumulative budget. Different run directories have separate ledgers; they are not an account-wide spending control.
+
+## Measured midpoint result
+
+Nine post-integration primary runs: the same **3 synthetic development tasks × 3 policies**, one rollout per task and policy. All nine passed. The independent graders contain 6, 7, and 8 tests for `stable_unique`, `chunked`, and `merge_intervals`.
+
+- **Always cheap:** 3/3 successful; mean billed cost **$0.002593/task**; mean time **9.39 s**.
+- **Always strong:** 3/3 successful; mean billed cost **$0.017650/task**; mean time **11.48 s**.
+- **Jev at 0.90:** 3/3 successful; mean billed cost **$0.018397/task**; mean time **12.11 s**. Scores **0.79 / 0.59 / 0.58** routed every task strong. Cheap coverage is **0%**; selective risk is **undefined**.
+
+The gate averaged **0.245 s**. These tasks do not establish routing value: the cheap baseline already solved all of them. The routed bill also varies with stochastic coding trajectories, so its entire difference from the strong baseline is not gate overhead. There is no calibrated 5% risk guarantee, noninferiority finding, or general savings claim.
+
+A separate post-hoc 0.75-threshold run selected the cheap model and passed six tests. A fresh source copy installed the pinned binary, passed the 11 offline checks, and completed another real cheap-model repair. Those checks verify execution/reproduction mechanics, not additional independent benchmark tasks.
+
+**Total session model spend: $0.126075004**, including the failed integration run and both supplementary checks. All request reservations are settled. The course key had a $200 spending limit with $196.06760495 remaining before this session; earlier usage is unrelated to this project work. This is key-limit information, not a verified team-wide credit balance. Tinker spend: **$0**.
+
+## Midpoint report and demo
+
+- [ICLR-format midway report draft](report/main.pdf): **3 body pages plus 1 page for references and AI-use disclosure**; source [report/main.tex](report/main.tex). It compiles and has been rendered for visual inspection. The draft requires team review before submission.
+- [74-second silent execution replay](demo_replay.mp4) and [walkthrough/narration script](DEMO_SCRIPT.md). The video is explicitly labeled as a replay of real saved execution, not a live run or screen capture. Decide whether to submit it or record a live terminal walkthrough; check any portal video-length requirement.
+- [Full project plan](docs/PROJECT_PLAN.md), [midpoint checklist](docs/MIDPOINT_CHECKLIST.md), and [source notes](docs/SOURCES.md).
+
+Optional artifact rebuilds:
+
+```bash
+python3 build_report.py
+python3 -m pip install -r requirements-demo.txt
+python3 build_demo.py
+```
+
+The report needs a full TeX distribution with Times, Helvetica, and Courier fonts, or the included sources can be imported into Overleaf. The app's built-in LaTeX compiler also compiled them successfully. Video rebuilding needs the unpacked trace archive and the pinned optional media dependencies. Neither rebuild makes model calls. `python3 package_evidence.py` rebuilds the sanitized trace ZIP from local runs.
 
 ## Status report
 
 Last updated: **2026-11-03, America/Los_Angeles**.
 
-**Current stage:** midpoint implementation in progress. Planning is published on `main`; the active bootstrap claim below covers the current session.
+**Current stage:** working midpoint prototype and submission drafts prepared on `midpoint-prototype`; review, final video choice, and course submission remain. Read [AGENTS.md](AGENTS.md) before modifying anything.
 
 ### Completed
 
-- [x] Read the three-page proposal PDF, including the instructor feedback and both proposal pages.
-- [x] Translate feedback into a linear sequence: existing harness, small intervention, strong baseline, cost/performance evaluation, then optional training.
-- [x] Define the first experiment, baseline comparisons, data separation, evaluation metrics, budget gates, three-person workstreams, and final deliverables.
-- [x] Check current primary documentation for OpenCode, Jev/OpenRouter, Kev, Tinker, and benchmark options; record sources and qualifications.
-- [x] Publish this README, the detailed plan, midpoint checklist, source notes, agent handoff instructions, and a PR checklist on `main`. Preserve the starter `.env`/`.venv` ignore rules and extend them for experiment artifacts.
+- [x] P0: proposal/feedback review, research plan, milestone schedule, repository handoff conventions.
+- [x] M1: pinned OpenCode install; real cheap/strong baselines; independent grader; tested quick-start path.
+- [x] M2: real Jev gate, explicit fallback, actual upstream model verification, request-level cost metering and durable budgets.
+- [x] M3 implementation: six frozen synthetic fixtures, reserved sanity split, paired development pilot, immutable artifacts, analysis script.
+- [x] M3 draft: ICLR-format report with measured findings, limitations, references, and AI-use disclosure.
+- [x] M4 preparation: clean-source agent reproduction, 74-second labeled replay, narration script, portable trace archive.
+- [x] Validation: 11 offline checks pass; all six fixture starters rejected/references accepted; nine primary plus two supplementary real runs pass; credential scan and archive checks pass.
 
-### Remaining work in dependency order
+### Remaining work and dependencies
 
-- [x] P0: Verify repository contents and the **ramimrad** identity; publish the planning files on `main`.
-- [ ] M1–M4: Deliver the midpoint prototype, recording, runnable README, and 3–4 page report; see [the midpoint checklist](docs/MIDPOINT_CHECKLIST.md).
-- [ ] P1: Confirm the exact final report cutoff, credit availability/expiry, execution machine, and workstream owners.
-- [ ] P2: Freeze harness/model/provider revisions and run two unmodified baseline smoke tasks.
-- [ ] P3: Build the task manifest, evaluation runner, raw trace logging, and cost accounting.
-- [ ] P4: Run paired strong/cheap baselines on development tasks; test one Jev routing decision per task.
-- [ ] P5: Fit calibration and select a threshold using development data only; freeze the primary protocol.
-- [ ] P6: Run the locked evaluation, matched-coverage controls, uncertainty analysis, and error review.
-- [ ] P7: If justified by development evidence and time, run ONE Tinker router-training extension.
-- [ ] P8: Produce report, reproducible figures, demo, clean-checkout reproduction instructions, and final handoff.
+- [ ] Teammate review/merge of `midpoint-prototype`; independently follow this README once and record the result.
+- [ ] Review the paper, references, author names/contributions, and AI-use disclosure; check current course submission rules.
+- [ ] Confirm the course graders can access the private repo; choose/record the final demo video.
+- [ ] Submit the video, report, and repo link through the course portal; nothing has been submitted automatically.
+- [ ] P1: confirm the exact final report cutoff, team ownership, other account allowances/expiry, and execution machine.
+- [ ] P2/P3 final-study extension: provision Docker/SWE-bench, freeze tasks/evaluator/provider revisions, obtain useful calibration data.
+- [ ] P4–P6: heuristic/random controls, calibration, locked meaningful evaluation, uncertainty and failure analysis.
+- [ ] P7 optional: Tinker training only if justified by enough data and development evidence.
+- [ ] P8: final paper, safety/authorship statements, live demo, and final reproduction review.
 
-### Active work and claims
+### Active claims and handoff
 
-**Active claim:** `M1–M3 / M4 preparation | Rami with Codex | main (bootstrap; feature branches thereafter) | 2026-11-03 | runnable prototype, checked results, report draft, recording script | P0 complete`. No teammate work is claimed beyond this bootstrap.
+`M1–M3 / M4 preparation | Rami with Codex | midpoint-prototype | 2026-11-03 | prototype, evidence, draft report/video | completed for review`.
 
-Suggested workstream allocation, **not yet assigned**:
+No experiment is running and no teammate task has been assigned. Proposed future workstreams remain Kristjan/harness, Ómar/evaluation, Rami/routing; confirm the owners before claiming new work. Do not rerun the pilot or rebuild a harness from scratch. Fetch the archived artifacts first.
 
-- **A / harness and runs:** proposed lead Kristjan; tasks P2 and harness portion of P3.
-- **B / evaluation and analysis:** proposed lead Ómar; task/data portion of P3, then P5/P6.
-- **C / decision models and integration:** proposed lead Rami; P4 and optional P7.
-- All three: P1, protocol review, error analysis, final report, and P8.
+### Known limitations and obstacles
 
-Dependencies and acceptance criteria are in [the plan](docs/PROJECT_PLAN.md#7-work-queue-and-milestone-schedule). Claim format: `task ID | owner | branch | started date | expected artifact | dependency`.
-
-### Blockers and unresolved decisions
-
-- The Cal connector for **ramimrad** returns 404, but browser access now works as **ramimrad**. The private repository's `main` branch has a starter README and `.gitignore`; there is no implementation yet. Planning publication succeeded through the browser; future work may use that verified session while connector access is unresolved.
-- Prototype-ready target: **Wednesday, November 4** per the team's request. The published course deadline for both midpoint submissions is **Friday, November 6, 11:59 p.m. Pacific**. Final live demo: **December 9, 3:30–6:30 p.m. Pacific**; final report cutoff remains TBA during **December 7–11**. Follow any newer instructor announcement.
-- Model IDs, prices, provider routing, usable balances/expiry, and Docker/compute availability must be verified during P1/P2. The credits are user-reported allocations, not verified balances.
-- The instructor suggests coding-harness experiments while the original proposal names intent datasets. The proposed primary track follows the instructor's coding focus; intent experiments are optional transfer diagnostics. Record a team decision before implementing a different primary scope.
-
-### Validation and results
-
-- Validation so far: proposal text extraction plus visual inspection of all three pages; primary documentation/course deadline review; local documentation link/content checks and archive integrity checks; browser verification of repository contents and the **ramimrad** identity.
-- No implementation, installations, model API calls, training, benchmark runs, or compute purchases have been performed.
-- No task success, calibration, risk, cost savings, or latency results have been measured.
-- No credits have been spent by this planning session. There are no run IDs, checkpoints, or experiment artifacts to resume.
-- The shared repository has been updated with planning and handoff documentation on `main`; no executable prototype exists yet.
+- No Docker is installed on the development machine. The current data is **synthetic-midpoint-v1**, not SWE-bench. The three sanity tasks have not been model-run.
+- The first socket-bound attempt was blocked by the execution sandbox. A subsequent paid attempt had a directory/path-permission integration failure. Both are preserved; the failed paid attempt is excluded from the post-fix comparison and included in spending.
+- The default threshold is uncalibrated and produced zero cheap coverage. Provider selection is not yet frozen for the final study; observed providers are recorded.
+- The Cal GitHub connector still returns 404 for this private repo; browser publication is verified as **ramimrad**. Use proper GitHub authentication in your own checkout.
+- Prototype target: November 4. Published midpoint report/video deadline: **November 6, 11:59 p.m. Pacific**. Final live demo: **December 9, 3:30–6:30 p.m. Pacific**; final report cutoff TBA during December 7–11. Follow newer course announcements.
 
 ### Exact next action
 
-Claim M1–M4 in [the midpoint checklist](docs/MIDPOINT_CHECKLIST.md) and agree on the model pair/task execution interface. Start M1 with one unmodified OpenCode run per model; build the real routing prototype for November 4, then the recorded video/report for November 6. Full benchmark infrastructure and training follow the midpoint.
+A teammate should check out `midpoint-prototype`, run the quick start and one low-cost task with their own key, review the draft report/video, and record that review here. Then finalize and submit the midpoint package. The next research implementation step is the SWE-bench execution environment and a development set where cheap-model success varies.
 
 ## Budget envelope
 
-User-reported allocation: **3 × $250 = $750 Tinker**, and **3 × $200 = $600 OpenRouter**; total face value **$1,350**. These are separate service balances in three accounts, not one transferable pool.
-
-- OpenRouter proposed caps: $30 access/smoke, $120 paired development runs, $270 locked evaluation, $60 targeted ablations, $120 reserve.
-- Tinker proposed caps: $25 compatibility probe, $75 dataset/base-router pilot, $200 one SFT run, $150 evaluation/comparison, $150 conditional replication, $150 reserve.
-- Caps are planning envelopes, not a commitment to spend. Reserve stays unallocated until a failed run or a specific scientific need justifies it. Each account owner retains control of their credentials and ledger.
-- Start small, measure actual per-task cost, and reduce the task count before exceeding a cap. See [budget and accounting](docs/PROJECT_PLAN.md#6-credits-and-cost-controls).
+User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three separate accounts. This session used **$0.126075004 OpenRouter**, leaving **$29.873924996** of the proposed $30 team midpoint-smoke envelope. Other balances/expiry and transferability are unverified. Keep account/service ledgers separate; do not share keys. The final-study allocations and spend gates remain in [the plan](docs/PROJECT_PLAN.md#6-credits-and-cost-controls).
 
 ## Handoff log
+
+### 2026-11-03 — Midpoint implementation and pilot
+
+- Done: root CLI/fixtures/installer/tests, model-price snapshot, metering/ledger, nine-run paired pilot, separate cheap-route demonstration, clean-source reproduction, evidence analysis/archive, report source/PDF, and labeled video/script.
+- Evidence: `midpoint_evidence.json`, `midpoint_runs.zip`, `report/main.pdf`, `demo_replay.mp4`. Primary source hash and every primary/supplementary/excluded run ID are in the evidence JSON.
+- Checks: `python3 -m unittest -v test_midpoint.py` (11 pass), `python3 midpoint.py verify-fixtures` (six valid fixtures), actual model/tool/grader traces, identical primary source hashes, completed cost receipts, archive integrity/credential scan, and rendered report/video inspection.
+- Spend: $0.126075004 OpenRouter; no Tinker training or spending. No active jobs/checkpoints.
+- Left: teammate reproduction/review, final video choice, private-repo grader access, portal submission, and all final-study extensions above.
+- Resume: follow “Exact next action.” Preserve failed runs and the uncalibrated-threshold finding; do not count supplementary runs as new benchmark tasks.
 
 ### 2026-11-03 — Initial planning
 
@@ -96,4 +150,4 @@ User-reported allocation: **3 × $250 = $750 Tinker**, and **3 × $200 = $600 Op
 
 ## Updating the status
 
-Keep the current state accurate, then append a short dated handoff entry. Include completed tasks and evidence, work in progress and owner/branch, remaining tasks and dependencies, commands/checks with outcomes, experiment IDs and artifact locations, spend and remaining balances if known, blockers, and one exact next action. Mark incomplete/failed/abandoned runs explicitly. A document or code change is not a successful experiment. A local draft is not a published repository change.
+Update the current state and append a dated entry in every work PR and before handoff. Record completed work with evidence, active owners/branches, remaining dependencies, checks and outcomes, run/checkpoint/artifact locations, spend, blockers, and one exact next action. Distinguish implementation from experiments, local from published files, draft artifacts from submissions, and empirical estimates from guarantees.
