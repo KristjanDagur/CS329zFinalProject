@@ -8,7 +8,7 @@ The midpoint prototype is implemented and has completed real OpenRouter/OpenCode
 
 ## Quick start
 
-The implementation is on **`midpoint-prototype`** for review. Use that branch until it is merged.
+The implementation is on **`midpoint-prototype`** in [review PR #1](https://github.com/KristjanDagur/CS329zFinalProject/pull/1). Use that branch until it is merged. Artifact links below are pinned to the reviewed implementation commit, so they also work from the status-only `main` branch.
 
 ```bash
 git clone https://github.com/KristjanDagur/CS329zFinalProject.git
@@ -45,7 +45,7 @@ python3 -m zipfile -e midpoint_runs.zip .
 python3 pilot_analysis.py
 ```
 
-This regenerates [midpoint_evidence.json](midpoint_evidence.json) from the nine declared primary run IDs. Failed integration attempts, the lower-threshold demonstration, and clean-source reproduction are retained and separately labeled. `python3 midpoint.py summarize` instead summarizes **all** completed runs, including the failed integration run and supplementary runs; do not use that unfiltered summary as the primary comparison.
+This regenerates [midpoint_evidence.json](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/midpoint_evidence.json) from the nine declared primary run IDs. Failed integration attempts, the lower-threshold demonstration, and clean-source reproduction are retained and separately labeled. `python3 midpoint.py summarize` instead summarizes **all** completed runs, including the failed integration run and supplementary runs; do not use that unfiltered summary as the primary comparison.
 
 Reusing an identical completed `--run-id` returns its saved result without another API call. Changed protocol/source settings under the same ID are rejected. Incomplete runs are preserved and require inspection before a new ID is used. Keep the same `--runs-dir` for a shared cumulative budget. Different run directories have separate ledgers; they are not an account-wide spending control.
 
@@ -65,9 +65,9 @@ A separate post-hoc 0.75-threshold run selected the cheap model and passed six t
 
 ## Midpoint report and demo
 
-- [ICLR-format midway report draft](report/main.pdf): **3 body pages plus 1 page for references and AI-use disclosure**; source [report/main.tex](report/main.tex). It compiles and has been rendered for visual inspection. The draft requires team review before submission.
-- [74-second silent execution replay](demo_replay.mp4) and [walkthrough/narration script](DEMO_SCRIPT.md). The video is explicitly labeled as a replay of real saved execution, not a live run or screen capture. Decide whether to submit it or record a live terminal walkthrough; check any portal video-length requirement.
-- [Full project plan](docs/PROJECT_PLAN.md), [midpoint checklist](docs/MIDPOINT_CHECKLIST.md), and [source notes](docs/SOURCES.md).
+- [ICLR-format midway report draft](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/report/main.pdf): **3 body pages plus 1 page for references and AI-use disclosure**; source [report/main.tex](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/report/main.tex). It compiles and has been rendered for visual inspection. The draft requires team review before submission.
+- [74-second silent execution replay](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/demo_replay.mp4) and [walkthrough/narration script](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/DEMO_SCRIPT.md). The video is explicitly labeled as a replay of real saved execution, not a live run or screen capture. Decide whether to submit it or record a live terminal walkthrough; check any portal video-length requirement.
+- [Full project plan](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/docs/PROJECT_PLAN.md), [midpoint checklist](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/docs/MIDPOINT_CHECKLIST.md), and [source notes](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/docs/SOURCES.md).
 
 Optional artifact rebuilds:
 
@@ -83,7 +83,7 @@ The report needs a full TeX distribution with Times, Helvetica, and Courier font
 
 Last updated: **2026-11-03, America/Los_Angeles**.
 
-**Current stage:** working midpoint prototype and submission drafts prepared on `midpoint-prototype`; review, final video choice, and course submission remain. Read [AGENTS.md](AGENTS.md) before modifying anything.
+**Current stage:** working midpoint prototype and submission drafts prepared on `midpoint-prototype`; review, final video choice, and course submission remain. Read [AGENTS.md](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/AGENTS.md) before modifying anything.
 
 ### Completed
 
@@ -94,6 +94,7 @@ Last updated: **2026-11-03, America/Los_Angeles**.
 - [x] M3 draft: ICLR-format report with measured findings, limitations, references, and AI-use disclosure.
 - [x] M4 preparation: clean-source agent reproduction, 74-second labeled replay, narration script, portable trace archive.
 - [x] Validation: 11 offline checks pass; all six fixture starters rejected/references accepted; nine primary plus two supplementary real runs pass; credential scan and archive checks pass.
+- [x] GitHub Actions offline checks passed on Ubuntu with Python 3.11 and 3.12; no model calls or API key are used in CI.
 
 ### Remaining work and dependencies
 
@@ -127,13 +128,13 @@ A teammate should check out `midpoint-prototype`, run the quick start and one lo
 
 ## Budget envelope
 
-User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three separate accounts. This session used **$0.126075004 OpenRouter**, leaving **$29.873924996** of the proposed $30 team midpoint-smoke envelope. Other balances/expiry and transferability are unverified. Keep account/service ledgers separate; do not share keys. The final-study allocations and spend gates remain in [the plan](docs/PROJECT_PLAN.md#6-credits-and-cost-controls).
+User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three separate accounts. This session used **$0.126075004 OpenRouter**, leaving **$29.873924996** of the proposed $30 team midpoint-smoke envelope. Other balances/expiry and transferability are unverified. Keep account/service ledgers separate; do not share keys. The final-study allocations and spend gates remain in [the plan](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/docs/PROJECT_PLAN.md#6-credits-and-cost-controls).
 
 ## Handoff log
 
 ### 2026-11-03 — Midpoint implementation and pilot
 
-- Done: root CLI/fixtures/installer/tests, model-price snapshot, metering/ledger, nine-run paired pilot, separate cheap-route demonstration, clean-source reproduction, evidence analysis/archive, report source/PDF, and labeled video/script.
+- Done: root CLI/fixtures/installer/tests, model-price snapshot, metering/ledger, nine-run paired pilot, separate cheap-route demonstration, clean-source reproduction, evidence analysis/archive, report source/PDF, and labeled video/script. Published for review in [PR #1](https://github.com/KristjanDagur/CS329zFinalProject/pull/1); offline CI passed on Python 3.11 and 3.12.
 - Evidence: `midpoint_evidence.json`, `midpoint_runs.zip`, `report/main.pdf`, `demo_replay.mp4`. Primary source hash and every primary/supplementary/excluded run ID are in the evidence JSON.
 - Checks: `python3 -m unittest -v test_midpoint.py` (11 pass), `python3 midpoint.py verify-fixtures` (six valid fixtures), actual model/tool/grader traces, identical primary source hashes, completed cost receipts, archive integrity/credential scan, and rendered report/video inspection.
 - Spend: $0.126075004 OpenRouter; no Tinker training or spending. No active jobs/checkpoints.
@@ -143,7 +144,7 @@ User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three 
 ### 2026-11-03 — Initial planning
 
 - Done: reviewed proposal/feedback; published the plan, midpoint checklist, source notes, README, agent instructions, PR checklist, and extended ignore rules on `main` as **ramimrad**.
-- Evidence: [source notes](docs/SOURCES.md); no experiment artifacts exist.
+- Evidence: [source notes](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/docs/SOURCES.md); no experiment artifacts exist.
 - Left: midpoint tasks M1–M4, environment setup, and implementation/evaluation tasks P1–P8.
 - Access: browser verified as **ramimrad** after user sign-in; connector access remains unresolved. Course milestones incorporated. Publication commits are listed in [repository history](https://github.com/KristjanDagur/CS329zFinalProject/commits/main); the setup concludes with commit message `docs: publish README status and agent handoff rules`.
 - Resume: follow “Exact next action” above. Do not repeat proposal review or start with custom harness development/training.
