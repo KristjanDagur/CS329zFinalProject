@@ -31,3 +31,13 @@ Selected connection: GitHub **Cal account**, login **ramimrad**. The connector r
 After the user signed into the browser as **ramimrad**, browser inspection confirmed the private repository and its `main` branch, containing only a starter `README.md` and `.gitignore`. The browser identity was verified through the user menu. The connector still returned 404 after browser login. Publication can therefore proceed through the browser; success must be verified from the repository after committing.
 
 The detailed plan was committed to `main` through the browser as **ramimrad** with message `docs: add end-to-end research plan and milestone schedule`. Supporting files and the current README are published in the same documentation setup session. No model experiments were run.
+
+## Midpoint implementation evidence — November 3
+
+The prototype uses OpenCode 1.19.5 from the official npm platform package, validated against npm SHA-512 integrity. The request-time model price/capability snapshot is `model_snapshot.json`; actual costs/providers are in the saved request receipts. Models: `qwen/qwen3-coder-next`, `openai/gpt-6.1-sol`, and `typesafe/jev-1.14`. No model has been trained.
+
+Additional primary documentation consulted: [OpenCode CLI](https://opencode.ai/docs/cli/), [agents](https://opencode.ai/docs/agents/), [permissions](https://opencode.ai/docs/permissions/), and [OpenRouter Jev tutorial](https://openrouter.ai/docs/guides/community/jev-tutorial). These informed the configuration and adapter, which were then validated by real calls. The tutorial's older version examples were not assumed to override the live model catalog.
+
+The report uses the unmodified [official ICLR 2027 style](https://github.com/ICLR/Master-Template/tree/master/iclr2027), with named course authors and an explicit draft header. The stylesheet's Git blob SHA was `f61ad7efce0855557694078c0945e6c33feb8236`; the bibliography style's SHA was `a85a0087d13bb3d19ba2ca53cae3a9db47119853`. The SWE-bench reference was checked against [the original paper](https://arxiv.org/abs/2310.06770). The current dataset is synthetic and must not be attributed to SWE-bench.
+
+`midpoint_evidence.json` identifies the nine primary runs, two supplementary checks, two excluded setup attempts, identical primary source hashes, and total metered spending. Raw local files are preserved; the portable ZIP strips machine-local paths and hashes its sanitized content. The video is a generated replay of actual traces, not a live screen capture. Team review and submission have not occurred.
