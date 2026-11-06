@@ -6,7 +6,7 @@ Team: Kristjan Dagur Egilsson, Ómar Ingi Halldórsson, and Rami Ratl Mrad.
 
 The instructor advised starting with a small substitution in an existing coding harness and measuring its cost/performance before redesigning the agent. Our chosen experiment replaces OpenCode’s native `explore` subagent with Jev selecting relevant source files. OpenCode still delegates, reads, edits, and runs tests; the same strong coding model writes every patch. Choosing exploration and this benchmark is our design decision, not a specific prescription from the instructor.
 
-**Current status (November 6):** the corrected experiment is running on five authentic pydicom bugs from SWE-bench Lite’s official development split. These replace the invented fixtures as project evidence. The original synthetic outer-router pilot is retained below as historical work; its report/video do not describe this corrected experiment.
+**Current status (November 6):** the corrected 15-run experiment is complete on five authentic pydicom bugs from SWE-bench Lite’s official development split. These replace the invented fixtures as project evidence. The original synthetic outer-router pilot is retained below as historical work; its report/video do not describe this corrected experiment.
 
 ## What Jev actually does
 
@@ -49,16 +49,37 @@ Outputs are in `runs/coding/<run-id>/`: `manifest.json`, `events.jsonl`, actual 
 
 The shared ledger caps this pilot at **$15 total**, **$2/run**, 32 requests, 4,096 output tokens/request and 480 seconds/run. It retains unresolved reservations. Use different IDs for teammate reproduction while sharing your local ledger. The credit allocations are three separate $200 OpenRouter and three separate $250 Tinker accounts; credits are not assumed transferable.
 
+## Results and artifacts
+
+All three conditions solved the **same 2/5 real development issues** (1256 and 1694). Mean total cost per issue was **$0.110382 native**, **$0.072762 Jev**, and **$0.062014 search-only**; mean agent wall time was 37.64, 25.93, and 24.90 seconds respectively. Jev replaced **23 native explorer generation calls with five actual decision calls**, with no fallback. Its direct decision bill was $0.001097208; total repair cost includes the writer and auxiliary calls.
+
+Jev cost 34.1% less than the native explorer in this pilot, but **search-only was cheaper still with the same observed success**. We have not established added value over retrieval, performance equivalence, calibration, or a 5% accepted-error guarantee. Writer trajectories differ, so the Jev-versus-search bill difference is not all direct Jev overhead.
+
+- [Frozen evidence JSON](coding_evidence.json): exact 15 run IDs, source/data/archive hashes, paired issue outcomes, component counts/costs and limitations.
+- [Raw evidence archive](coding_runs.zip): actual requests/responses, Jev scores/selections, OpenCode traces, patches, test logs, environment controls, exact experiment source and upstream license. It excludes repository working copies and credentials.
+- [Corrected four-page midway report draft](report/coding_midpoint.pdf), [LaTeX source](report/coding_midpoint.tex), and its [LaTeX results source](report/coding_results.tex). These supersede the old synthetic report/video for this branch.
+
+Recompute the **frozen** comparison offline from the archive, without models, dependencies or another paid run:
+
+```bash
+python3 build_coding_report.py
+```
+
+This selects only the 15 declared primary IDs; teammate/demo runs cannot silently enter the published results. With LaTeX installed, `python3 build_coding_report.py --compile` rebuilds the report PDF. `coding_probe.py summarize` is only a generic summary of all local runs, not the frozen analysis.
+
 ## Status and handoff
 
-- **Done:** interpreted the instructor’s narrow-substitution advice; froze all five pydicom development IDs/base commits before agent outcomes; validated broken-base/gold-fix controls on every task; implemented native delegation/provider substitution and separate gold-test evaluation; verified four new failure-boundary tests and all 11 existing tests.
-- **Running / owner:** Rami’s coding agent on `rami`; one rollout on every task under each of the three frozen conditions. Preserve source hash `5d106f20e205e4101bab9b46ce421c7c9620457ec131ecb1018c3a459e7b96c6` and all failures.
-- **Preliminary evidence:** on task 1139, six normal explorer generation calls became one actual Jev decision call with no fallback. Total cost was $0.1258524 native versus $0.085085626 Jev. Both patches failed the same iterator regression. This is integration evidence, not proof of a better quality/cost frontier.
-- **Remaining for midpoint:** finish the frozen comparison, package receipts/patches/test logs, update this status with all outcomes/spend, and produce the corrected demo/report from actual results. Then a teammate should reproduce the commands and submit the video, 3–4 page report, and accessible repository link in the course portal.
-- **Remaining for final:** reproduce with the official Docker evaluator on suitable compute, broaden beyond one repository, freeze independent evaluation settings/data, analyze uncertainty and failure modes, and prepare the final report/live demo. Do not claim a 5% risk guarantee, calibration, or equivalent performance from this pilot.
-- **Deferred direction 1:** the original BANKING77/CLINC150 intent classification with tool-using escalation remains a possible later direction. The user explicitly chose this coding-harness experiment first.
-- **Spend:** the first matched pair cost $0.210938026 OpenRouter; the batch is still running. Historical synthetic pilot cost $0.126075004. No Tinker spending or checkpoints.
-- **Exact next action:** inspect the frozen batch results, retain unsuccessful repairs, and package/compare all three conditions before changing retrieval, prompts, or confidence policy.
+- **Done / owner:** Rami’s coding agent on `rami`; official development IDs/base commits frozen before outcomes; all five broken-base/gold-fix controls validated; native baseline followed by Jev and search-only runs; all 15 results and billed receipts preserved; corrected four-page report drafted and visually checked; runnable commands provided. Video work is deferred at the user’s request.
+- **Verified:** 11 existing plus four new offline checks pass; all 15 primary runs share source hash `5d106f20e205e4101bab9b46ce421c7c9620457ec131ecb1018c3a459e7b96c6`; every bill settled; Jev exercised on all five tasks with no fallback; all unsuccessful repairs remain in the denominator. The evidence builder validates hashes, expected IDs, controls and receipt totals before producing results. CI now runs the four new checks and offline evidence reconstruction alongside the existing checks.
+- **Remaining for midpoint:** independent teammate reproduction; review of report/AI disclosure; verify course graders can access the private repository; submit report/video/repository link in the portal. Video work is deferred at the user’s request. The old `demo_replay.mp4` is historical and does not show this corrected system.
+- **Remaining for final:** reproduce with the official Docker evaluator on suitable compute; broaden repositories and development tasks; investigate file selection and parent recovery; compare a generative ranker on identical candidates; freeze independent evaluation; report uncertainty/failure analysis and prepare final paper/live demo. Do not tune on final outcomes.
+- **Deferred direction 1:** original BANKING77/CLINC150 intent decisions with tool-using escalation remain a later option. The user chose the coding-harness experiment first.
+- **Spend / jobs:** corrected pilot **$1.225791308 OpenRouter**; historical synthetic pilot $0.126075004; combined recorded project total **$1.351866312**. **$0 Tinker**, no training/checkpoints, no active paid jobs. These are recorded project expenses, not account-wide usage. The last key allowance snapshot before this pilot was $195.809830466; other account activity may affect it.
+- **Exact next action:** a teammate follows the setup above, runs `python3 build_coding_report.py` offline, then launches one fresh Jev run on task 1256 with a unique ID and checks its decision receipt, patch and 23 benchmark regression cases. Review the report against the actual results. Video work is deferred at the user’s request.
+
+### November 6 handoff
+
+Changed files: `.github/workflows/offline.yml`, `coding_probe.py`, `coding_protocol.json`, `test_coding_probe.py`, `coding_runs.zip`, `coding_evidence.json`, `build_coding_report.py`, corrected report sources/PDF, this README, and `docs/PROJECT_PLAN.md`/`MIDPOINT_CHECKLIST.md`. Commands verified: prepare/check, all 15 bounded real-model runs, `python3 -m unittest -v test_midpoint.py test_coding_probe.py`, and offline evidence/report reconstruction. No test outcomes were used to alter the frozen retrieval settings, model pair, prompts or selection policy. Branch-local only; main and teammates’ branches were not edited.
 
 Local pytest uses published `FAIL_TO_PASS`/`PASS_TO_PASS` tests, with broken/gold controls, on macOS/Python 3.12. **This is not the official Docker SWE-bench score.** Five convenience-selected development issues and one rollout each cannot establish statistical equivalence or generalize to all repositories. Tool permissions restrict benchmark writes; they are not an operating-system sandbox.
 
