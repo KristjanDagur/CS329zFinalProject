@@ -1,16 +1,73 @@
-> **Rami branch status — 2026-11-06 (active)**
->
-> **Owner / branch:** Rami’s coding agent / `rami`. All changes stay here; do not modify `main` or teammates’ branches.
->
-> **Scope decision:** Follow the instructor’s coding-harness direction first. Replace one narrow internal decision in the existing OpenCode harness: its `explore` subagent’s file localization. Compare the normal generative explorer, Jev selecting repository files, and deterministic search, while holding the patch-writing model fixed. The old outer task-launch router and synthetic fixtures below are historical integration checks, not the corrected midpoint experiment.
->
-> **Active claim:** implement and validate that substitution on all five pydicom issues in SWE-bench Lite’s official development split. Dependencies: native explorer baseline, authentic repository snapshots, and published fail-to-pass/pass-to-pass tests. Expected artifacts: minimal experiment runner, frozen protocol/task IDs, actual Jev receipts, patches, test logs, cost/latency comparison, and a runnable demo command. No corrected results exist yet.
->
-> **Evaluation limitation:** native local pytest evaluation must be checked with broken-base and gold-patch controls; it is not the official Docker SWE-bench score. Never expose gold patches or added benchmark tests to the agent or Jev.
->
-> **Later option:** return to the original proposal’s BANKING77/CLINC150 intent decisions with tool-using escalation after this coding experiment is established. It is deferred, not discarded.
->
-> **Done:** created `rami` from the team’s latest `main`; inspected pinned OpenCode 1.19.5’s native exploration boundary and obtained official development metadata. **Next:** validate the five upstream bug environments, then run the unchanged explorer baseline before enabling Jev. No new paid runs yet; historical project spend is $0.126075004 OpenRouter and $0 Tinker.
+# CS329Z Final Project — Rami’s coding experiment
+
+Team: Kristjan Dagur Egilsson, Ómar Ingi Halldórsson, and Rami Ratl Mrad.
+
+**Active branch: `rami`. All further work by Rami’s coding agent stays here.**
+
+The instructor advised starting with a small substitution in an existing coding harness and measuring its cost/performance before redesigning the agent. Our chosen experiment replaces OpenCode’s native `explore` subagent with Jev selecting relevant source files. OpenCode still delegates, reads, edits, and runs tests; the same strong coding model writes every patch. Choosing exploration and this benchmark is our design decision, not a specific prescription from the instructor.
+
+**Current status (November 6):** the corrected experiment is running on five authentic pydicom bugs from SWE-bench Lite’s official development split. These replace the invented fixtures as project evidence. The original synthetic outer-router pilot is retained below as historical work; its report/video do not describe this corrected experiment.
+
+## What Jev actually does
+
+The build agent invokes OpenCode’s existing `task` tool with `subagent_type="explore"`. A thin provider adapter changes only that explorer’s response. It searches implementation files deterministically, gives Jev the top 12 candidates with original code snippets, asks 12 typed file-relevance questions, and returns the three selected paths/snippets. Jev’s probabilities directly determine which files are returned. Jev does not generate code. On an API/validation error, the normal explorer is used and both costs are counted.
+
+We compare three conditions with identical issues, writer (`openai/gpt-6.1-sol`), tools, limits and evaluator:
+
+- `native`: OpenCode’s normal generative explorer, using the strong model.
+- `jev`: deterministic retrieval plus `typesafe/jev-1.14` file selection at the internal explorer boundary.
+- `search`: the same retrieval, returning its top three files without Jev. This tests whether Jev adds value over search alone.
+
+The native explorer can search the whole repository; the replacement receives bounded candidates. This is a component substitution study, not a claim that Jev can replace every exploration behavior. See [the current plan](docs/PROJECT_PLAN.md) and [the frozen protocol](coding_protocol.json).
+
+## Run the real-bug prototype
+
+Check out **`rami`** in your own clone. Python 3.12, Git, an OpenRouter key, and the OpenCode binary are required. The existing `bootstrap.py` installs the pinned OpenCode 1.19.5 **runtime being evaluated**; your Claude/GPT coding assistant is separate and needs no repository bootstrap.
+
+```bash
+git switch rami
+python3 bootstrap.py
+python3 -m venv .runtime/coding-venv
+.runtime/coding-venv/bin/python -m pip install pytest==7.4.4 setuptools==70.3.0 numpy==1.26.4 pillow==11.3.0
+python3 coding_probe.py prepare
+python3 coding_probe.py check
+python3 -m unittest -v test_coding_probe.py
+```
+
+`prepare` downloads official task metadata and exact upstream repository commits into `.runtime/coding/`. `check` applies the benchmark-owned added tests in separate evaluator copies and verifies the broken base fails and upstream fix passes. None of those gold assets is copied into the agent’s workspace. All five environments passed locally (41, 23, 304, 27 and 5 selected/expanded regression cases). Historical tests need pytest 7’s nose-style setup support. Three malformed parameter IDs in task 1413 expand to their whole test functions rather than dropping regressions.
+
+Set `OPENROUTER_API_KEY` in your shell, then verify models/prices and launch a fresh run. Do not paste your key into a command committed here.
+
+```bash
+python3 coding_probe.py snapshot
+python3 coding_probe.py run --task pydicom__pydicom-1256 --condition native --run-id teammate-1256-native-01
+python3 coding_probe.py run --task pydicom__pydicom-1256 --condition jev --run-id teammate-1256-jev-01
+python3 coding_probe.py run --task pydicom__pydicom-1256 --condition search --run-id teammate-1256-search-01
+```
+
+Outputs are in `runs/coding/<run-id>/`: `manifest.json`, `events.jsonl`, actual model requests/responses and usage receipts, `localization-0.json` (Jev/search only), `patch.diff`, `evaluation.json`, and `result.json`. Existing completed run IDs resume without another API call only when source/protocol/task/condition match; incomplete runs require inspection and a new ID. Never delete paid failures to rerun silently.
+
+The shared ledger caps this pilot at **$15 total**, **$2/run**, 32 requests, 4,096 output tokens/request and 480 seconds/run. It retains unresolved reservations. Use different IDs for teammate reproduction while sharing your local ledger. The credit allocations are three separate $200 OpenRouter and three separate $250 Tinker accounts; credits are not assumed transferable.
+
+## Status and handoff
+
+- **Done:** interpreted the instructor’s narrow-substitution advice; froze all five pydicom development IDs/base commits before agent outcomes; validated broken-base/gold-fix controls on every task; implemented native delegation/provider substitution and separate gold-test evaluation; verified four new failure-boundary tests and all 11 existing tests.
+- **Running / owner:** Rami’s coding agent on `rami`; one rollout on every task under each of the three frozen conditions. Preserve source hash `5d106f20e205e4101bab9b46ce421c7c9620457ec131ecb1018c3a459e7b96c6` and all failures.
+- **Preliminary evidence:** on task 1139, six normal explorer generation calls became one actual Jev decision call with no fallback. Total cost was $0.1258524 native versus $0.085085626 Jev. Both patches failed the same iterator regression. This is integration evidence, not proof of a better quality/cost frontier.
+- **Remaining for midpoint:** finish the frozen comparison, package receipts/patches/test logs, update this status with all outcomes/spend, and produce the corrected demo/report from actual results. Then a teammate should reproduce the commands and submit the video, 3–4 page report, and accessible repository link in the course portal.
+- **Remaining for final:** reproduce with the official Docker evaluator on suitable compute, broaden beyond one repository, freeze independent evaluation settings/data, analyze uncertainty and failure modes, and prepare the final report/live demo. Do not claim a 5% risk guarantee, calibration, or equivalent performance from this pilot.
+- **Deferred direction 1:** the original BANKING77/CLINC150 intent classification with tool-using escalation remains a possible later direction. The user explicitly chose this coding-harness experiment first.
+- **Spend:** the first matched pair cost $0.210938026 OpenRouter; the batch is still running. Historical synthetic pilot cost $0.126075004. No Tinker spending or checkpoints.
+- **Exact next action:** inspect the frozen batch results, retain unsuccessful repairs, and package/compare all three conditions before changing retrieval, prompts, or confidence policy.
+
+Local pytest uses published `FAIL_TO_PASS`/`PASS_TO_PASS` tests, with broken/gold controls, on macOS/Python 3.12. **This is not the official Docker SWE-bench score.** Five convenience-selected development issues and one rollout each cannot establish statistical equivalence or generalize to all repositories. Tool permissions restrict benchmark writes; they are not an operating-system sandbox.
+
+Sources: [SWE-bench Lite dataset](https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite), [pinned OpenCode exploration tool](https://github.com/anomalyco/opencode/blob/v1.19.5/packages/opencode/src/tool/task.ts), [Jev typed decisions](https://openrouter.ai/docs/guides/community/jev).
+
+---
+
+<details>
+<summary>Historical synthetic outer-router pilot and earlier handoff notes</summary>
 
 # CS329Z Final Project
 
@@ -177,3 +234,5 @@ User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three 
 ## Updating the status
 
 Update the current state and append a dated entry in every work PR and before handoff. Record completed work with evidence, active owners/branches, remaining dependencies, checks and outcomes, run/checkpoint/artifact locations, spend, blockers, and one exact next action. Distinguish implementation from experiments, local from published files, draft artifacts from submissions, and empirical estimates from guarantees.
+
+</details>
