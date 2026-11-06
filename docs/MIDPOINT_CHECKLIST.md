@@ -1,3 +1,23 @@
+# Corrected midpoint handoff (rami, November 6)
+
+The coding-harness experiment in the root README and `coding_protocol.json` supersedes the synthetic outer-router checklist below.
+
+- [x] Authentic development bugs and exact upstream commit IDs frozen before outcomes.
+- [x] All five broken-base/gold-fix environment controls verified.
+- [x] Native exploration baseline run before Jev substitution; actual Jev file decisions exercised.
+- [x] Runner, protocol, new checks and README published on `rami` only.
+- [x] Finish all 15 frozen runs, including search-only control; retain failures and receipts.
+- [x] Publish evidence archive, comparison, current spend and exact reproduction commands.
+- [x] Draft corrected four-page report from the 15 results.
+- [ ] Team review of report and AI disclosure.
+- Video deferred at the user’s request.
+- [ ] Independent teammate reproduction, recorded demo, repository grader access and portal submission.
+
+---
+
+<details>
+<summary>Historical checklist for the earlier synthetic integration pilot</summary>
+
 # Midpoint Prototype and Submission Plan
 
 Status: M1/M2 implemented and verified on real synthetic-task runs; M3 evidence and paper draft prepared; M4 clean-source reproduction and labeled replay prepared. Team review, final video choice, grader access, and portal submission remain. See the root README for current commands, run IDs, spending, and limitations.
@@ -66,3 +86,5 @@ The milestone is complete only when the prototype runs, its README has been inde
 ## Current artifact review
 
 The report has 3 body pages and a separate references/AI-use disclosure page. The 74-second silent MP4 is a generated replay of real recorded traces, explicitly labeled accordingly; it is not a live screen capture. A clean source copy was tested by the agent, but the independent teammate check remains open. The nine-run primary pilot routes all tasks strong at threshold 0.90 and establishes no routing advantage. The post-hoc 0.75 demonstration is kept separate. Total session OpenRouter spend was $0.126075004; Tinker spend was zero.
+
+</details>

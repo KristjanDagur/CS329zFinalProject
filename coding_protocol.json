@@ -1,0 +1,67 @@
+{
+  "protocol": "internal-explore-v1",
+  "date": "2026-11-06",
+  "dataset": "princeton-nlp/SWE-bench_Lite",
+  "dataset_revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+  "split": "dev",
+  "selection": "All five pydicom/pydicom development instances, selected for one locally runnable pure-Python environment before agent outcomes. This is a convenience pilot, not a representative SWE-bench sample.",
+  "tasks": [
+    {
+      "instance_id": "pydicom__pydicom-1139",
+      "repo": "pydicom/pydicom",
+      "base_commit": "b9fb05c177b685bf683f7f57b2d57374eb7d882d"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1256",
+      "repo": "pydicom/pydicom",
+      "base_commit": "49a3da4a3d9c24d7e8427a25048a1c7d5c4f7724"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1413",
+      "repo": "pydicom/pydicom",
+      "base_commit": "f909c76e31f759246cec3708dadd173c5d6e84b1"
+    },
+    {
+      "instance_id": "pydicom__pydicom-1694",
+      "repo": "pydicom/pydicom",
+      "base_commit": "f8cf45b6c121e5a4bf4a43f71aba3bc64af3db9c"
+    },
+    {
+      "instance_id": "pydicom__pydicom-901",
+      "repo": "pydicom/pydicom",
+      "base_commit": "3746878d8edf1cbda6fbcf35eec69f9ba79301ca"
+    }
+  ],
+  "harness": "OpenCode",
+  "harness_version": "1.19.5",
+  "writer_model": "openai/gpt-6.1-sol",
+  "explorer_baseline_model": "openai/gpt-6.1-sol",
+  "jev_model": "typesafe/jev-1.14",
+  "conditions": [
+    "native",
+    "jev",
+    "search"
+  ],
+  "intervention": "Replace only the native explore subagent model response with Jev ranking deterministic file candidates. Writer, tools, issue, and budget stay fixed.",
+  "candidate_files": 12,
+  "selected_files": 3,
+  "snippet_chars_per_file": 1800,
+  "confidence_policy": "Select three highest finite Noul relevance scores. This is a ranking experiment; no calibrated acceptance claim. On decision API or validation error, use the native explorer and charge both costs.",
+  "main_steps": 16,
+  "explore_steps": 6,
+  "max_requests": 32,
+  "max_output_tokens": 4096,
+  "max_input_bytes": 196608,
+  "timeout_s": 480,
+  "task_budget_usd": 2,
+  "experiment_budget_usd": 15,
+  "evaluation": "Apply official test_patch only in evaluator copy, run published FAIL_TO_PASS and PASS_TO_PASS nodes under local pytest. Validate broken-base fails and gold patch passes. Not official Docker SWE-bench.",
+  "dependencies": [
+    "pytest==7.4.4",
+    "setuptools==70.3.0",
+    "numpy==1.26.4",
+    "pillow==11.3.0"
+  ],
+  "future_direction": "Original BANKING77/CLINC150 intent decisions with tool-using escalation, deferred until the coding-harness experiment is established.",
+  "environment_notes": "pytest 7 retains historical nose-style setup; setuptools supplies pkg_resources. Truncated upstream parameter IDs expand to the whole parent test function, adding regression cases rather than dropping them."
+}
