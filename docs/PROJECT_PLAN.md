@@ -1,3 +1,34 @@
+# Current experiment: instructor-directed internal substitution
+
+**Updated November 6, 2026 on `rami`; this section supersedes the outer task-launch router below.** The user selected the coding-harness direction first. The instructor recommended moving linearly, obtaining mechanical data, and making a small substitution inside an existing harness before redesigning it. The instructor did not prescribe our particular component or benchmark: choosing OpenCode’s native explorer and pydicom development issues is our implementation decision.
+
+The question is now: **Can typed Jev file-selection decisions replace an expensive repository-exploration subagent while preserving bug-repair performance and reducing total cost?** Keep OpenCode’s native build/task/explore loop and the same strong patch-writing model. At the explorer’s existing provider boundary, substitute deterministic source-file retrieval plus one Jev relevance-ranking call for the normal generative explorer. Return selected paths and original snippets. Jev actually chooses repository files; it does not generate patches or choose the model at task launch. A search-only condition uses the same retrieval without Jev.
+
+## Midpoint acceptance criteria
+
+1. Use the official SWE-bench Lite development split, not invented tasks. Freeze all five pydicom instances and exact base commits before inspecting agent outcomes. Convenience selection limits generalization; these are development experiments, not held-out results.
+2. Validate each local environment using the benchmark’s own test patch: broken base must fail and the upstream gold fix must pass. Keep gold patches, added tests, and expected outcomes out of the agent workspace and Jev state. Local pytest is explicitly not the official Docker SWE-bench score.
+3. Execute a native explorer baseline before activating the substitution. Preserve the native OpenCode task/delegation/editing loop; change only the exploration provider. Record the actual decisions, fallback behavior, generated patch, independent tests, model receipts, full cost, and wall time.
+4. Complete one rollout per task per condition: native explorer, Jev explorer replacement, and search-only replacement. Preserve all failures. Use the same issue prompt, writer, limits, and evaluator in each condition. Report success per issue, not per test case, and attribute the search-only control honestly.
+5. Publish runnable commands, immutable evidence, current status, and one exact next action on `rami`. Only then prepare the corrected demo/report using these results. The previous synthetic demo/report are historical artifacts.
+
+## Following weeks
+
+- **Week 8:** Reproduce on a teammate machine; run official container evaluation on suitable compute; fix infrastructure before choosing the final benchmark subset. Increase repository diversity using real development tasks. Compare file-selection recall, parent recovery behavior, costs, and high-confidence ranking errors. Measure whether Jev adds value over search alone. Keep new protocol versions distinct.
+- **Week 9:** Freeze a separate final evaluation set, model/provider revisions, retrieval settings, prompts, and statistical analysis before opening its outcomes. Choose sample size from measured development cost, never observed test success. Run paired conditions; add a generative ranker over the same candidates if needed to isolate decision-model quality from retrieval. Evaluate task-success/cost Pareto tradeoffs with paired uncertainty; do not claim equivalence from a tiny sample.
+- **Week 10:** Freeze code and artifact hashes, reproduce results from the README, perform error/safety analysis, prepare the live demo and eight-page ICLR-format report, disclose AI use and individual authorship, and submit links with grader access. Final live demo: December 9, 3:30–6:30 p.m.; confirm report deadline in the course portal.
+
+## Budget and optional work
+
+The face-value allocations are three separate $200 OpenRouter accounts and three separate $250 Tinker accounts. The current pilot is capped at $2/run and $15 across its shared ledger, with bounded requests, output, and time. Record actual spend rather than treating credits as free compute. Do not start training until a measured failure motivates it and enough separately sourced training/development data exist. Tinker does not automatically support training Jev’s custom decision architecture; a supported fine-tuned ranking model would be a distinct comparison.
+
+**Deferred direction 1:** the original proposal’s BANKING77/CLINC150 intent decisions, calibrated acceptance, and tool-using escalation remain a possible later track. Do not run it in parallel with this experiment until the team chooses to reopen it.
+
+---
+
+<details>
+<summary>Earlier November 3 plan: historical outer-router proposal, superseded above</summary>
+
 # End-to-End Project Plan
 
 Planning date: 2026-11-03. Status: proposed protocol; no experiments executed. Immediate priority: November 4 prototype target and November 6 midpoint submissions.
@@ -233,3 +264,5 @@ Every work session must leave the README with evidence-backed completed work, re
 - A current README that lets any teammate's coding agent resume without reconstructing history.
 
 Sources [S1]–[S11] and important qualifications are in [SOURCES.md](SOURCES.md).
+
+</details>
