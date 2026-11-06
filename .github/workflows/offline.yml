@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Offline correctness checks (no API key or model calls)
-        run: python -m unittest -v test_midpoint.py test_coding_probe.py
+        run: python -m unittest -v test_midpoint.py test_coding_probe.py test_verified_probe.py
       - name: Validate all synthetic fixture graders
         run: python midpoint.py verify-fixtures
       - name: Reproduce the frozen real-bug evidence offline
