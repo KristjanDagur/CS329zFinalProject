@@ -24,13 +24,13 @@ The native explorer can search the whole repository; the replacement receives bo
 
 ## Run the real-bug prototype
 
-Check out **`rami`** in your own clone. Python 3.12, Git, an OpenRouter key, and the OpenCode binary are required. The existing `bootstrap.py` installs the pinned OpenCode 1.19.5 **runtime being evaluated**; your Claude/GPT coding assistant is separate and needs no repository bootstrap.
+Check out **`rami`** in your own clone. Required: Git, [uv](https://docs.astral.sh/uv/), an OpenRouter key in `.env`, and the OpenCode binary. The team's reference machine is Arch Linux x86_64 with system Python 3.14; the orchestrator scripts are standard-library only and run on the system `python3` (verified on 3.14 and 3.12). The evaluator venv must be Python 3.12, which uv downloads automatically; [requirements.txt](requirements.txt) pins its exact packages. The existing `bootstrap.py` installs the pinned OpenCode 1.19.5 **runtime being evaluated**; your Claude/GPT coding assistant is separate and needs no repository bootstrap.
 
 ```bash
 git switch rami
 python3 bootstrap.py
-python3 -m venv .runtime/coding-venv
-.runtime/coding-venv/bin/python -m pip install pytest==7.4.4 setuptools==70.3.0 numpy==1.26.4 pillow==11.3.0
+uv venv --python 3.12 .runtime/coding-venv
+uv pip install --python .runtime/coding-venv/bin/python -r requirements.txt
 python3 coding_probe.py prepare
 python3 coding_probe.py check
 python3 -m unittest -v test_coding_probe.py
@@ -38,7 +38,9 @@ python3 -m unittest -v test_coding_probe.py
 
 `prepare` downloads official task metadata and exact upstream repository commits into `.runtime/coding/`. `check` applies the benchmark-owned added tests in separate evaluator copies and verifies the broken base fails and upstream fix passes. None of those gold assets is copied into the agent’s workspace. All five environments passed locally (41, 23, 304, 27 and 5 selected/expanded regression cases). Historical tests need pytest 7’s nose-style setup support. Three malformed parameter IDs in task 1413 expand to their whole test functions rather than dropping regressions.
 
-Set `OPENROUTER_API_KEY` in your shell, then verify models/prices and launch a fresh run. Do not paste your key into a command committed here.
+Put your key in a project-root `.env` file (gitignored) as `OPENROUTER_API_KEY=...`; the scripts read it from there automatically. A shell variable with the same name, if set, takes precedence (useful for CI). The key is never exported to `os.environ`, so OpenCode and task tests cannot inherit it. Then verify models/prices and launch a fresh run. Never commit `.env` or paste your key into a committed command.
+
+Do not install `requirements.txt` into Python 3.13+: `numpy==1.26.4` has no wheels there, and newer numpy/pytest break the historical pydicom tests. Changing those pins changes the evaluator and requires a new protocol version.
 
 ```bash
 python3 coding_probe.py snapshot
@@ -78,6 +80,14 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 - **Deferred direction 1:** original BANKING77/CLINC150 intent decisions with tool-using escalation remain a later option. The user chose the coding-harness experiment first.
 - **Spend / jobs:** corrected pilot **$1.225791308 OpenRouter**; historical synthetic pilot $0.126075004; combined recorded project total **$1.351866312**. **$0 Tinker**, no training/checkpoints, no active paid jobs. These are recorded project expenses, not account-wide usage. The last key allowance snapshot before this pilot was $195.809830466; other account activity may affect it.
 - **Exact next action:** a teammate follows the setup above, runs `python3 build_coding_report.py` offline, then launches one fresh Jev run on task 1256 with a unique ID and checks its decision receipt, patch and 23 benchmark regression cases. Review the report against the actual results. Video work is deferred at the user’s request.
+
+### November 6 handoff — Linux setup and `.env` key loading (Kristjan, `kristjan`)
+
+- Agreed with Rami: the team standardizes on Kristjan's machine (Arch Linux, system Python 3.14 for the orchestrator; uv-managed Python 3.12 evaluator venv). Added `requirements.txt` (exact freeze of the verified venv, same pins as `coding_protocol.json`), switched setup docs to uv, and added Python 3.14 to the CI matrix. Teammates: install uv and recreate `.runtime/coding-venv` with the commands above.
+- Changed: `midpoint.py` `key_from_environment()` now reads `OPENROUTER_API_KEY` from the project `.env` (shell variable overrides) without exporting it; new offline test in `test_midpoint.py`; this README. The experiment source hash (`coding_probe.py` + `coding_protocol.json`) is unchanged, so new runs remain comparable with the frozen 15.
+- Verified on Arch Linux x86_64: `bootstrap.py` installs and runs OpenCode 1.19.5 (first Linux validation); Python 3.12.15 coding venv via `uv` with pinned deps; `python3 -m unittest test_midpoint.py test_coding_probe.py` — 16 pass on Python 3.14 and 3.12; `build_coding_report.py` reproduces the frozen evidence.
+- Not yet verified on Linux: `coding_probe.py prepare`/`check` and a paid smoke run. No paid calls made; spend unchanged. `.env.example` comment still says "set in your shell" and needs a manual update.
+- Next action: run `python3 coding_probe.py prepare && python3 coding_probe.py check`, then `python3 midpoint.py doctor`, then one Jev run on 1256 with run ID `kristjan-linux-1256-jev-01`.
 
 ### November 6 handoff
 

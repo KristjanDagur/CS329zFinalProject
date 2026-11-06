@@ -104,5 +104,18 @@ class MidpointTests(unittest.TestCase):
                 m.run(args)
                 request.assert_not_called()
 
+    def test_key_is_read_from_env_file_without_exporting_it(self):
+        with tempfile.TemporaryDirectory() as temp:
+            env_file=Path(temp)/'.env'
+            env_file.write_text('# comment\nOTHER=x\nexport OPENROUTER_API_KEY="sk-test-123"\n')
+            clean={k:v for k,v in os.environ.items() if k!='OPENROUTER_API_KEY'}
+            with patch.dict(os.environ,clean,clear=True):
+                self.assertEqual(m.key_from_environment(env_file),'sk-test-123')
+                self.assertNotIn('OPENROUTER_API_KEY',os.environ)
+            with patch.dict(os.environ,{'OPENROUTER_API_KEY':'shell-override'}):
+                self.assertEqual(m.key_from_environment(env_file),'shell-override')
+            with patch.dict(os.environ,clean,clear=True),self.assertRaisesRegex(RuntimeError,'OPENROUTER_API_KEY'):
+                m.key_from_environment(Path(temp)/'missing.env')
+
 
 if __name__=='__main__': unittest.main()
