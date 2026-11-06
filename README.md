@@ -1,10 +1,16 @@
-> **Rami branch handoff — 2026-11-06**
+> **Rami branch status — 2026-11-06 (active)**
 >
-> All further changes by Rami’s coding agent must stay on `rami`. Do not write to `main` or teammates’ branches. Update the status in this branch’s README at each handoff.
+> **Owner / branch:** Rami’s coding agent / `rami`. All changes stay here; do not modify `main` or teammates’ branches.
 >
-> **Done this session:** created `rami` from the team’s current `main`, preserving teammate changes. No implementation was changed and no paid experiments were run.
+> **Scope decision:** Follow the instructor’s coding-harness direction first. Replace one narrow internal decision in the existing OpenCode harness: its `explore` subagent’s file localization. Compare the normal generative explorer, Jev selecting repository files, and deterministic search, while holding the patch-writing model fixed. The old outer task-launch router and synthetic fixtures below are historical integration checks, not the corrected midpoint experiment.
 >
-> **Remaining:** replace the synthetic-task demonstration with a substantive Jev experiment on real data. Scope confirmation is pending because the original proposal names intent classification with tool-using escalation, while the instructor suggests a coding-harness experiment. The previous pilot does not establish routing value or calibration.
+> **Active claim:** implement and validate that substitution on all five pydicom issues in SWE-bench Lite’s official development split. Dependencies: native explorer baseline, authentic repository snapshots, and published fail-to-pass/pass-to-pass tests. Expected artifacts: minimal experiment runner, frozen protocol/task IDs, actual Jev receipts, patches, test logs, cost/latency comparison, and a runnable demo command. No corrected results exist yet.
+>
+> **Evaluation limitation:** native local pytest evaluation must be checked with broken-base and gold-patch controls; it is not the official Docker SWE-bench score. Never expose gold patches or added benchmark tests to the agent or Jev.
+>
+> **Later option:** return to the original proposal’s BANKING77/CLINC150 intent decisions with tool-using escalation after this coding experiment is established. It is deferred, not discarded.
+>
+> **Done:** created `rami` from the team’s latest `main`; inspected pinned OpenCode 1.19.5’s native exploration boundary and obtained official development metadata. **Next:** validate the five upstream bug environments, then run the unchanged explorer baseline before enabling Jev. No new paid runs yet; historical project spend is $0.126075004 OpenRouter and $0 Tinker.
 
 # CS329Z Final Project
 
