@@ -8,12 +8,11 @@ The midpoint prototype is implemented and has completed real OpenRouter/OpenCode
 
 ## Quick start
 
-The implementation is on **`midpoint-prototype`** in [review PR #1](https://github.com/KristjanDagur/CS329zFinalProject/pull/1). Use that branch until it is merged. Artifact links below are pinned to the reviewed implementation commit, so they also work from the status-only `main` branch.
+The implementation is on **`main`**, merged in [PR #1](https://github.com/KristjanDagur/CS329zFinalProject/pull/1). Clone via SSH using a GitHub account with repository access and a configured SSH key. The default checkout is `main`; no branch switch is needed. Artifact links below are pinned to the reviewed implementation commit.
 
 ```bash
-git clone https://github.com/KristjanDagur/CS329zFinalProject.git
+git clone git@github.com:KristjanDagur/CS329zFinalProject.git
 cd CS329zFinalProject
-git switch midpoint-prototype
 python3 --version
 python3 bootstrap.py
 python3 -m unittest -v test_midpoint.py
@@ -81,9 +80,9 @@ The report needs a full TeX distribution with Times, Helvetica, and Courier font
 
 ## Status report
 
-Last updated: **2026-11-03, America/Los_Angeles**.
+Last updated: **2026-11-05, America/Los_Angeles**.
 
-**Current stage:** working midpoint prototype and submission drafts prepared on `midpoint-prototype`; review, final video choice, and course submission remain. Read [AGENTS.md](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/AGENTS.md) before modifying anything.
+**Current stage:** working midpoint prototype and submission drafts merged into `main` in PR #1 (merge commit `e0a4705`). Independent teammate reproduction, report/video review, final video choice, and course submission remain unrecorded. The SSH setup and branch instructions were corrected on November 5 in the documentation commit `updated the readme file`. Read [AGENTS.md](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/AGENTS.md) before modifying anything.
 
 ### Completed
 
@@ -98,7 +97,7 @@ Last updated: **2026-11-03, America/Los_Angeles**.
 
 ### Remaining work and dependencies
 
-- [ ] Teammate review/merge of `midpoint-prototype`; independently follow this README once and record the result.
+- [ ] Independently follow this README from `main` once and record the teammate reproduction result; PR #1 is already merged.
 - [ ] Review the paper, references, author names/contributions, and AI-use disclosure; check current course submission rules.
 - [ ] Confirm the course graders can access the private repo; choose/record the final demo video.
 - [ ] Submit the video, report, and repo link through the course portal; nothing has been submitted automatically.
@@ -110,12 +109,15 @@ Last updated: **2026-11-03, America/Los_Angeles**.
 
 ### Active claims and handoff
 
+`README setup correction | Codex for Kristjan | main | 2026-11-05 | dependency: merged prototype and current checkout | artifact: corrected README and discrepancy notes | completed; included in the documentation commit`.
+
 `M1–M3 / M4 preparation | Rami with Codex | midpoint-prototype | 2026-11-03 | prototype, evidence, draft report/video | completed for review`.
 
 No experiment is running and no teammate task has been assigned. Proposed future workstreams remain Kristjan/harness, Ómar/evaluation, Rami/routing; confirm the owners before claiming new work. Do not rerun the pilot or rebuild a harness from scratch. Fetch the archived artifacts first.
 
 ### Known limitations and obstacles
 
+- The opening status in `docs/PROJECT_PLAN.md` still says no experiments have executed. Treat it as the November 3 planning snapshot; the recorded midpoint pilot and current status are documented here and in `midpoint_evidence.json`.
 - No Docker is installed on the development machine. The current data is **synthetic-midpoint-v1**, not SWE-bench. The three sanity tasks have not been model-run.
 - The first socket-bound attempt was blocked by the execution sandbox. A subsequent paid attempt had a directory/path-permission integration failure. Both are preserved; the failed paid attempt is excluded from the post-fix comparison and included in spending.
 - The default threshold is uncalibrated and produced zero cheap coverage. Provider selection is not yet frozen for the final study; observed providers are recorded.
@@ -124,13 +126,22 @@ No experiment is running and no teammate task has been assigned. Proposed future
 
 ### Exact next action
 
-A teammate should check out `midpoint-prototype`, run the quick start and one low-cost task with their own key, review the draft report/video, and record that review here. Then finalize and submit the midpoint package. The next research implementation step is the SWE-bench execution environment and a development set where cheap-model success varies.
+A teammate should clone `main` via SSH, run the quick start and one low-cost task with their own key, review the draft report/video, and record that review here. Then finalize and submit the midpoint package. The next research implementation step is the SWE-bench execution environment and a development set where cheap-model success varies.
 
 ## Budget envelope
 
 User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three separate accounts. This session used **$0.126075004 OpenRouter**, leaving **$29.873924996** of the proposed $30 team midpoint-smoke envelope. Other balances/expiry and transferability are unverified. Keep account/service ledgers separate; do not share keys. The final-study allocations and spend gates remain in [the plan](https://github.com/KristjanDagur/CS329zFinalProject/blob/6b084a23639c645d0f856aaa5d5f3e364f2ae58e/docs/PROJECT_PLAN.md#6-credits-and-cost-controls).
 
 ## Handoff log
+
+### 2026-11-05 — README setup correction
+
+- Changed: `README.md` now uses the repository's SSH clone URL and the default `main` checkout. Removed obsolete branch-switch and pending-merge instructions; retained historical branch references. Included in the documentation commit `updated the readme file`, prepared for push to `origin/main` at Kristjan's request. Codex made this documentation edit for Kristjan.
+- Verified: `git status --short` initially showed a clean checkout; `git branch -a` showed only local `main` and remote `origin/main`; `git remote -v` confirmed the SSH URL; `git log -3 --oneline` confirmed PR #1 was merged as `e0a4705`. Inspected tracked files and `midpoint_evidence.json`; the pinned artifact commit exists locally. `git diff --check` passed. No runtime tests were needed for this documentation-only change.
+- Discrepancy: the project plan's opening status predates the recorded experiments; flagged above without changing the historical plan. No teammate reproduction or submission outcome was inferred from the merge.
+- Runs/artifacts/budget: no experiments, downloads, or paid calls launched; existing run IDs, artifacts, and recorded balances are unchanged. No new checkpoint or run ID.
+- Remaining/dependencies/blockers: teammate reproduction requires repository SSH access and an OpenRouter key for the paid task; report/video review and submission remain unrecorded. No blocker to this documentation correction; no active claim remains from this session.
+- Next action: follow the quick start from `main` and record the reproduction result.
 
 ### 2026-11-03 — Midpoint implementation and pilot
 
