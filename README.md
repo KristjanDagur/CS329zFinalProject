@@ -1,3 +1,11 @@
+> **Rami branch handoff — 2026-11-06**
+>
+> All further changes by Rami’s coding agent must stay on `rami`. Do not write to `main` or teammates’ branches. Update the status in this branch’s README at each handoff.
+>
+> **Done this session:** created `rami` from the team’s current `main`, preserving teammate changes. No implementation was changed and no paid experiments were run.
+>
+> **Remaining:** replace the synthetic-task demonstration with a substantive Jev experiment on real data. Scope confirmation is pending because the original proposal names intent classification with tool-using escalation, while the instructor suggests a coding-harness experiment. The previous pilot does not establish routing value or calibration.
+
 # CS329Z Final Project
 
 **Can System One routing reduce the cost of a coding agent?**
