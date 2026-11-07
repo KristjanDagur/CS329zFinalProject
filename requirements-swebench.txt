@@ -1,0 +1,5 @@
+# Official SWE-bench grader for verified_probe.py (.runtime/swebench-venv), separate from requirements.txt.
+# Python 3.12; Docker required. Note: 5.0.2 has no --cache_level; verified_probe.py deletes images itself.
+#   uv venv --python 3.12 .runtime/swebench-venv      (or: python3.12 -m venv .runtime/swebench-venv)
+#   uv pip install --python .runtime/swebench-venv/bin/python -r requirements-swebench.txt
+swebench==5.0.2
