@@ -540,6 +540,7 @@ def sweep_analyze():
             'latency_median_s': quantile(lat, .5), 'latency_p90_s': quantile(lat, .9),
             'cost_mean_usd': sum(cost) / max(1, len(cost)), 'cost_total_usd': sum(cost),
             'full_repository_issues': sum(r[f'shortlist_{n}'] < n for r in rows),
+            'calls_over_2s': sum(x > 2 for x in lat),
         }
     jev = {n: [r[f'jev_hit_{n}'] for r in rows] for n in sizes}
     search = [r['search_hit'] for r in rows]
@@ -592,6 +593,7 @@ def write_sweep_tex(evidence, sizes):
         macros[f'SwInList{k}'] = evidence['near_miss_rescue'][n]['in_shortlist']
         macros[f'SwLat{k}'] = f"{q[n]['latency_median_s']:.2f}"
         macros[f'SwCost{k}'] = f"{1000 * q[n]['cost_mean_usd']:.2f}"
+        macros[f'SwSlow{k}'] = q[n]['calls_over_2s']
         if n != sizes[0]:
             v = c[f'jev{n}_vs_jev12']
             macros[f'SwDiff{k}'] = pct(v['diff'])

@@ -14,7 +14,8 @@
    "latency_p90_s": 0.41719999999999996,
    "cost_mean_usd": 0.00021815808000000004,
    "cost_total_usd": 0.04908556800000001,
-   "full_repository_issues": 2
+   "full_repository_issues": 2,
+   "calls_over_2s": 4
   },
   "24": {
    "candidate_recall": 0.9511111111111111,
@@ -27,7 +28,8 @@
    "latency_p90_s": 0.4376,
    "cost_mean_usd": 0.0003901951200000002,
    "cost_total_usd": 0.08779390200000005,
-   "full_repository_issues": 9
+   "full_repository_issues": 9,
+   "calls_over_2s": 0
   },
   "48": {
    "candidate_recall": 0.9733333333333334,
@@ -40,7 +42,8 @@
    "latency_p90_s": 8.064400000000001,
    "cost_mean_usd": 0.0006934821599999999,
    "cost_total_usd": 0.156033486,
-   "full_repository_issues": 45
+   "full_repository_issues": 45,
+   "calls_over_2s": 44
   }
  },
  "comparisons": {
