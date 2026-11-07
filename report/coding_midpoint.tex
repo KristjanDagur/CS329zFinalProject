@@ -2,14 +2,14 @@
 \usepackage{iclr2027_conference,times}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{hyperref,booktabs,amsmath}
+\usepackage{hyperref,booktabs,amsmath,xcolor}
 \input{coding_results.tex}
-\title{Replacing Repository Exploration with Typed Jev Decisions\\CS329Z Midway Report Draft}
+\title{Replacing Repository Exploration with Typed Jev Decisions\\CS329Z Midway Report}
 \author{Kristjan Dagur Egilsson \And \'Omar Ingi Halld\'orsson \And Rami Ratl Mrad}
 \iclrfinalcopy
 \begin{document}
 \maketitle
-\lhead{CS329Z Midway Report --- Draft for team review, November 6, 2026}
+\lhead{CS329Z Midway Report, November 2026}
 
 \section{Research Questions}
 
@@ -70,9 +70,9 @@ Exploration condition & Repairs passed & Mean cost (USD) & Mean time (s) \\
 The search-only condition solved \SearchPassed/5 issues with mean cost \$\SearchCost{}. This control must be considered before attributing a benefit to Jev: bypassing an iterative explorer and providing retrieved context may explain much of the effect. The current experiment is insufficient to establish that Jev is preferable to deterministic retrieval. For example, task 1139's patches implement iteration/containment but fail the benchmark's direct \texttt{next(person\_name)} requirement. Task 1413's repairs do not handle every byte-valued data-element variant. Task 901 changes logging configuration but fails the benchmark's handler/debug compatibility expectations. These are observable repair failures, not evaluator infrastructure errors: the corresponding gold fixes pass. Imperfect localization can also be hidden by the strong parent's later recovery, so file-selection quality and end-to-end success should be analyzed separately in a broader study.
 
 \paragraph{Completed work and next steps.}
-We have completed dataset/environment controls, native baseline execution, the Jev integration, all three pilot conditions, immutable metering/trace artifacts, and four new checks covering malformed decisions, gold/test leakage in retrieval, fallback, and budget denial. Together with the existing checks, 15 offline tests pass. New work is isolated on branch \texttt{rami}, and the README records runnable commands, results, ownership, remaining work, and cost. This corrected pilot cost \$\TotalSpend{} OpenRouter; no Tinker credits were used. The earlier synthetic pilot is preserved as historical integration work and excluded from these results.
+We have completed dataset/environment controls, native baseline execution, the Jev integration, all three pilot conditions, immutable metering/trace artifacts, and four new checks covering malformed decisions, gold/test leakage in retrieval, fallback, and budget denial. Together with the existing checks, 15 offline tests pass. The project repository's README records runnable commands, results, remaining work, and cost, and the raw evidence archive lets the reported comparison be recomputed offline. This corrected pilot cost \$\TotalSpend{} OpenRouter; no Tinker credits were used. The earlier synthetic pilot is preserved as historical integration work and excluded from these results.
 
-The immediate submission tasks are independent teammate reproduction, review of this draft and AI disclosure, confirming repository grader access, and portal submission. Video preparation is deferred at the user's request. For the final study, we will reproduce with the official evaluator, broaden repositories and development tasks, examine retrieval/selection errors and parent recovery, and freeze independent evaluation settings before inspecting final outcomes. We will report paired uncertainty, costs, latency, and failure categories rather than extrapolating this sample. The original BANKING77/CLINC150 intent-decision and tool-using escalation proposal remains a deferred option. Training with the team's separate Tinker accounts is conditional on a demonstrated need and sufficient separately sourced data; it is not a prerequisite for this experiment.
+For the final study, we will reproduce with the official evaluator, broaden repositories and development tasks, examine retrieval/selection errors and parent recovery, and freeze independent evaluation settings before inspecting final outcomes. We will report paired uncertainty, costs, latency, and failure categories rather than extrapolating this sample. The original BANKING77/CLINC150 intent-decision and tool-using escalation proposal remains a deferred option. Training with the team's separate Tinker accounts is conditional on a demonstrated need and sufficient separately sourced data; it is not a prerequisite for this experiment.
 
 \paragraph{Safety considerations.}
 We use public software issues and repository fixtures, not clinical patient data or deployed medical systems. Generated patches are research artifacts and are not merged upstream or applied in production. Credentials are excluded from published traces. Future evaluation environments should use container/process isolation in addition to tool-level permissions, retain upstream license notices, and record actual resource cost.
@@ -82,14 +82,17 @@ We use public software issues and repository fixtures, not clinical patient data
 \bibitem[Jimenez et~al.(2024)]{swebench}
 Carlos E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and Karthik Narasimhan. 2024.
 SWE-bench: Can Language Models Resolve Real-World GitHub Issues? \emph{International Conference on Learning Representations}. \url{https://arxiv.org/abs/2310.06770}.
-\bibitem[SWE-bench contributors(2026)]{dataset}
-SWE-bench contributors. SWE-bench Lite dataset, development split. Revision \texttt{6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2}. Accessed November 6, 2026. \url{https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite}.
 \bibitem[OpenCode contributors(2026)]{opencode}
 OpenCode contributors. OpenCode 1.19.5, native task/explore implementation. Software source. Accessed November 6, 2026. \url{https://github.com/anomalyco/opencode/blob/v1.19.5/packages/opencode/src/tool/task.ts}.
 \bibitem[OpenRouter(2026)]{jev}
 OpenRouter. Jev documentation: using the TypeSafe decision model on OpenRouter. API documentation. Accessed November 6, 2026. \url{https://openrouter.ai/docs/guides/community/jev}.
+\bibitem[SWE-bench contributors(2026)]{dataset}
+SWE-bench contributors. SWE-bench Lite dataset, development split. Revision \texttt{6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2}. Accessed November 6, 2026. \url{https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite}.
 \end{thebibliography}
 
 \section*{AI-Use Disclosure Statement}
-OpenAI Codex assisted Rami with interpreting the instructor feedback, inspecting source/documentation, implementing the provider adapter and evaluator, executing the model experiments, and drafting this report. Jev 1.14 made file-relevance decisions within the evaluated agent; GPT-6.1-Sol produced the experiment's patches and native exploration responses. Benchmark issues, upstream fixes, and regression tests came from SWE-bench/pydicom, rather than being generated for this project. This is an unsubmitted draft requiring team review and confirmation against the course disclosure policy; it does not represent completed independent review by every author.
+\textbf{Rami.} OpenAI Codex assisted with interpreting the instructor feedback, inspecting source and documentation, implementing the provider adapter and evaluator, executing the model experiments, and drafting this report.
+\textbf{\'Omar.} Anthropic's Claude Code assisted with reviewing the repository and this report, editing the report for the required format and this disclosure, and preparing the reproduction instructions used for the independent teammate check.
+\textbf{Kristjan.} \textcolor{red}{[TO FILL IN: Kristjan's use of AI tools, or ``none''.]}
+\textbf{Within the evaluated system.} Jev 1.14 made file-relevance decisions within the evaluated agent, and GPT-6.1-Sol produced the experiment's patches and native exploration responses. Benchmark issues, upstream fixes, and regression tests came from SWE-bench and pydicom rather than being generated for this project. The authors reviewed the reported results against the preserved run artifacts and take full responsibility for this report's contents.
 \end{document}
