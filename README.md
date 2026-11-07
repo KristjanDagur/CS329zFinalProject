@@ -13,9 +13,10 @@ We replace one component of an existing coding agent, the repository-exploration
 | Verified pilot | 10 SWE-bench Verified tasks, official Docker grader | Native 9/10, Jev 9/10, search 8/10; Jev 48% cheaper than native; writer edited the gold file in all 30 runs. |
 | File-selection study | All 225 SWE-bench dev issues, 6 repositories | Jev picks a gold file in its top 3 for 85.3% of issues vs 70.2% for search (+15.1 points, 95% CI 9.8–20.4). |
 | Shortlist sweep | Same 225 issues, 24 and 48 candidates | 24 candidates: 90.2%, no latency tail; 48: 91.1% but 44/225 decisions take ~8 s. |
+| LLM selectors | Same 225 issues and Jev's exact 12 candidates and questions | gpt-6-luna 85.8% (ties Jev) and GPT-6.1-Sol 88.0% (+2.7 points over Jev, 95% CI 0.4–5.3), but 5–6× slower per decision (1.5–1.8 s vs 0.29 s); Sol costs 58× as much. |
 | Restricted writer (v3, option A) | 41 pydicom issues; writer may only read/edit the files chosen before launch, no grep/glob | Oracle 16/41 > Jev 14/41 > search 11/41; a wrong file choice is now nearly always fatal (0/5 Jev and 1/13 search runs passed after a miss); search runs 6.9 s slower than Jev. Directions as expected but not yet significant (Jev vs search 4 wins/1 loss, p = 0.38). |
 
-Summary: replacing the generative explorer saves about a third of the time and cost without changing success, and Jev selects files better than search. With free search tools the writer recovers from poor selections, so selection quality does not change outcomes; once the writer is restricted to the chosen files, it does (oracle > Jev > search), although 41 issues are not yet enough for significance.
+Summary: replacing the generative explorer saves about a third of the time and cost without changing success, and Jev selects files better than search, about as well as a cheap LLM and nearly as well as a strong one, at a fraction of their latency. With free search tools the writer recovers from poor selections, so selection quality does not change outcomes; once the writer is restricted to the chosen files, it does (oracle > Jev > search), although 41 issues are not yet enough for significance.
 
 ## Repository map
 
@@ -24,7 +25,7 @@ Summary: replacing the generative explorer saves about a third of the time and c
 | `coding_probe.py` | Runner for the development experiments: `prepare`, `check`, `snapshot`, `run`, `batch`, `pack`. `--protocol FILE` selects v1 (default), v2 or v3. |
 | `coding_protocol.json`, `coding_protocol_v2.json`, `coding_protocol_v3.json` | Frozen protocols (v1 pilot, v2 extended run with oracle and timing, v3 restricted writer). |
 | `verified_probe.py`, `verified_protocol.json`, `verified_sample.json` | SWE-bench Verified runner (official Docker harness), protocol and frozen 50-task sample. |
-| `localization_study.py`, `localization_protocol.json`, `localization_sweep_protocol.json` | Offline file-selection study and shortlist sweep. |
+| `localization_study.py`, `localization_protocol.json`, `localization_sweep_protocol.json`, `localization_llm_protocol.json` | Offline file-selection study, shortlist sweep and LLM-selector baselines. |
 | `analyze_agent_runs.py` | Analysis of the v2 extended run. |
 | `build_coding_report.py`, `build_verified_report.py` | Frozen analyses of the v1 and Verified pilots. |
 | `*_evidence.json`, `*.zip` | Computed results and portable run archives (receipts, patches, test logs, traces). |
@@ -68,16 +69,17 @@ Use Python 3.12 as shown: with older interpreters the rebuilt JSON can differ in
 | v3 restricted writer (41 issues) | `uv run --no-project --python 3.12 python analyze_agent_runs.py --protocol coding_protocol_v3.json` | `agent_runs_v3_evidence.json`, `report/agent_v3_results.tex` (restores from `runs_internal-explore-v3-restricted.zip`) |
 | File-selection study (225 issues) | `uv run --no-project --python 3.12 python localization_study.py analyze` | `localization_evidence.json`, `report/localization_results.tex` (restores from `localization_runs.zip`) |
 | Shortlist sweep (12/24/48) | `uv run --no-project --python 3.12 python localization_study.py sweep` | `localization_sweep_evidence.json`, `report/sweep_results.tex` |
+| LLM selectors (Sol, Luna) | `uv run --no-project --python 3.12 python localization_study.py llm` | `localization_llm_evidence.json`, `report/llm_results.tex` |
 | Verified pilot | `uv run --no-project --python 3.12 python build_verified_report.py` | `verified_evidence.json`, `report/verified_results.tex` (needs the local `runs/verified/` directory; not yet archived) |
 | Report PDF | `cd report && pdflatex coding_midpoint.tex && pdflatex coding_midpoint.tex` | `report/coding_midpoint.pdf` |
 
 ## Current status (November 6)
 
-- **Done:** v1 pilot (15 runs), v2 extended run (164 runs), v3 restricted run (123 runs), Verified pilot (30 runs), file-selection study and sweep (675 Jev decisions); combined midway report; 27 offline checks pass.
+- **Done:** v1 pilot (15 runs), v2 extended run (164 runs), v3 restricted run (123 runs), Verified pilot (30 runs), file-selection study, sweep and LLM-selector baselines (1,125 decisions); combined midway report; 27 offline checks pass.
 - **Done, option A (v3 restricted writer):** 123 runs, $10.80, no errors. The first smoke run stalled because OpenCode's shared session database (162 MB after v2) blocked session creation; an amendment recorded before any v3 outcome gives each run its own OpenCode state directory, and the stalled run is preserved as `runs/coding-v3/v3-793-jev-stalled-before-amendment`. About 60% of runs in each condition attempted a refused read or search, so the restriction was exercised.
 - **Next, Verified arm of option A:** Kristjan's `shared_subset_20` (his sampling rule at N = 20: the 10 pilot tasks plus astropy-13398, django-12965/13516/16100/16333, pylint-8898, pytest-6197, sphinx-10449, sympy-22456, xarray-3095), both arms rerun from the same commit; needs Docker on the machine that runs it.
 - **Team decisions open:** (1) whether to move the v2/v3 runner code into a separate `coding_probe_v2.py` so the Verified runner's fingerprint of `coding_probe.py` stays unchanged; (2) whether the course-issued OpenRouter key is the intended key for project runs (Ómar's runs used it).
-- **Spend:** v1 $1.23 and synthetic pilot $0.13 (Rami); Verified $2.21 (Kristjan); file selection $0.29, v2 $16.71, v3 $10.80 plus about $0.001 for the stalled smoke and debug runs (Ómar).
+- **Spend:** v1 $1.23 and synthetic pilot $0.13 (Rami); Verified $2.21 (Kristjan); file selection and sweep $0.29, LLM selectors $2.98, v2 $16.71, v3 $10.80 plus about $0.001 for the stalled smoke and debug runs (Ómar); project total about $34.
 
 ## Detailed handoff log
 
