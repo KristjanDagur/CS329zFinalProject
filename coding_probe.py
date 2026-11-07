@@ -323,7 +323,17 @@ class ExplorerMeter:
         self.settle(record, response)
         return response
 
+    def preselect(self, query):
+        """Restricted mode: choose the files before the agent starts, from the issue text, so the
+        writer's read/edit permissions can be limited to them. Returns the chosen paths."""
+        response = self.exploration({'messages': [{'role': 'user', 'content': query}]})
+        self.preselected = response
+        return json.loads((self.out / 'localization-0.json').read_text())['selected']
+
     def exploration(self, body):
+        if getattr(self, 'preselected', None) is not None:
+            # The agent's own explore call returns the files chosen before launch.
+            return dict(self.preselected, id='local-explore-' + secrets.token_hex(8), created=int(time.time()))
         query = '\n'.join(str(m.get('content', '')) for m in body['messages'] if m['role'] == 'user')
         started = time.monotonic()
         files = oracle_files(self.workspace, self.row, query) if self.condition == 'oracle' else candidates(self.workspace, query)
@@ -358,6 +368,18 @@ class ExplorerMeter:
                     'usage': {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}}
         except Exception as error:
             report.update(fallback=True, error_type=type(error).__name__, elapsed_s=time.monotonic()-started)
+            if PROTOCOL.get('restricted'):
+                # No generative explorer in restricted mode: fall back to the search order, flagged.
+                chosen = list(range(min(PROTOCOL['selected_files'], len(files))))
+                report['selected'] = [files[i]['path'] for i in chosen]
+                report['fallback_to'] = 'search'
+                dump(self.out / f'localization-{index}.json', report)
+                text = 'Relevant implementation files to inspect:\n' + '\n'.join(
+                    str(self.workspace / files[i]['path']) + '\n' + files[i]['snippet'] for i in chosen)
+                return {'id': 'local-explore-' + secrets.token_hex(8), 'object': 'chat.completion',
+                        'model': PROTOCOL['writer_model'], 'created': int(time.time()),
+                        'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': text}, 'finish_reason': 'stop'}],
+                        'usage': {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}}
             dump(self.out / f'localization-{index}.json', report)
             return self.native(body, 'explore_fallback')
 
@@ -454,6 +476,9 @@ def run(args):
         command(['git', 'add', '.'], workspace)
         command(['git', '-c', 'user.name=CS329Z experiment', '-c', 'user.email=experiment@example.invalid', 'commit', '-qm', 'upstream base snapshot'], workspace)
         meter = ExplorerMeter(key, ledger, out, workspace, args.condition, snapshot['models'], row)
+        preselect_started = time.monotonic()
+        selected = meter.preselect(row['problem_statement']) if PROTOCOL.get('restricted') else None
+        preselect_elapsed = time.monotonic() - preselect_started if selected is not None else 0.0
         base_url = meter.start()
         model = PROTOCOL['writer_model']
         providers = {name: {'npm': '@ai-sdk/openai-compatible', 'name': name,
@@ -467,6 +492,10 @@ def run(args):
                      'pydicom/tests/**': 'deny', str(workspace / 'pydicom/tests') + '/**': 'deny'},
             'bash': {'*': 'deny', 'python3 -m pytest *': 'allow', 'python3 -m compileall *': 'allow'},
             'external_directory': 'deny'}
+        if selected is not None:
+            allowed = [p for p in selected if 'tests' not in Path(p).parts]
+            only = lambda paths: {'*': 'deny', **{p: 'allow' for p in paths}, **{str(workspace / p): 'allow' for p in paths}}
+            permission.update(read=only(allowed), edit=only(allowed), glob='deny', grep='deny')
         config = {'$schema': 'https://opencode.ai/config.json', 'autoupdate': False,
             'model': 'writer/' + model, 'small_model': 'writer/' + model,
             'enabled_providers': ['writer', 'explorer'], 'provider': providers, 'permission': permission,
@@ -487,6 +516,9 @@ def run(args):
              'Before editing, use the task tool with subagent_type="explore" to locate the most relevant implementation files. '
              'Then read the relevant code and implement the fix. You may run existing tests with python3 -m pytest -q. '
              'Only change implementation files under pydicom/; do not change tests. Keep your final response brief.')
+        if selected is not None:
+            prompt += (' You can read and edit only the files the explorer returns; other files and the search tools '
+                       'are unavailable in this session.')
         dump(out / 'agent_prompt.json', {'prompt': prompt})
         binary = Path(args.opencode).resolve()
         version = command([str(binary), '--version'], workspace).stdout.strip()
@@ -541,6 +573,8 @@ def run(args):
             'started_at': json.loads((out / 'manifest.json').read_text())['started_at'],
             'finished_at': dt.datetime.now(dt.timezone.utc).isoformat(),
             'protocol': PROTOCOL['protocol'], 'lane': getattr(args, 'lane', None),
+            'restricted': bool(PROTOCOL.get('restricted')), 'selected_files': selected,
+            'preselect_elapsed_s': preselect_elapsed, 'total_elapsed_s': agent_elapsed + preselect_elapsed,
             'official_docker_score': False}
         dump(out / 'result.json', result)
         if not getattr(args, 'quiet', False):
@@ -557,7 +591,7 @@ def lane_plan(lane):
         order = list(PROTOCOL['conditions'])
         random.Random(f"329-{spec['instance_id']}").shuffle(order)
         number = spec['instance_id'].rsplit('-', 1)[1]
-        plan += [(spec['instance_id'], c, f"v2-{number}-{c}") for c in order]
+        plan += [(spec['instance_id'], c, f"{PROTOCOL.get('run_prefix', 'v2')}-{number}-{c}") for c in order]
     return plan
 
 

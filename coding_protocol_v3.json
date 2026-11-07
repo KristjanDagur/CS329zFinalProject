@@ -1,0 +1,268 @@
+{
+ "protocol": "internal-explore-v3-restricted",
+ "date": "2026-11-06",
+ "dataset": "princeton-nlp/SWE-bench",
+ "dataset_revision": "e48e2bd1e9fecd5bbd641e9414ac59da9f2e69f6",
+ "split": "dev",
+ "selection": "The 41 instances of internal-explore-v2 that passed its environment controls (after its pre-outcome amendment); the 10 dropped instances stay dropped.",
+ "tasks": [
+  {
+   "instance_id": "pydicom__pydicom-793",
+   "repo": "pydicom/pydicom",
+   "base_commit": "897fe092ae3ef282a21c894b47134233bdd5cdd0"
+  },
+  {
+   "instance_id": "pydicom__pydicom-800",
+   "repo": "pydicom/pydicom",
+   "base_commit": "2f3586b6f67383b1ec0c24c4772e65119c3f5261"
+  },
+  {
+   "instance_id": "pydicom__pydicom-809",
+   "repo": "pydicom/pydicom",
+   "base_commit": "356a51ab4bc54fd18950041ebc44dbfa1a425a10"
+  },
+  {
+   "instance_id": "pydicom__pydicom-811",
+   "repo": "pydicom/pydicom",
+   "base_commit": "7d0889e7143f5d4773fa74606efa816ed4e54c9f"
+  },
+  {
+   "instance_id": "pydicom__pydicom-816",
+   "repo": "pydicom/pydicom",
+   "base_commit": "3551f5b5a5f8d4de3ed92e5e479ac8c74a8c893a"
+  },
+  {
+   "instance_id": "pydicom__pydicom-839",
+   "repo": "pydicom/pydicom",
+   "base_commit": "da9e0df8da28a35596f830379341a379de8ac439"
+  },
+  {
+   "instance_id": "pydicom__pydicom-863",
+   "repo": "pydicom/pydicom",
+   "base_commit": "b4b44acbf1ddcaf03df16210aac46cb3a8acd6b9"
+  },
+  {
+   "instance_id": "pydicom__pydicom-897",
+   "repo": "pydicom/pydicom",
+   "base_commit": "b682e1dc71eda183786ad724da25f2fb30b5a621"
+  },
+  {
+   "instance_id": "pydicom__pydicom-900",
+   "repo": "pydicom/pydicom",
+   "base_commit": "3746878d8edf1cbda6fbcf35eec69f9ba79301ca"
+  },
+  {
+   "instance_id": "pydicom__pydicom-903",
+   "repo": "pydicom/pydicom",
+   "base_commit": "88ca0bff105c75a632d7351acb6895b70230fa12"
+  },
+  {
+   "instance_id": "pydicom__pydicom-916",
+   "repo": "pydicom/pydicom",
+   "base_commit": "a94cc9996d2c716298c846f2dbba84f9f901e0a7"
+  },
+  {
+   "instance_id": "pydicom__pydicom-933",
+   "repo": "pydicom/pydicom",
+   "base_commit": "38436b6824c079564b8760ea6acfa4c0fd3ee9c3"
+  },
+  {
+   "instance_id": "pydicom__pydicom-938",
+   "repo": "pydicom/pydicom",
+   "base_commit": "6d8ef0bfcec983e5f8bd8a2e359ff318fe9fcf65"
+  },
+  {
+   "instance_id": "pydicom__pydicom-944",
+   "repo": "pydicom/pydicom",
+   "base_commit": "a0300a69a1da1626caef0d9738cff29b17ce79cc"
+  },
+  {
+   "instance_id": "pydicom__pydicom-958",
+   "repo": "pydicom/pydicom",
+   "base_commit": "40652fc0a18fd9f1204cb3d4b9829e3a8be5cbe0"
+  },
+  {
+   "instance_id": "pydicom__pydicom-965",
+   "repo": "pydicom/pydicom",
+   "base_commit": "ee775c8a137cd8e0b69b46dc24c23648c31fe34c"
+  },
+  {
+   "instance_id": "pydicom__pydicom-996",
+   "repo": "pydicom/pydicom",
+   "base_commit": "d21e97c9a35b5c225dc3340faaa7c293e7c8ee9b"
+  },
+  {
+   "instance_id": "pydicom__pydicom-997",
+   "repo": "pydicom/pydicom",
+   "base_commit": "41e984c8df5533805ae13cbcf419e6c5f63da30c"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1000",
+   "repo": "pydicom/pydicom",
+   "base_commit": "14acdd4d767ee55e8e84daeb6f80f81ef4748fee"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1017",
+   "repo": "pydicom/pydicom",
+   "base_commit": "7241f5d9db0de589b230bb84212fbb643a7c86c3"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1031",
+   "repo": "pydicom/pydicom",
+   "base_commit": "64f5b8daaa798836579c56912244b7732ab073be"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1033",
+   "repo": "pydicom/pydicom",
+   "base_commit": "701c1062bf66de2b29df68fa5540be6009943885"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1048",
+   "repo": "pydicom/pydicom",
+   "base_commit": "00c248441ffb8b7d46c6d855b723e696a8f5aada"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1050",
+   "repo": "pydicom/pydicom",
+   "base_commit": "00c248441ffb8b7d46c6d855b723e696a8f5aada"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1076",
+   "repo": "pydicom/pydicom",
+   "base_commit": "caf0db105ddf389ff5025937fd5f3aa1e61e85e7"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1090",
+   "repo": "pydicom/pydicom",
+   "base_commit": "5098c9147fadcb3e5918487036867931435adeb8"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1192",
+   "repo": "pydicom/pydicom",
+   "base_commit": "1f099ae0f75f0e2ed402a21702e584aac54a30ef"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1194",
+   "repo": "pydicom/pydicom",
+   "base_commit": "5e70c1dfe09820023fec519dac4c51bebcb7f60d"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1228",
+   "repo": "pydicom/pydicom",
+   "base_commit": "8112bb69bfc0423c3a08cb89e7960defbe7237bf"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1241",
+   "repo": "pydicom/pydicom",
+   "base_commit": "9d69811e539774f296c2f289839147e741251716"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1255",
+   "repo": "pydicom/pydicom",
+   "base_commit": "59be4993000cc8af2cd9a4176f15398b6a7875d7"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1334",
+   "repo": "pydicom/pydicom",
+   "base_commit": "24a86b316441ac3a46e569779627e24482786a8a"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1365",
+   "repo": "pydicom/pydicom",
+   "base_commit": "bd82f01faf4212f6e43f55a1cc6da17956122d8f"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1375",
+   "repo": "pydicom/pydicom",
+   "base_commit": "c14bf96040e4cc930db890638b9f190d4ede0a21"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1416",
+   "repo": "pydicom/pydicom",
+   "base_commit": "699c9f0a8e190d463dd828822106250523d38154"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1539",
+   "repo": "pydicom/pydicom",
+   "base_commit": "a125a02132c2db5ff5cad445e4722802dd5a8d55"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1555",
+   "repo": "pydicom/pydicom",
+   "base_commit": "9db89e1d8f5e82dc617f9c8cbf303fe23a0632b9"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1562",
+   "repo": "pydicom/pydicom",
+   "base_commit": "e1a035a88fe36d466579b2f3940bde5b8b1bc84d"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1608",
+   "repo": "pydicom/pydicom",
+   "base_commit": "37dd49e2754a10db22e7cde2ac18aa8afc1f3af6"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1633",
+   "repo": "pydicom/pydicom",
+   "base_commit": "98ac88706e7ab17cd279c94949ac6af4e87f341d"
+  },
+  {
+   "instance_id": "pydicom__pydicom-1720",
+   "repo": "pydicom/pydicom",
+   "base_commit": "a8be738418dee0a2b93c241fbd5e0bc82f4b8680"
+  }
+ ],
+ "harness": "OpenCode",
+ "harness_version": "1.19.5",
+ "writer_model": "openai/gpt-6.1-sol",
+ "explorer_baseline_model": "openai/gpt-6.1-sol",
+ "jev_model": "typesafe/jev-1.14",
+ "conditions": [
+  "jev",
+  "search",
+  "oracle"
+ ],
+ "intervention": "Replace only the native explore subagent model response with Jev ranking deterministic file candidates. Writer, tools, issue, and budget stay fixed.",
+ "candidate_files": 12,
+ "selected_files": 3,
+ "snippet_chars_per_file": 1800,
+ "confidence_policy": "Select three highest finite Noul relevance scores. This is a ranking experiment; no calibrated acceptance claim. On decision API or validation error, use the native explorer and charge both costs.",
+ "main_steps": 16,
+ "explore_steps": 6,
+ "max_requests": 32,
+ "max_output_tokens": 4096,
+ "max_input_bytes": 196608,
+ "timeout_s": 480,
+ "task_budget_usd": 0.75,
+ "experiment_budget_usd": 16,
+ "evaluation": "Apply official test_patch only in evaluator copy, run published FAIL_TO_PASS and PASS_TO_PASS nodes under local pytest. Validate broken-base fails and gold patch passes. Not official Docker SWE-bench.",
+ "dependencies": [
+  "pytest==7.4.4",
+  "setuptools==70.3.0",
+  "numpy==1.26.4",
+  "pillow==11.3.0"
+ ],
+ "future_direction": "Original BANKING77/CLINC150 intent decisions with tool-using escalation, deferred until the coding-harness experiment is established.",
+ "environment_notes": "pytest 7 retains historical nose-style setup; setuptools supplies pkg_resources. Truncated upstream parameter IDs expand to the whole parent test function, adding regression cases rather than dropping them.",
+ "owner": "Omar (branch omar)",
+ "extends": "internal-explore-v2 (coding_protocol_v2.json): same writer, Jev model, retrieval (12 candidates, 3 selected), step/token/time limits, evaluator, environment controls and task pool. Changes: the writer is restricted to the files the explorer returns, the files are chosen from the issue text before the agent starts, conditions are jev/search/oracle, and a lower per-run budget.",
+ "data_url": "https://datasets-server.huggingface.co/rows?dataset=princeton-nlp%2FSWE-bench&config=default&split=dev&offset={offset}&length=100",
+ "oracle": "Upper-bound reference, not a deployable method: the explorer returns the implementation files under pydicom/ that the instance's gold patch modifies and that exist at the base commit, each with the same query-matched 16-line snippet as other conditions. Only file paths are revealed; the gold patch content, test patch and expected outcomes stay outside the agent workspace.",
+ "lanes": 4,
+ "lane_assignment": "As v2: round-robin tasks, all conditions of a task consecutively in a per-task order shuffled with seed 329; each lane's ledger is capped at experiment_budget_usd / lanes.",
+ "invalid_environments": "check() records every task whose broken base does not fail or whose gold patch does not pass; such tasks are dropped from the primary analysis and reported, never run.",
+ "timing": "As v2, plus preselect_elapsed_s (file choice before launch) and total_elapsed_s = agent_elapsed_s + preselect_elapsed_s, the primary time outcome.",
+ "cache_dir": ".runtime/coding-v2",
+ "runs_dir": "runs/coding-v3",
+ "base_failure_states": [
+  "failure",
+  "error"
+ ],
+ "question": "Does the quality of the explorer's file choice decide repair success once the writer cannot recover by searching itself?",
+ "restricted": true,
+ "restriction": "Before OpenCode starts, the runner chooses the files from the issue text (jev: retrieval plus one Jev decision; search: top 3 retrieval candidates; oracle: gold implementation files that exist at the base commit). The writer's read and edit permissions allow only those files; grep and glob are denied; bash still allows python3 -m pytest and compileall. The writer's explore call returns the same chosen files with their snippets. The prompt adds one sentence stating the restriction, identical across conditions.",
+ "query_difference": "v1 and v2 chose files from the parent's exploration request; v3 chooses from the issue text, as in localization-offline-v1.",
+ "jev_failure": "One decision attempt; on an API or validation error the search order is used and the run is flagged (fallback_to = search). No generative explorer is called.",
+ "native_condition": "Not run: the native explorer is itself a model whose files are only known mid-run, so the writer cannot be locked to them before launch.",
+ "run_prefix": "v3"
+}
