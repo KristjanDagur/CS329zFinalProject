@@ -1,0 +1,41 @@
+{
+  "protocol": "localization-offline-v1",
+  "date": "2026-11-06",
+  "owner": "Omar (branch omar)",
+  "purpose": "Measure the one decision Jev makes inside the agent, choosing 3 of 12 retrieved implementation files, on many more real bugs than the 5-task end-to-end pilot, without running the coding agent.",
+  "dataset": "princeton-nlp/SWE-bench",
+  "split": "dev",
+  "task_selection": "Every instance in the SWE-bench dev split (225 instances, 6 repositories). Instances whose gold patch changes no implementation .py file under the package root are excluded and counted. The SWE-bench test split and SWE-bench Verified are not used; they stay reserved for a later held-out evaluation.",
+  "package_roots": {
+    "pydicom/pydicom": ["pydicom"],
+    "sqlfluff/sqlfluff": ["src/sqlfluff", "sqlfluff"],
+    "marshmallow-code/marshmallow": ["src/marshmallow", "marshmallow"],
+    "pvlib/pvlib-python": ["pvlib"],
+    "pylint-dev/astroid": ["astroid"],
+    "pyvista/pyvista": ["pyvista"]
+  },
+  "package_root_rule": "Use the first listed root that exists at the instance's base commit.",
+  "excluded_path_parts": ["tests", "test", "__pycache__"],
+  "query": "The instance's problem_statement (issue text). Difference from the end-to-end pilot: there, Jev sees the parent agent's exploration request instead.",
+  "retrieval": "Same deterministic BM25-style ranking, tokenizer, 16-line snippet window and 1,800-character snippet cap as coding_probe.py candidates(), generalized from the pydicom/ root to each repository's package root. Verified to reproduce the archived pilot candidates exactly before any new Jev call.",
+  "candidate_files": 12,
+  "selected_files": 3,
+  "conditions": {
+    "search": "Top 3 retrieval candidates, no model call.",
+    "jev": "typesafe/jev-1.14, one decision request per instance with the pilot's exact question wording; top 3 Noul scores, ties broken by retrieval order.",
+    "random": "Analytic expectation of choosing 3 of the 12 candidates uniformly at random."
+  },
+  "gold_files": "Implementation .py files under the package root that the instance's gold patch modifies (paths from 'diff --git' headers, excluding test directories). Gold patches are used only by the scorer, never in retrieval or the Jev request.",
+  "metrics": {
+    "candidate_recall": "Share of instances with at least one gold file among the 12 candidates (the ceiling for any selector).",
+    "hit_at_3": "Primary. Share of instances with at least one gold file among the 3 selected files.",
+    "all_at_3": "Share of instances with every gold file among the 3 selected files.",
+    "conditional_hit_at_3": "hit_at_3 restricted to instances whose candidates contain a gold file, so that selection quality is separated from retrieval failures."
+  },
+  "analysis": "Paired Jev-vs-search comparison on the same instances: wins/losses/ties, exact two-sided sign test on discordant pairs, and a 95% paired bootstrap interval (10,000 resamples of instances, seed 329) for the hit_at_3 difference. Reported overall and per repository. No setting is changed after outcomes are seen.",
+  "failure_handling": "A Jev API or validation error is recorded and the instance is reported as failed for Jev (not silently replaced by search). Errors are retried at most once.",
+  "model_limits": {"max_input_bytes": 196608, "timeout_s": 60, "concurrency": 6},
+  "budget_usd": 1.0,
+  "api_key_source": "OPENROUTER_API_KEY from the environment; the key is never written to disk by this study.",
+  "in_situ_analysis": "Separately, for the 15 archived pilot runs: gold-file hits among the files each explorer reported to the parent (parsed from the parent's task tool result), and among the files each final patch edited."
+}
