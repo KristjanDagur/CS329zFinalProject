@@ -172,7 +172,7 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 
 ### November 6 handoff — end-to-end agent runs on 41 more pydicom issues (Omar, `omar`)
 
-- **Protocol `internal-explore-v2`** (`coding_protocol_v2.json`, committed d3c0287 before any run; one amendment before outcomes, recorded in the file): 51 further pydicom dev issues; 41 pass the environment controls (10 need older numpy/Python and are dropped and listed). Four conditions per issue: native, Jev (12 candidates, as v1), search, and an **oracle** given the gold implementation files (upper bound, paths only). Writer, limits and evaluator unchanged from v1. 164 runs, all complete.
+- **Protocol `internal-explore-v2`** (`coding_protocol_v2.json`, committed 512e9e4 before any run; one amendment before outcomes, recorded in the file): 51 further pydicom dev issues; 41 pass the environment controls (10 need older numpy/Python and are dropped and listed). Four conditions per issue: native, Jev (12 candidates, as v1), search, and an **oracle** given the gold implementation files (upper bound, paths only). Writer, limits and evaluator unchanged from v1. 164 runs, all complete.
 - **Results (41 issues, paired):**
 
 | Condition | Repairs | Mean cost | Mean agent time | Exploration time | Explorer named a gold file |
@@ -203,7 +203,7 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 
 ### November 6 handoff — offline file-selection study (Omar, `omar`)
 
-- **Question:** does Jev choose the right files more often than search alone? Measured directly, without the coding agent, on all 225 SWE-bench dev issues (six repositories). Protocol `localization_protocol.json` was committed (4db00ca) before any Jev request.
+- **Question:** does Jev choose the right files more often than search alone? Measured directly, without the coding agent, on all 225 SWE-bench dev issues (six repositories). Protocol `localization_protocol.json` was committed (0562636) before any Jev request.
 - **Result:** Jev hit@3 **85.3%** vs search **70.2%** (+15.1 points, 95% paired bootstrap 9.8 to 20.4; 38 wins vs 4 losses, sign test p < 0.001); 96% vs 79% when retrieval found a gold file. Retrieval recall@12 is 88.9%. In the 15 pilot runs every final patch edited the gold file, even when the explorer's report missed it, so end-to-end success hides localization quality.
 - **Verified:** the generalized retrieval reproduces all 10 archived pilot candidate lists exactly (`python3 localization_study.py verify`). Analysis reproduces offline from `localization_runs.zip` with `python3 localization_study.py analyze`.
 - **Spend:** $0.049086 for 225 Jev decisions, on the HW1 course OpenRouter key at the user's choice (team should confirm this is allowed); no failures or retries.
