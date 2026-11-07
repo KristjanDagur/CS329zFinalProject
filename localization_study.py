@@ -37,6 +37,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 PROTOCOL = json.loads((ROOT / 'localization_protocol.json').read_text())
 PILOT = json.loads((ROOT / 'coding_protocol.json').read_text())
+SWEEP = json.loads((ROOT / 'localization_sweep_protocol.json').read_text())
 WORK = ROOT / '.runtime' / 'localization'
 TASKS = WORK / 'tasks.json'
 RUNS = WORK / 'runs'
@@ -136,8 +137,9 @@ def source_files(repo, commit, root):
     return files
 
 
-def candidates(files, query):
+def candidates(files, query, size=None):
     """coding_probe.candidates() over an explicit file set; same scores, snippets and order."""
+    size = size or PROTOCOL['candidate_files']
     docs = []
     for rel in sorted(files):
         content = files[rel]
@@ -152,7 +154,7 @@ def candidates(files, query):
                     * counts[t] * 2.5 / (counts[t] + 1.5 * (.25 + .75 * size / max(mean, 1)))
                     for t in query_terms if counts[t])
         scored.append((rel, content, score))
-    top = sorted(scored, key=lambda r: (-r[2], r[0]))[:PROTOCOL['candidate_files']]
+    top = sorted(scored, key=lambda r: (-r[2], r[0]))[:size]
     out = []
     for rel, content, score in top:  # snippets only for the kept files; they do not affect ranking
         lines = content.splitlines()
@@ -170,11 +172,28 @@ def gold_files(patch, root):
                    and not set(p.split('/')) & set(PROTOCOL['excluded_path_parts'])})
 
 
-def task_state(task):
+def task_state(task, size=None):
     repo = repo_dir(task['repo'])
     root = package_root(repo, task['base_commit'], task['repo'])
     files = source_files(repo, task['base_commit'], root)
-    return root, candidates(files, task['problem_statement'])
+    return root, candidates(files, task['problem_statement'], size)
+
+
+def runs_dir(size):
+    """The 12-candidate study keeps its original folder; sweep sizes get their own."""
+    return RUNS if size == PROTOCOL['candidate_files'] else WORK / f'runs-{size}'
+
+
+def spend_file(size):
+    return SPEND if size == PROTOCOL['candidate_files'] else WORK / f'spend-{size}.jsonl'
+
+
+def limits(size):
+    return (PROTOCOL if size == PROTOCOL['candidate_files'] else SWEEP)['model_limits']
+
+
+def budget(size):
+    return (PROTOCOL if size == PROTOCOL['candidate_files'] else SWEEP)['budget_usd']
 
 
 # ------------------------------------------------------------------ verify ---
@@ -213,24 +232,25 @@ def verify():
 _spend_lock = threading.Lock()
 
 
-def spent():
-    if not SPEND.exists():
+def spent(size=None):
+    path = spend_file(size or PROTOCOL['candidate_files'])
+    if not path.exists():
         return 0.0
-    return sum(json.loads(line)['cost_usd'] for line in SPEND.read_text().splitlines() if line.strip())
+    return sum(json.loads(line)['cost_usd'] for line in path.read_text().splitlines() if line.strip())
 
 
-def jev_decision(key, query, files):
+def jev_decision(key, query, files, size=None):
     payload = {'model': PILOT['jev_model'],
                'state': {'search_request': query, 'candidate_files': files},
                'questions': {f'file_{i}': {'type': 'noul', 'instructions': QUESTION.format(i=i, path=f['path'])}
                              for i, f in enumerate(files)}}
     body = json.dumps(payload).encode()
-    if len(body) > PROTOCOL['model_limits']['max_input_bytes']:
+    if len(body) > limits(size or PROTOCOL['candidate_files'])['max_input_bytes']:
         raise ValueError('input byte limit exceeded')
     request = urllib.request.Request(API + '/alpha/decisions', data=body,
                                      headers={'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
     try:
-        with urllib.request.urlopen(request, timeout=PROTOCOL['model_limits']['timeout_s']) as response:
+        with urllib.request.urlopen(request, timeout=limits(size or PROTOCOL['candidate_files'])['timeout_s']) as response:
             return json.load(response)
     except urllib.error.HTTPError as error:
         raise RuntimeError(f'OpenRouter HTTP {error.code}') from None  # never echo headers or the key
@@ -246,34 +266,37 @@ def choose(response, count):  # identical selection rule to coding_probe.choose(
     return scores, sorted(range(count), key=lambda i: (-scores[i], i))[:PROTOCOL['selected_files']]
 
 
-def run_one(task, key):
-    out = RUNS / f"{task['instance_id']}.json"
+def run_one(task, key, size=None):
+    size = size or PROTOCOL['candidate_files']
+    out = runs_dir(size) / f"{task['instance_id']}.json"
     if out.exists() and json.loads(out.read_text()).get('state') == 'complete':
         return 'cached'
-    root, files = task_state(task)
-    record = {'instance_id': task['instance_id'], 'repo': task['repo'], 'package_root': root,
-              'candidates': files, 'state': 'started', 'attempts': []}
+    started_retrieval = time.time()
+    root, files = task_state(task, size)
+    record = {'instance_id': task['instance_id'], 'repo': task['repo'], 'package_root': root, 'shortlist_size': size,
+              'retrieval_s': round(time.time() - started_retrieval, 3), 'candidates': files, 'state': 'started',
+              'attempts': []}
     for attempt in range(2):
         with _spend_lock:
-            if spent() + 0.005 > PROTOCOL['budget_usd']:
+            if spent(size) + 0.005 > budget(size):
                 record['state'] = 'budget_stop'
                 break
         started = time.time()
         try:
-            response = jev_decision(key, task['problem_statement'], files)
+            response = jev_decision(key, task['problem_statement'], files, size)
+            elapsed = round(time.time() - started, 3)
             cost = float(response.get('usage', {}).get('cost') or 0.0)
-            with _spend_lock, SPEND.open('a') as stream:
+            with _spend_lock, spend_file(size).open('a') as stream:
                 stream.write(json.dumps({'instance_id': task['instance_id'], 'cost_usd': cost,
-                                         'generation_id': response.get('id')}) + '\n')
+                                         'generation_id': response.get('id'), 'elapsed_s': elapsed}) + '\n')
             scores, chosen = choose(response, len(files))
             record.update(state='complete', response=response, scores=scores,
-                          selected=[files[i]['path'] for i in chosen], cost_usd=cost,
-                          elapsed_s=round(time.time() - started, 3))
+                          selected=[files[i]['path'] for i in chosen], cost_usd=cost, elapsed_s=elapsed)
             break
         except Exception as error:  # recorded, never silently replaced by search
             record['attempts'].append({'error': f'{type(error).__name__}: {error}', 'elapsed_s': round(time.time() - started, 3)})
             record['state'] = 'failed'
-    RUNS.mkdir(parents=True, exist_ok=True)
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(record, indent=1))
     return record['state']
 
@@ -282,12 +305,16 @@ def run(args):
     key = os.environ.get('OPENROUTER_API_KEY', '').strip()
     if not key:
         raise SystemExit('Set OPENROUTER_API_KEY in the environment.')
+    size = args.candidates or PROTOCOL['candidate_files']
+    if size != PROTOCOL['candidate_files'] and size not in SWEEP['candidate_sizes']:
+        raise SystemExit(f'Shortlist size {size} is not in the frozen sweep protocol.')
     tasks = load_tasks()['tasks'][: args.limit or None]
     states = collections.Counter()
-    with concurrent.futures.ThreadPoolExecutor(PROTOCOL['model_limits']['concurrency']) as pool:
-        for state in pool.map(lambda t: run_one(t, key), tasks):
+    started = time.time()
+    with concurrent.futures.ThreadPoolExecutor(limits(size)['concurrency']) as pool:
+        for state in pool.map(lambda t: run_one(t, key, size), tasks):
             states[state] += 1
-    print(dict(states), f'spent ${spent():.6f} of ${PROTOCOL["budget_usd"]}')
+    print(dict(states), f'shortlist {size}: spent ${spent(size):.6f} of ${budget(size)} in {time.time() - started:.0f} s')
 
 
 # ----------------------------------------------------------------- analyze ---
@@ -454,7 +481,10 @@ def write_tex(evidence):
 def archive():
     """Write localization_runs.zip: task metadata, every decision record and the spend log."""
     with zipfile.ZipFile(ROOT / 'localization_runs.zip', 'w', zipfile.ZIP_DEFLATED) as z:
-        for path in [TASKS, SPEND, *sorted(RUNS.glob('*.json'))]:
+        sweep = [p for size in SWEEP['candidate_sizes'] for p in [spend_file(size), *sorted(runs_dir(size).glob('*.json'))]]
+        for path in [TASKS, SPEND, *sorted(RUNS.glob('*.json')), *sweep]:
+            if not path.exists():
+                continue
             z.write(path, path.relative_to(WORK).as_posix())
     print('wrote localization_runs.zip')
 
@@ -466,6 +496,7 @@ def main():
     sub.add_parser('verify')
     run_parser = sub.add_parser('run')
     run_parser.add_argument('--limit', type=int, default=0, help='only the first N tasks (for a smoke test)')
+    run_parser.add_argument('--candidates', type=int, default=0, help='shortlist size (12, or a frozen sweep size)')
     sub.add_parser('analyze')
     sub.add_parser('archive')
     args = parser.parse_args()

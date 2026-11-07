@@ -1,0 +1,17 @@
+{
+  "protocol": "localization-offline-v2-shortlist",
+  "date": "2026-11-06",
+  "owner": "Omar (branch omar)",
+  "extends": "localization-offline-v1 (localization_protocol.json); every setting is unchanged except the shortlist size.",
+  "question": "Does a longer shortlist let Jev recover gold files that keyword search ranks just below 12, or do the extra candidates make its choice worse? And what does a longer shortlist cost in time and money per decision?",
+  "candidate_sizes": [24, 48],
+  "baseline": "The 12-candidate results of localization-offline-v1 are reused as-is; they are not rerun.",
+  "selected_files": 3,
+  "search_condition": "Top 3 retrieval candidates. Identical for every shortlist size, because the ranking is the same.",
+  "repositories_with_fewer_files": "A repository with fewer implementation files than the shortlist size uses all of its files; reported as such.",
+  "metrics": "As in v1 (candidate recall, hit@3, all@3, conditional hit@3), plus per-decision latency (seconds from request to response) and cost, reported as median and 90th percentile per shortlist size.",
+  "analysis": "Paired comparisons on the same 225 issues: Jev@24 and Jev@48 against Jev@12 and against search, with wins/losses, exact sign tests and 95% paired bootstrap intervals (10,000 resamples, seed 329). Separately, the 23 issues where search ranked a present gold file below 12 (14 at ranks 13-24, 5 at 25-48, 4 below 48): how many each shortlist size recovers. The 2 issues whose gold file is created by the fix cannot be recovered by any selector and are reported separately.",
+  "failure_handling": "As in v1: an API or validation error is recorded and counted as a miss for Jev; at most one retry.",
+  "model_limits": {"max_input_bytes": 196608, "timeout_s": 90, "concurrency": 6},
+  "budget_usd": 1.0
+}
