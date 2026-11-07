@@ -304,5 +304,18 @@
  "invalid_environments": "check() records every task whose broken base does not fail or whose gold patch does not pass; such tasks are dropped from the primary analysis and reported, never run.",
  "timing": "Primary outcome alongside repair success and cost: agent wall time per run (OpenCode start to exit), time in exploration (retrieval plus Jev decision, or the native explorer's model calls), time in writer model calls, and evaluation time, recorded in result.json.",
  "cache_dir": ".runtime/coding-v2",
- "runs_dir": "runs/coding-v2"
+ "runs_dir": "runs/coding-v2",
+ "base_failure_states": [
+  "failure",
+  "error"
+ ],
+ "amendments": [
+  {
+   "date": "2026-11-06",
+   "before_outcomes": true,
+   "change": "A broken base counts as failing when a selected test fails or errors (v1 accepted only assertion failures).",
+   "reason": "In 5 instances (1017, 1048, 1241, 1720, 997) the official test patch imports or calls an API the fix adds, so the broken base errors at collection, while the gold patch passes every selected test in the same environment. The error is caused by the bug, not by the environment. 10 other instances fail because the gold patch itself does not pass here (removed numpy.float, Python 3.12 behaviour, uncollectable test files); they remain dropped and reported.",
+   "effect": "36 -> 41 valid instances; no agent run had started."
+  }
+ ]
 }

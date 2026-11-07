@@ -182,8 +182,13 @@ def check():
     for name, row in sorted(tasks().items()):
         base, gold = evaluate(row), evaluate(row, gold=True)
         results[name] = {'broken_base': base, 'gold_patch': gold,
-                         'valid': not base['passed'] and base.get('collected', 0) >= base.get('expected_nodes', 1)
-                         and any(c['state'] == 'failure' for c in base.get('states', [])) and gold['passed']}
+                         'valid': not base['passed'] and gold['passed'] and (
+                             # v1: the broken base fully collects and fails an assertion.
+                             (base.get('collected', 0) >= base.get('expected_nodes', 1)
+                              and any(c['state'] == 'failure' for c in base.get('states', [])))
+                             # v2 amendment: or a selected test errors, e.g. it imports an API the fix adds.
+                             or ('error' in PROTOCOL.get('base_failure_states', ['failure'])
+                                 and any(c['state'] == 'error' for c in base.get('states', []))))}
         dump(CACHE / 'environment_checks.json', results)
         print(name, 'base:', base['passed'], 'gold:', gold['passed'],
               'collected:', gold.get('collected'), flush=True)
