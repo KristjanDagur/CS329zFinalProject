@@ -649,14 +649,20 @@ def summarize():
 
 
 def pack():
-    """Portable receipts, patches, test logs and traces; never repository working copies."""
-    with zipfile.ZipFile(ROOT / 'coding_runs.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+    """Portable receipts, patches, test logs and traces; never repository working copies.
+
+    The v1 pilot keeps its archive name (coding_runs.zip). Other protocols write
+    runs_<protocol>.zip, so packing them can never overwrite the frozen v1 evidence."""
+    name = 'coding_runs.zip' if PROTOCOL_FILE == 'coding_protocol.json' else f"runs_{PROTOCOL['protocol']}.zip"
+    prefix = PROTOCOL.get('runs_dir', 'runs/coding') + '/'
+    with zipfile.ZipFile(ROOT / name, 'w', zipfile.ZIP_DEFLATED) as archive:
         for p in sorted(RUNS.rglob('*')):
-            if p.is_file() and 'workspace' not in p.relative_to(RUNS).parts and p.name != '.lock':
-                archive.write(p, 'runs/coding/' + p.relative_to(RUNS).as_posix())
-        for name in ('data_receipt.json', 'model_snapshot.json', 'environment_checks.json'):
-            archive.write(CACHE / name, 'environment/' + name)
-    print('Packaged', ROOT / 'coding_runs.zip')
+            parts = p.relative_to(RUNS).parts
+            if p.is_file() and 'workspace' not in parts and 'opencode-state' not in parts and not p.name.startswith('.lock'):
+                archive.write(p, prefix + p.relative_to(RUNS).as_posix())
+        for item in ('data_receipt.json', 'model_snapshot.json', 'environment_checks.json'):
+            archive.write(CACHE / item, 'environment/' + item)
+    print('Packaged', ROOT / name)
 
 
 if __name__ == '__main__':
