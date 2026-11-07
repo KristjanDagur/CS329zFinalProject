@@ -504,8 +504,11 @@ def run(args):
                                   'permission': {'*': 'deny', 'read': 'allow', 'glob': 'allow', 'grep': 'allow'}}}}
         env = clean_env()
         env['OPENROUTER_API_KEY'] = 'local-proxy-only'
+        # isolated_state: a fresh OpenCode config/data/cache/state directory per run, so a damaged or
+        # locked shared session database cannot stall a run and runs cannot see each other's sessions.
+        xdg_root = (out / 'opencode-state') if PROTOCOL.get('isolated_state') else (ROOT / '.runtime' / 'coding-xdg')
         for suffix in ('config', 'data', 'cache', 'state'):
-            path = ROOT / '.runtime' / 'coding-xdg' / suffix
+            path = xdg_root / suffix
             path.mkdir(parents=True, exist_ok=True)
             env['XDG_' + suffix.upper() + '_HOME'] = str(path)
         env.update(OPENCODE_CONFIG_CONTENT=json.dumps(config), OPENCODE_DISABLE_AUTOUPDATE='true',

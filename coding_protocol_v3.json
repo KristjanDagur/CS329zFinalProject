@@ -264,5 +264,15 @@
  "query_difference": "v1 and v2 chose files from the parent's exploration request; v3 chooses from the issue text, as in localization-offline-v1.",
  "jev_failure": "One decision attempt; on an API or validation error the search order is used and the run is flagged (fallback_to = search). No generative explorer is called.",
  "native_condition": "Not run: the native explorer is itself a model whose files are only known mid-run, so the writer cannot be locked to them before launch.",
- "run_prefix": "v3"
+ "run_prefix": "v3",
+ "isolated_state": true,
+ "amendments": [
+  {
+   "date": "2026-11-06",
+   "before_outcomes": true,
+   "change": "Each run uses its own fresh OpenCode state directory (runs/coding-v3/<run>/opencode-state) instead of the shared .runtime/coding-xdg.",
+   "reason": "The first smoke run (v3-793-jev) and two debug runs stalled after OpenCode's init without creating a session, also with v2's exact permissions; with the shared state directory moved aside, the same run completed normally (11 requests, 30 s). The shared session database, which had accumulated all v2 runs, was blocking session creation. Isolation also prevents runs from affecting one another.",
+   "effect": "The stalled smoke run is preserved as runs/coding-v3/v3-793-jev-stalled-before-amendment (one Jev decision, $0.0002) and excluded from results; v3-793-jev is run again under the amended protocol."
+  }
+ ]
 }
