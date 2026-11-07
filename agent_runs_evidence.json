@@ -1,0 +1,3618 @@
+{
+ "protocol": "internal-explore-v2",
+ "tasks_frozen": 51,
+ "tasks_valid": 41,
+ "tasks_dropped": [
+  "pydicom__pydicom-1069",
+  "pydicom__pydicom-1236",
+  "pydicom__pydicom-1428",
+  "pydicom__pydicom-1439",
+  "pydicom__pydicom-1458",
+  "pydicom__pydicom-1598",
+  "pydicom__pydicom-1674",
+  "pydicom__pydicom-866",
+  "pydicom__pydicom-955",
+  "pydicom__pydicom-995"
+ ],
+ "tasks_complete_all_conditions": 41,
+ "runs_completed": 164,
+ "batch_errors": [
+  "v2-1555-oracle.batch-error.json",
+  "v2-1720-jev.batch-error.json"
+ ],
+ "total_cost_usd": 16.709851322,
+ "conditions": {
+  "native": {
+   "runs": 41,
+   "passed": 18,
+   "pass_rate": 0.43902439024390244,
+   "pass_ci95": [
+    0.2988990477210983,
+    0.5895973484824271
+   ],
+   "cost_mean_usd": 0.13898328780487804,
+   "time_mean_s": 46.49941288412367,
+   "time_median_s": 43.51549308304675,
+   "explore_mean_s": 21.595121290625595,
+   "writer_mean_s": 23.110567092895508,
+   "explorer_hit_rate": 0.975609756097561,
+   "patch_hit_rate": 0.9512195121951219,
+   "timeouts": 0,
+   "fallbacks": 0
+  },
+  "jev": {
+   "runs": 41,
+   "passed": 19,
+   "pass_rate": 0.4634146341463415,
+   "pass_ci95": [
+    0.32055999118185885,
+    0.6125378465402564
+   ],
+   "cost_mean_usd": 0.09100528102439025,
+   "time_mean_s": 30.16903542171846,
+   "time_median_s": 28.307676624972373,
+   "explore_mean_s": 1.606406025401112,
+   "writer_mean_s": 27.38779677995821,
+   "explorer_hit_rate": 0.926829268292683,
+   "patch_hit_rate": 0.9512195121951219,
+   "timeouts": 0,
+   "fallbacks": 0
+  },
+  "search": {
+   "runs": 41,
+   "passed": 21,
+   "pass_rate": 0.5121951219512195,
+   "pass_ci95": [
+    0.36484259315865186,
+    0.657458127600643
+   ],
+   "cost_mean_usd": 0.08681668048780487,
+   "time_mean_s": 28.729717751067678,
+   "time_median_s": 26.71066170791164,
+   "explore_mean_s": 1.3885247215867134,
+   "writer_mean_s": 26.23895611414095,
+   "explorer_hit_rate": 0.6341463414634146,
+   "patch_hit_rate": 0.9512195121951219,
+   "timeouts": 0,
+   "fallbacks": 0
+  },
+  "oracle": {
+   "runs": 41,
+   "passed": 20,
+   "pass_rate": 0.4878048780487805,
+   "pass_ci95": [
+    0.3425418723993569,
+    0.6351574068413481
+   ],
+   "cost_mean_usd": 0.0907521,
+   "time_mean_s": 27.366540086359105,
+   "time_median_s": 26.893187958048657,
+   "explore_mean_s": 0.029512125970341446,
+   "writer_mean_s": 26.228432370395197,
+   "explorer_hit_rate": 1.0,
+   "patch_hit_rate": 0.9512195121951219,
+   "timeouts": 0,
+   "fallbacks": 0
+  }
+ },
+ "comparisons": {
+  "jev_vs_native": {
+   "pairs": 41,
+   "success_wins": 1,
+   "success_losses": 0,
+   "success_sign_p": 1.0,
+   "cost_diff_mean_usd": -0.0479780067804878,
+   "cost_diff_ci95": [
+    -0.05506500219512197,
+    -0.041185638292682944
+   ],
+   "cost_change_pct": -34.52070212056379,
+   "time_diff_mean_s": -16.330377462405213,
+   "time_diff_ci95": [
+    -19.084073352820536,
+    -13.666572252975595
+   ],
+   "time_change_pct": -35.11953474143951
+  },
+  "search_vs_native": {
+   "pairs": 41,
+   "success_wins": 3,
+   "success_losses": 0,
+   "success_sign_p": 0.25,
+   "cost_diff_mean_usd": -0.05216660731707317,
+   "cost_diff_ci95": [
+    -0.06067339268292683,
+    -0.04455040487804877
+   ],
+   "cost_change_pct": -37.53444614888598,
+   "time_diff_mean_s": -17.769695133055993,
+   "time_diff_ci95": [
+    -20.740224497813003,
+    -15.025019640102983
+   ],
+   "time_change_pct": -38.214880642338414
+  },
+  "oracle_vs_native": {
+   "pairs": 41,
+   "success_wins": 2,
+   "success_losses": 0,
+   "success_sign_p": 0.5,
+   "cost_diff_mean_usd": -0.04823118780487805,
+   "cost_diff_ci95": [
+    -0.05507066341463415,
+    -0.04166693902439023
+   ],
+   "cost_change_pct": -34.70286864460349,
+   "time_diff_mean_s": -19.132872797764566,
+   "time_diff_ci95": [
+    -22.075324607689343,
+    -16.443182163684426
+   ],
+   "time_change_pct": -41.14648252751836
+  },
+  "jev_vs_search": {
+   "pairs": 41,
+   "success_wins": 0,
+   "success_losses": 2,
+   "success_sign_p": 0.5,
+   "cost_diff_mean_usd": 0.004188600536585366,
+   "cost_diff_ci95": [
+    -0.0002432434634146336,
+    0.008769848926829266
+   ],
+   "cost_change_pct": 4.824649494832665,
+   "time_diff_mean_s": 1.4393176706507802,
+   "time_diff_ci95": [
+    -0.17702038920052895,
+    3.0612314287459523
+   ],
+   "time_change_pct": 5.009856633893631
+  },
+  "oracle_vs_jev": {
+   "pairs": 41,
+   "success_wins": 2,
+   "success_losses": 1,
+   "success_sign_p": 1.0,
+   "cost_diff_mean_usd": -0.0002531810243902424,
+   "cost_diff_ci95": [
+    -0.004514378487804875,
+    0.003851893707317074
+   ],
+   "cost_change_pct": -0.27820476080106554,
+   "time_diff_mean_s": -2.8024953353593536,
+   "time_diff_ci95": [
+    -4.660699340299044,
+    -0.9130646849857507
+   ],
+   "time_change_pct": -9.289310368013485
+  }
+ },
+ "by_localization": {
+  "jev_hit": {
+   "runs": 38,
+   "passed": 18
+  },
+  "jev_miss": {
+   "runs": 3,
+   "passed": 1
+  },
+  "search_hit": {
+   "runs": 26,
+   "passed": 17
+  },
+  "search_miss": {
+   "runs": 15,
+   "passed": 4
+  }
+ },
+ "runs": {
+  "pydicom__pydicom-1000|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.09530899999999999,
+   "agent_elapsed_s": 23.091026165988296,
+   "explore_elapsed_s": 0.9604911669157445,
+   "writer_elapsed_s": 21.10973048210144,
+   "evaluation_elapsed_s": 0.6548255828674883,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-1000|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1431131,
+   "agent_elapsed_s": 46.142601375002414,
+   "explore_elapsed_s": 27.650527238845825,
+   "writer_elapsed_s": 18.49248433113098,
+   "evaluation_elapsed_s": 0.6839032080024481,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-1000|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0794024,
+   "agent_elapsed_s": 30.683411207981408,
+   "explore_elapsed_s": 0.017444083001464605,
+   "writer_elapsed_s": 29.04843759536743,
+   "evaluation_elapsed_s": 0.6756738328840584,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-1000|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0840358,
+   "agent_elapsed_s": 23.639127040980384,
+   "explore_elapsed_s": 0.5842383338604122,
+   "writer_elapsed_s": 22.216652870178223,
+   "evaluation_elapsed_s": 0.8664495421107858,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-1017|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.133409208,
+   "agent_elapsed_s": 35.892194541869685,
+   "explore_elapsed_s": 2.3992552501149476,
+   "writer_elapsed_s": 31.031153678894043,
+   "evaluation_elapsed_s": 0.8238192498683929,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1017|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.2099924,
+   "agent_elapsed_s": 68.86306120781228,
+   "explore_elapsed_s": 31.63306164741516,
+   "writer_elapsed_s": 26.51025629043579,
+   "evaluation_elapsed_s": 0.8682825830765069,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 16,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 9,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1017|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1376003,
+   "agent_elapsed_s": 26.893187958048657,
+   "explore_elapsed_s": 0.029500250006094575,
+   "writer_elapsed_s": 24.080357789993286,
+   "evaluation_elapsed_s": 0.857812917092815,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1017|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.1333571,
+   "agent_elapsed_s": 32.57888024998829,
+   "explore_elapsed_s": 2.4539773750584573,
+   "writer_elapsed_s": 27.81618905067444,
+   "evaluation_elapsed_s": 0.8764010421000421,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1031|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.102442944,
+   "agent_elapsed_s": 29.9206297500059,
+   "explore_elapsed_s": 2.1387159160804003,
+   "writer_elapsed_s": 25.482633113861084,
+   "evaluation_elapsed_s": 0.6875734159257263,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1031|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1312463,
+   "agent_elapsed_s": 45.20360999996774,
+   "explore_elapsed_s": 27.793340921401978,
+   "writer_elapsed_s": 15.558241367340088,
+   "evaluation_elapsed_s": 0.6699473750777543,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 6,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1031|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1102769,
+   "agent_elapsed_s": 31.128064583055675,
+   "explore_elapsed_s": 0.012523041805252433,
+   "writer_elapsed_s": 28.673241138458252,
+   "evaluation_elapsed_s": 0.6683921250514686,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1031|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0812785,
+   "agent_elapsed_s": 26.03343658312224,
+   "explore_elapsed_s": 1.8755778328049928,
+   "writer_elapsed_s": 22.38236165046692,
+   "evaluation_elapsed_s": 0.7049907909240574,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1033|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.085128734,
+   "agent_elapsed_s": 22.789410874946043,
+   "explore_elapsed_s": 2.225924416910857,
+   "writer_elapsed_s": 18.888177394866943,
+   "evaluation_elapsed_s": 0.5055351669434458,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ]
+  },
+  "pydicom__pydicom-1033|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1157525,
+   "agent_elapsed_s": 30.009581542108208,
+   "explore_elapsed_s": 11.557976961135864,
+   "writer_elapsed_s": 16.869999408721924,
+   "evaluation_elapsed_s": 0.4945179580245167,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ]
+  },
+  "pydicom__pydicom-1033|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0935715,
+   "agent_elapsed_s": 24.823087542084977,
+   "explore_elapsed_s": 0.056109500117599964,
+   "writer_elapsed_s": 22.67298698425293,
+   "evaluation_elapsed_s": 0.4720511247869581,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ]
+  },
+  "pydicom__pydicom-1033|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.078254,
+   "agent_elapsed_s": 21.59039920894429,
+   "explore_elapsed_s": 1.9979805420152843,
+   "writer_elapsed_s": 20.88023090362549,
+   "evaluation_elapsed_s": 0.6162943330127746,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ]
+  },
+  "pydicom__pydicom-1048|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.077011096,
+   "agent_elapsed_s": 22.782896709162742,
+   "explore_elapsed_s": 2.3947658331599087,
+   "writer_elapsed_s": 20.825779676437378,
+   "evaluation_elapsed_s": 0.6680687910411507,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/data/data_manager.py",
+    "pydicom/dataset.py",
+    "pydicom/dicomdir.py",
+    "pydicom/filereader.py",
+    "pydicom/fileutil.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1048|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.143257,
+   "agent_elapsed_s": 37.84661383414641,
+   "explore_elapsed_s": 21.755863666534424,
+   "writer_elapsed_s": 13.82712435722351,
+   "evaluation_elapsed_s": 0.7153966249898076,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/data/data_manager.py",
+    "pydicom/dataset.py",
+    "pydicom/dicomdir.py",
+    "pydicom/filereader.py",
+    "pydicom/fileutil.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1048|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0676997,
+   "agent_elapsed_s": 19.229687416926026,
+   "explore_elapsed_s": 0.08421404100954533,
+   "writer_elapsed_s": 17.02467918395996,
+   "evaluation_elapsed_s": 0.6906616671476513,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 6,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 6,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/data/data_manager.py",
+    "pydicom/dataset.py",
+    "pydicom/dicomdir.py",
+    "pydicom/filereader.py",
+    "pydicom/fileutil.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1048|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0750894,
+   "agent_elapsed_s": 22.51475716708228,
+   "explore_elapsed_s": 2.023713167058304,
+   "writer_elapsed_s": 19.003636598587036,
+   "evaluation_elapsed_s": 0.6037214579991996,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/data/data_manager.py",
+    "pydicom/dataset.py",
+    "pydicom/dicomdir.py",
+    "pydicom/filereader.py",
+    "pydicom/fileutil.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1050|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.060029924,
+   "agent_elapsed_s": 18.373018000042066,
+   "explore_elapsed_s": 2.280338707845658,
+   "writer_elapsed_s": 14.591500282287598,
+   "evaluation_elapsed_s": 0.7114983748178929,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1050|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.0969454,
+   "agent_elapsed_s": 35.23773912503384,
+   "explore_elapsed_s": 17.78881001472473,
+   "writer_elapsed_s": 15.115111827850342,
+   "evaluation_elapsed_s": 0.7077994591090828,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1050|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0570752,
+   "agent_elapsed_s": 16.46954912506044,
+   "explore_elapsed_s": 0.012253083055838943,
+   "writer_elapsed_s": 14.960638523101807,
+   "evaluation_elapsed_s": 0.7331009581685066,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1050|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0638731,
+   "agent_elapsed_s": 20.121138042071834,
+   "explore_elapsed_s": 2.119807500159368,
+   "writer_elapsed_s": 16.261191606521606,
+   "evaluation_elapsed_s": 0.7211121669970453,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1076|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.072179458,
+   "agent_elapsed_s": 20.11284837499261,
+   "explore_elapsed_s": 2.1839301250874996,
+   "writer_elapsed_s": 16.17293429374695,
+   "evaluation_elapsed_s": 0.9329570000991225,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1076|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1156826,
+   "agent_elapsed_s": 38.40855233394541,
+   "explore_elapsed_s": 25.07657289505005,
+   "writer_elapsed_s": 11.262804746627808,
+   "evaluation_elapsed_s": 0.9246205831877887,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1076|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0741566,
+   "agent_elapsed_s": 18.109563292004168,
+   "explore_elapsed_s": 0.02776437485590577,
+   "writer_elapsed_s": 16.61786460876465,
+   "evaluation_elapsed_s": 0.9088420420885086,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1076|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0826507,
+   "agent_elapsed_s": 21.865633291890845,
+   "explore_elapsed_s": 1.9840564581099898,
+   "writer_elapsed_s": 18.582815408706665,
+   "evaluation_elapsed_s": 0.9302956671454012,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-1090|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.165209014,
+   "agent_elapsed_s": 39.33855029102415,
+   "explore_elapsed_s": 2.3270901669748127,
+   "writer_elapsed_s": 33.36320495605469,
+   "evaluation_elapsed_s": 0.7785547920502722,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 14,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1090|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.18292419999999998,
+   "agent_elapsed_s": 55.7618853750173,
+   "explore_elapsed_s": 22.852479934692383,
+   "writer_elapsed_s": 28.480450868606567,
+   "evaluation_elapsed_s": 0.7240111657883972,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 18,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1090|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1261206,
+   "agent_elapsed_s": 30.10084645799361,
+   "explore_elapsed_s": 0.034563457826152444,
+   "writer_elapsed_s": 27.133344650268555,
+   "evaluation_elapsed_s": 0.6924288750160486,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1090|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.1425946,
+   "agent_elapsed_s": 41.624944916926324,
+   "explore_elapsed_s": 1.9861201250459999,
+   "writer_elapsed_s": 35.92664122581482,
+   "evaluation_elapsed_s": 0.7312313748989254,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py",
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1192|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.051867596,
+   "agent_elapsed_s": 18.71567966695875,
+   "explore_elapsed_s": 2.264075041981414,
+   "writer_elapsed_s": 18.268729209899902,
+   "evaluation_elapsed_s": 0.5877357921563089,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-1192|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1018629,
+   "agent_elapsed_s": 37.61770966718905,
+   "explore_elapsed_s": 23.122918128967285,
+   "writer_elapsed_s": 12.339970588684082,
+   "evaluation_elapsed_s": 0.5842795420903713,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 5,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-1192|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0696363,
+   "agent_elapsed_s": 18.72285316698253,
+   "explore_elapsed_s": 0.014758042059838772,
+   "writer_elapsed_s": 16.82986855506897,
+   "evaluation_elapsed_s": 0.5965525000356138,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-1192|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0501981,
+   "agent_elapsed_s": 19.12561829201877,
+   "explore_elapsed_s": 2.017306166002527,
+   "writer_elapsed_s": 15.575709104537964,
+   "evaluation_elapsed_s": 0.6066785000730306,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-1194|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.090359202,
+   "agent_elapsed_s": 29.458371749846265,
+   "explore_elapsed_s": 2.1672579168807715,
+   "writer_elapsed_s": 27.291133165359497,
+   "evaluation_elapsed_s": 1.0420743750873953,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1194|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1481457,
+   "agent_elapsed_s": 40.01633008290082,
+   "explore_elapsed_s": 21.323341608047485,
+   "writer_elapsed_s": 16.457539081573486,
+   "evaluation_elapsed_s": 0.7331119999289513,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1194|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0957036,
+   "agent_elapsed_s": 24.583101209020242,
+   "explore_elapsed_s": 0.020215125055983663,
+   "writer_elapsed_s": 25.230988025665283,
+   "evaluation_elapsed_s": 0.8057821658439934,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1194|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0895812,
+   "agent_elapsed_s": 31.43069116701372,
+   "explore_elapsed_s": 1.8942425418645144,
+   "writer_elapsed_s": 24.162755727767944,
+   "evaluation_elapsed_s": 0.7620693331118673,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1228|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.095830236,
+   "agent_elapsed_s": 33.92360420781188,
+   "explore_elapsed_s": 2.386911541922018,
+   "writer_elapsed_s": 29.817241430282593,
+   "evaluation_elapsed_s": 0.524358875118196,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1228|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.0899666,
+   "agent_elapsed_s": 40.01346724992618,
+   "explore_elapsed_s": 19.123271703720093,
+   "writer_elapsed_s": 21.44084644317627,
+   "evaluation_elapsed_s": 0.5482599169481546,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1228|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0850569,
+   "agent_elapsed_s": 29.390349959023297,
+   "explore_elapsed_s": 0.058891332941129804,
+   "writer_elapsed_s": 28.1018168926239,
+   "evaluation_elapsed_s": 0.5451923331711441,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1228|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0908353,
+   "agent_elapsed_s": 31.96652483381331,
+   "explore_elapsed_s": 2.0320165420416743,
+   "writer_elapsed_s": 30.635544300079346,
+   "evaluation_elapsed_s": 0.5230499170720577,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1241|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.06846736,
+   "agent_elapsed_s": 35.827120332978666,
+   "explore_elapsed_s": 2.273015709128231,
+   "writer_elapsed_s": 32.80473279953003,
+   "evaluation_elapsed_s": 0.5707173750270158,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-1241|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1489691,
+   "agent_elapsed_s": 52.25008829217404,
+   "explore_elapsed_s": 22.517025470733643,
+   "writer_elapsed_s": 28.468469381332397,
+   "evaluation_elapsed_s": 0.5692877499386668,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-1241|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0751344,
+   "agent_elapsed_s": 31.591901500010863,
+   "explore_elapsed_s": 0.010943375062197447,
+   "writer_elapsed_s": 30.49090600013733,
+   "evaluation_elapsed_s": 0.5869221249595284,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-1241|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0687618,
+   "agent_elapsed_s": 30.871120083145797,
+   "explore_elapsed_s": 2.0419074578676373,
+   "writer_elapsed_s": 30.047055959701538,
+   "evaluation_elapsed_s": 0.5715313330292702,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-1255|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.081800934,
+   "agent_elapsed_s": 21.38009287486784,
+   "explore_elapsed_s": 2.1797562499996275,
+   "writer_elapsed_s": 18.59786081314087,
+   "evaluation_elapsed_s": 0.5704108751378953,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/_version.py",
+    "pydicom/filebase.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1255|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1250052,
+   "agent_elapsed_s": 41.39721795800142,
+   "explore_elapsed_s": 23.026437520980835,
+   "writer_elapsed_s": 18.649210929870605,
+   "evaluation_elapsed_s": 0.5645816249307245,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/_version.py",
+    "pydicom/filebase.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1255|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0790213,
+   "agent_elapsed_s": 26.67334129102528,
+   "explore_elapsed_s": 0.0077737499959766865,
+   "writer_elapsed_s": 26.261364221572876,
+   "evaluation_elapsed_s": 0.6068253749981523,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/_version.py",
+    "pydicom/filebase.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1255|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.07887670000000001,
+   "agent_elapsed_s": 22.981837624916807,
+   "explore_elapsed_s": 2.0065842499025166,
+   "writer_elapsed_s": 21.902095794677734,
+   "evaluation_elapsed_s": 0.5516031668521464,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/_version.py",
+    "pydicom/filebase.py",
+    "pydicom/jsonrep.py"
+   ]
+  },
+  "pydicom__pydicom-1334|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.111979568,
+   "agent_elapsed_s": 48.29658466717228,
+   "explore_elapsed_s": 2.198213499970734,
+   "writer_elapsed_s": 44.500500202178955,
+   "evaluation_elapsed_s": 1.7405970830004662,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1334|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1363364,
+   "agent_elapsed_s": 57.93332158308476,
+   "explore_elapsed_s": 13.673349142074585,
+   "writer_elapsed_s": 45.81856727600098,
+   "evaluation_elapsed_s": 1.6139482089783996,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1334|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.09617490000000001,
+   "agent_elapsed_s": 39.10122049995698,
+   "explore_elapsed_s": 0.019615666940808296,
+   "writer_elapsed_s": 39.48404812812805,
+   "evaluation_elapsed_s": 1.7069273749366403,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1334|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0902568,
+   "agent_elapsed_s": 39.42982558300719,
+   "explore_elapsed_s": 2.045598875032738,
+   "writer_elapsed_s": 38.73715782165527,
+   "evaluation_elapsed_s": 1.6099314999300987,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1365|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.064487304,
+   "agent_elapsed_s": 32.063990250229836,
+   "explore_elapsed_s": 2.3290633750148118,
+   "writer_elapsed_s": 31.280413150787354,
+   "evaluation_elapsed_s": 0.9316282919608057,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1365|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1240654,
+   "agent_elapsed_s": 43.04092925018631,
+   "explore_elapsed_s": 18.73241925239563,
+   "writer_elapsed_s": 23.730426788330078,
+   "evaluation_elapsed_s": 0.9669378339312971,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1365|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0848711,
+   "agent_elapsed_s": 30.168981458060443,
+   "explore_elapsed_s": 0.022893291898071766,
+   "writer_elapsed_s": 28.178451538085938,
+   "evaluation_elapsed_s": 0.9515029580798,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1365|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.09833940000000001,
+   "agent_elapsed_s": 30.475115790963173,
+   "explore_elapsed_s": 2.113906875019893,
+   "writer_elapsed_s": 26.88095188140869,
+   "evaluation_elapsed_s": 0.9400639168452471,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1375|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.055420408,
+   "agent_elapsed_s": 36.04841341706924,
+   "explore_elapsed_s": 2.4017862919718027,
+   "writer_elapsed_s": 31.6733660697937,
+   "evaluation_elapsed_s": 0.6464094161055982,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1375|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.0855797,
+   "agent_elapsed_s": 39.29038366605528,
+   "explore_elapsed_s": 17.37880301475525,
+   "writer_elapsed_s": 19.934787034988403,
+   "evaluation_elapsed_s": 0.6317219999618828,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1375|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.049117100000000004,
+   "agent_elapsed_s": 27.25305537506938,
+   "explore_elapsed_s": 0.023222542135044932,
+   "writer_elapsed_s": 25.791449785232544,
+   "evaluation_elapsed_s": 0.7222869170363992,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1375|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0511432,
+   "agent_elapsed_s": 26.71066170791164,
+   "explore_elapsed_s": 2.2243666250724345,
+   "writer_elapsed_s": 22.772042274475098,
+   "evaluation_elapsed_s": 0.644332833122462,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1416|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.07014068799999999,
+   "agent_elapsed_s": 18.51060525001958,
+   "explore_elapsed_s": 2.2938160421326756,
+   "writer_elapsed_s": 14.414916515350342,
+   "evaluation_elapsed_s": 0.9275060000363737,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/pixel_data_handlers/util.py"
+   ]
+  },
+  "pydicom__pydicom-1416|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1079227,
+   "agent_elapsed_s": 27.099317708984017,
+   "explore_elapsed_s": 13.492531299591064,
+   "writer_elapsed_s": 11.660796165466309,
+   "evaluation_elapsed_s": 0.9836824999656528,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/pixel_data_handlers/util.py"
+   ]
+  },
+  "pydicom__pydicom-1416|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0678149,
+   "agent_elapsed_s": 14.573182458989322,
+   "explore_elapsed_s": 0.021344542037695646,
+   "writer_elapsed_s": 12.408819437026978,
+   "evaluation_elapsed_s": 0.8782702919561416,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/pixel_data_handlers/util.py"
+   ]
+  },
+  "pydicom__pydicom-1416|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0630532,
+   "agent_elapsed_s": 16.36275116703473,
+   "explore_elapsed_s": 2.1448868750594556,
+   "writer_elapsed_s": 12.809319734573364,
+   "evaluation_elapsed_s": 0.8671573330648243,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/pixel_data_handlers/util.py"
+   ]
+  },
+  "pydicom__pydicom-1539|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.081536578,
+   "agent_elapsed_s": 19.328797166934237,
+   "explore_elapsed_s": 2.31375899980776,
+   "writer_elapsed_s": 17.878827810287476,
+   "evaluation_elapsed_s": 0.8083587919827551,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1539|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1120332,
+   "agent_elapsed_s": 33.88899558316916,
+   "explore_elapsed_s": 17.701291799545288,
+   "writer_elapsed_s": 15.783596992492676,
+   "evaluation_elapsed_s": 0.8148554160725325,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1539|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0766883,
+   "agent_elapsed_s": 17.777503958903253,
+   "explore_elapsed_s": 0.019603958120569587,
+   "writer_elapsed_s": 18.882230758666992,
+   "evaluation_elapsed_s": 0.9403923749923706,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1539|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0852576,
+   "agent_elapsed_s": 17.8683913750574,
+   "explore_elapsed_s": 2.601224333047867,
+   "writer_elapsed_s": 15.985344886779785,
+   "evaluation_elapsed_s": 0.79507050011307,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-1555|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.082836234,
+   "agent_elapsed_s": 23.139085334027186,
+   "explore_elapsed_s": 2.33288220805116,
+   "writer_elapsed_s": 19.19583797454834,
+   "evaluation_elapsed_s": 0.9167433751281351,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/encoders/base.py",
+    "pydicom/filebase.py",
+    "pydicom/fileset.py",
+    "pydicom/filewriter.py",
+    "pydicom/pixel_data_handlers/util.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1555|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1152023,
+   "agent_elapsed_s": 32.42721095890738,
+   "explore_elapsed_s": 14.682002782821655,
+   "writer_elapsed_s": 16.090133666992188,
+   "evaluation_elapsed_s": 0.9898600000888109,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/encoders/base.py",
+    "pydicom/filebase.py",
+    "pydicom/fileset.py",
+    "pydicom/filewriter.py",
+    "pydicom/pixel_data_handlers/util.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1555|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0917805,
+   "agent_elapsed_s": 22.933559791883454,
+   "explore_elapsed_s": 0.17315683304332197,
+   "writer_elapsed_s": 21.53403639793396,
+   "evaluation_elapsed_s": 0.8446851251646876,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 7,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/encoders/base.py",
+    "pydicom/filebase.py",
+    "pydicom/fileset.py",
+    "pydicom/filewriter.py",
+    "pydicom/pixel_data_handlers/util.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1555|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0819175,
+   "agent_elapsed_s": 24.53621454187669,
+   "explore_elapsed_s": 2.071900624781847,
+   "writer_elapsed_s": 20.55036997795105,
+   "evaluation_elapsed_s": 0.9209083330351859,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/encoders/base.py",
+    "pydicom/filebase.py",
+    "pydicom/fileset.py",
+    "pydicom/filewriter.py",
+    "pydicom/pixel_data_handlers/util.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1562|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.042989028,
+   "agent_elapsed_s": 21.09296966600232,
+   "explore_elapsed_s": 2.3094882911536843,
+   "writer_elapsed_s": 18.79120635986328,
+   "evaluation_elapsed_s": 0.5557376251090318,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/datadict.py"
+   ]
+  },
+  "pydicom__pydicom-1562|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.06817000000000001,
+   "agent_elapsed_s": 27.10379770793952,
+   "explore_elapsed_s": 11.441435098648071,
+   "writer_elapsed_s": 15.912491083145142,
+   "evaluation_elapsed_s": 0.5385577080305666,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 3,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/datadict.py"
+   ]
+  },
+  "pydicom__pydicom-1562|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0376991,
+   "agent_elapsed_s": 19.830385999986902,
+   "explore_elapsed_s": 0.009079542011022568,
+   "writer_elapsed_s": 20.868783712387085,
+   "evaluation_elapsed_s": 0.6206714999862015,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/datadict.py"
+   ]
+  },
+  "pydicom__pydicom-1562|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0322357,
+   "agent_elapsed_s": 18.665304749971256,
+   "explore_elapsed_s": 2.389653499936685,
+   "writer_elapsed_s": 17.508941173553467,
+   "evaluation_elapsed_s": 0.5786698330193758,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/datadict.py"
+   ]
+  },
+  "pydicom__pydicom-1608|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.075037884,
+   "agent_elapsed_s": 22.463637083070353,
+   "explore_elapsed_s": 2.338725916109979,
+   "writer_elapsed_s": 18.633021116256714,
+   "evaluation_elapsed_s": 1.2129269160795957,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1608|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1534178,
+   "agent_elapsed_s": 39.88028745818883,
+   "explore_elapsed_s": 22.786650896072388,
+   "writer_elapsed_s": 16.85496163368225,
+   "evaluation_elapsed_s": 1.1175875409971923,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1608|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0722511,
+   "agent_elapsed_s": 18.282011083094403,
+   "explore_elapsed_s": 0.015265833120793104,
+   "writer_elapsed_s": 17.41800022125244,
+   "evaluation_elapsed_s": 1.0681562500540167,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1608|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0667354,
+   "agent_elapsed_s": 20.78893387503922,
+   "explore_elapsed_s": 2.111568417167291,
+   "writer_elapsed_s": 17.32683300971985,
+   "evaluation_elapsed_s": 1.108305542031303,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-1633|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.055391486000000004,
+   "agent_elapsed_s": 26.81168745807372,
+   "explore_elapsed_s": 2.3622799168806523,
+   "writer_elapsed_s": 22.791380882263184,
+   "evaluation_elapsed_s": 0.6911724160891026,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1633|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1517077,
+   "agent_elapsed_s": 46.93911641696468,
+   "explore_elapsed_s": 33.50703024864197,
+   "writer_elapsed_s": 14.12436294555664,
+   "evaluation_elapsed_s": 0.6861034170724452,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 6,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1633|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0486606,
+   "agent_elapsed_s": 16.89600950013846,
+   "explore_elapsed_s": 0.029051541816443205,
+   "writer_elapsed_s": 15.908286094665527,
+   "evaluation_elapsed_s": 0.705930083990097,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1633|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0503847,
+   "agent_elapsed_s": 20.007973541971296,
+   "explore_elapsed_s": 2.096737999934703,
+   "writer_elapsed_s": 19.144137144088745,
+   "evaluation_elapsed_s": 0.6785034579224885,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1720|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.094764232,
+   "agent_elapsed_s": 35.43496104096994,
+   "explore_elapsed_s": 2.3518251250497997,
+   "writer_elapsed_s": 33.12099647521973,
+   "evaluation_elapsed_s": 0.8560375000815839,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataset.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1720|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.163716,
+   "agent_elapsed_s": 64.10816775006242,
+   "explore_elapsed_s": 28.896010160446167,
+   "writer_elapsed_s": 32.6014347076416,
+   "evaluation_elapsed_s": 0.7469634159933776,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 14,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataset.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1720|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0883582,
+   "agent_elapsed_s": 29.02373958285898,
+   "explore_elapsed_s": 0.0878267080988735,
+   "writer_elapsed_s": 27.598318576812744,
+   "evaluation_elapsed_s": 0.7527937919367105,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataset.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-1720|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0951135,
+   "agent_elapsed_s": 29.016266708029434,
+   "explore_elapsed_s": 2.1163455829955637,
+   "writer_elapsed_s": 24.703432083129883,
+   "evaluation_elapsed_s": 0.75061049987562,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataset.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-793|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.057211234,
+   "agent_elapsed_s": 48.58296479191631,
+   "explore_elapsed_s": 0.7320842910557985,
+   "writer_elapsed_s": 46.24627757072449,
+   "evaluation_elapsed_s": 0.8557977080345154,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-793|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.0838509,
+   "agent_elapsed_s": 41.38837095792405,
+   "explore_elapsed_s": 16.694939136505127,
+   "writer_elapsed_s": 22.560410499572754,
+   "evaluation_elapsed_s": 1.142627292079851,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-793|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0766324,
+   "agent_elapsed_s": 30.991557457949966,
+   "explore_elapsed_s": 0.007669250015169382,
+   "writer_elapsed_s": 28.047626972198486,
+   "evaluation_elapsed_s": 1.094173374818638,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-793|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0573525,
+   "agent_elapsed_s": 33.83511820901185,
+   "explore_elapsed_s": 0.5149595830589533,
+   "writer_elapsed_s": 31.249754905700684,
+   "evaluation_elapsed_s": 1.2567397500388324,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-800|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.03749023,
+   "agent_elapsed_s": 18.82964291702956,
+   "explore_elapsed_s": 0.7538366250228137,
+   "writer_elapsed_s": 17.449171781539917,
+   "evaluation_elapsed_s": 0.6800960840191692,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/uid.py"
+   ]
+  },
+  "pydicom__pydicom-800|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.0692378,
+   "agent_elapsed_s": 32.08317529107444,
+   "explore_elapsed_s": 16.68264079093933,
+   "writer_elapsed_s": 14.523236751556396,
+   "evaluation_elapsed_s": 0.6703936250414699,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/uid.py"
+   ]
+  },
+  "pydicom__pydicom-800|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0400842,
+   "agent_elapsed_s": 17.197233458049595,
+   "explore_elapsed_s": 0.004372833063825965,
+   "writer_elapsed_s": 18.142219305038452,
+   "evaluation_elapsed_s": 0.670855208998546,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/uid.py"
+   ]
+  },
+  "pydicom__pydicom-800|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0480167,
+   "agent_elapsed_s": 15.924239833839238,
+   "explore_elapsed_s": 0.5242645000107586,
+   "writer_elapsed_s": 14.511922836303711,
+   "evaluation_elapsed_s": 0.7899998328648508,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/uid.py"
+   ]
+  },
+  "pydicom__pydicom-809|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.124969778,
+   "agent_elapsed_s": 46.98464870802127,
+   "explore_elapsed_s": 0.7601434579119086,
+   "writer_elapsed_s": 42.53694128990173,
+   "evaluation_elapsed_s": 0.7092358749359846,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-809|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1778394,
+   "agent_elapsed_s": 57.411006834125146,
+   "explore_elapsed_s": 28.145185708999634,
+   "writer_elapsed_s": 26.334381580352783,
+   "evaluation_elapsed_s": 0.6926992500666529,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 15,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-809|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1365016,
+   "agent_elapsed_s": 49.76153287477791,
+   "explore_elapsed_s": 0.041894499910995364,
+   "writer_elapsed_s": 47.262709856033325,
+   "evaluation_elapsed_s": 0.6464817500673234,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-809|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.13795190000000002,
+   "agent_elapsed_s": 43.29790854197927,
+   "explore_elapsed_s": 0.5309856249950826,
+   "writer_elapsed_s": 40.53714418411255,
+   "evaluation_elapsed_s": 0.6342896251007915,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-811|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.032490872,
+   "agent_elapsed_s": 12.1853903750889,
+   "explore_elapsed_s": 0.7133127911947668,
+   "writer_elapsed_s": 10.328206062316895,
+   "evaluation_elapsed_s": 0.5920664169825613,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-811|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.0855061,
+   "agent_elapsed_s": 32.447083540959284,
+   "explore_elapsed_s": 15.302064180374146,
+   "writer_elapsed_s": 15.006057739257812,
+   "evaluation_elapsed_s": 0.6354378750547767,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-811|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.0337814,
+   "agent_elapsed_s": 14.946725582936779,
+   "explore_elapsed_s": 0.01660958305001259,
+   "writer_elapsed_s": 14.616756677627563,
+   "evaluation_elapsed_s": 0.6072055420372635,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-811|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0405037,
+   "agent_elapsed_s": 15.837111207889393,
+   "explore_elapsed_s": 0.5224336669780314,
+   "writer_elapsed_s": 13.632909297943115,
+   "evaluation_elapsed_s": 0.7278615001123399,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-816|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.13485802,
+   "agent_elapsed_s": 47.57898204191588,
+   "explore_elapsed_s": 0.8636693330481648,
+   "writer_elapsed_s": 46.38034987449646,
+   "evaluation_elapsed_s": 0.498518459033221,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-816|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.18189,
+   "agent_elapsed_s": 54.123996291076764,
+   "explore_elapsed_s": 24.9075870513916,
+   "writer_elapsed_s": 27.850379467010498,
+   "evaluation_elapsed_s": 0.5808715829625726,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 5,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-816|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.1367057,
+   "agent_elapsed_s": 35.65361583395861,
+   "explore_elapsed_s": 0.008508250117301941,
+   "writer_elapsed_s": 34.45925307273865,
+   "evaluation_elapsed_s": 0.5011886670254171,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-816|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.12381879999999999,
+   "agent_elapsed_s": 48.575383292045444,
+   "explore_elapsed_s": 0.538845167029649,
+   "writer_elapsed_s": 46.27740430831909,
+   "evaluation_elapsed_s": 0.6999673328828067,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-839|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.110067714,
+   "agent_elapsed_s": 25.855732374824584,
+   "explore_elapsed_s": 0.7740073341410607,
+   "writer_elapsed_s": 24.95387363433838,
+   "evaluation_elapsed_s": 0.6384816658683121,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-839|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.20754350000000002,
+   "agent_elapsed_s": 50.5972700829152,
+   "explore_elapsed_s": 19.409396171569824,
+   "writer_elapsed_s": 30.015289545059204,
+   "evaluation_elapsed_s": 0.64987075002864,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-839|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1453554,
+   "agent_elapsed_s": 30.56228758301586,
+   "explore_elapsed_s": 0.016357207903638482,
+   "writer_elapsed_s": 29.83491587638855,
+   "evaluation_elapsed_s": 0.674184582894668,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-839|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.1110294,
+   "agent_elapsed_s": 23.803396875038743,
+   "explore_elapsed_s": 0.537515209056437,
+   "writer_elapsed_s": 24.048394441604614,
+   "evaluation_elapsed_s": 0.6488480831030756,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-863|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.15132732200000001,
+   "agent_elapsed_s": 56.312713583000004,
+   "explore_elapsed_s": 0.7513973340392113,
+   "writer_elapsed_s": 51.89334034919739,
+   "evaluation_elapsed_s": 0.5070132501423359,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-863|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1964261,
+   "agent_elapsed_s": 72.49646416609176,
+   "explore_elapsed_s": 20.68924880027771,
+   "writer_elapsed_s": 48.54850721359253,
+   "evaluation_elapsed_s": 0.57034937501885,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 15,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-863|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.1382156,
+   "agent_elapsed_s": 39.63546112482436,
+   "explore_elapsed_s": 0.009805292123928666,
+   "writer_elapsed_s": 37.81614565849304,
+   "evaluation_elapsed_s": 0.5608840421773493,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-863|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.1287311,
+   "agent_elapsed_s": 45.924890500027686,
+   "explore_elapsed_s": 0.5368594168685377,
+   "writer_elapsed_s": 42.107600927352905,
+   "evaluation_elapsed_s": 0.512431165901944,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-897|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.08392747,
+   "agent_elapsed_s": 28.307676624972373,
+   "explore_elapsed_s": 0.7489571250043809,
+   "writer_elapsed_s": 25.44560194015503,
+   "evaluation_elapsed_s": 0.6263992912136018,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/multival.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-897|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.102993,
+   "agent_elapsed_s": 43.51549308304675,
+   "explore_elapsed_s": 23.699090003967285,
+   "writer_elapsed_s": 17.987608671188354,
+   "evaluation_elapsed_s": 0.520950999809429,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/multival.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-897|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0489799,
+   "agent_elapsed_s": 23.433877333067358,
+   "explore_elapsed_s": 0.026051624910905957,
+   "writer_elapsed_s": 22.285852670669556,
+   "evaluation_elapsed_s": 0.49306383403018117,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/multival.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-897|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.050022699999999996,
+   "agent_elapsed_s": 19.261576750082895,
+   "explore_elapsed_s": 0.540106917032972,
+   "writer_elapsed_s": 17.182812213897705,
+   "evaluation_elapsed_s": 0.5852661249227822,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/multival.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-900|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.11163702,
+   "agent_elapsed_s": 32.572279875166714,
+   "explore_elapsed_s": 0.8713365830481052,
+   "writer_elapsed_s": 29.864067316055298,
+   "evaluation_elapsed_s": 0.49890354205854237,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-900|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1683987,
+   "agent_elapsed_s": 68.14110050001182,
+   "explore_elapsed_s": 28.150121927261353,
+   "writer_elapsed_s": 37.87361764907837,
+   "evaluation_elapsed_s": 0.4862405410967767,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 15,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 5,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-900|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.09614,
+   "agent_elapsed_s": 24.061392875155434,
+   "explore_elapsed_s": 0.010373541852459311,
+   "writer_elapsed_s": 22.675183534622192,
+   "evaluation_elapsed_s": 0.5287104998715222,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": false,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-900|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.10181470000000001,
+   "agent_elapsed_s": 32.773621417116374,
+   "explore_elapsed_s": 0.5504348338581622,
+   "writer_elapsed_s": 31.206730842590332,
+   "evaluation_elapsed_s": 0.48809066601097584,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-903|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.14827570199999998,
+   "agent_elapsed_s": 39.605580375064164,
+   "explore_elapsed_s": 0.8917204581666738,
+   "writer_elapsed_s": 37.0004026889801,
+   "evaluation_elapsed_s": 0.7503642907831818,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-903|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1845751,
+   "agent_elapsed_s": 56.115362875163555,
+   "explore_elapsed_s": 23.62059712409973,
+   "writer_elapsed_s": 30.758811950683594,
+   "evaluation_elapsed_s": 0.6945781658869237,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 15,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-903|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.153381,
+   "agent_elapsed_s": 34.365147083066404,
+   "explore_elapsed_s": 0.016464499989524484,
+   "writer_elapsed_s": 31.40012836456299,
+   "evaluation_elapsed_s": 0.6647052080370486,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-903|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.1381749,
+   "agent_elapsed_s": 41.22897720802575,
+   "explore_elapsed_s": 0.5433398331515491,
+   "writer_elapsed_s": 39.87064266204834,
+   "evaluation_elapsed_s": 0.7155865000095218,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/filewriter.py"
+   ]
+  },
+  "pydicom__pydicom-916|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.072278032,
+   "agent_elapsed_s": 20.642874625045806,
+   "explore_elapsed_s": 0.8954991658683866,
+   "writer_elapsed_s": 20.464491605758667,
+   "evaluation_elapsed_s": 0.5098132079001516,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/jsonrep.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-916|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1152051,
+   "agent_elapsed_s": 35.423423249972984,
+   "explore_elapsed_s": 20.022021055221558,
+   "writer_elapsed_s": 13.531837224960327,
+   "evaluation_elapsed_s": 0.5000777500681579,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 14,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/jsonrep.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-916|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0848836,
+   "agent_elapsed_s": 25.318821957800537,
+   "explore_elapsed_s": 0.02829820802435279,
+   "writer_elapsed_s": 26.672138452529907,
+   "evaluation_elapsed_s": 0.5126242500264198,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/jsonrep.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-916|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.080354,
+   "agent_elapsed_s": 24.0648320838809,
+   "explore_elapsed_s": 0.5548842079006135,
+   "writer_elapsed_s": 23.995908975601196,
+   "evaluation_elapsed_s": 0.5105749580543488,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/jsonrep.py",
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-933|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.10111441,
+   "agent_elapsed_s": 36.62444220902398,
+   "explore_elapsed_s": 0.7593001250643283,
+   "writer_elapsed_s": 35.797720193862915,
+   "evaluation_elapsed_s": 0.6487847091630101,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-933|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1334137,
+   "agent_elapsed_s": 54.61868020799011,
+   "explore_elapsed_s": 15.677902936935425,
+   "writer_elapsed_s": 36.21121597290039,
+   "evaluation_elapsed_s": 0.7382691660895944,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 4,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-933|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1195806,
+   "agent_elapsed_s": 49.847612750018016,
+   "explore_elapsed_s": 0.07414362486451864,
+   "writer_elapsed_s": 46.76731824874878,
+   "evaluation_elapsed_s": 0.7019384999293834,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 14,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-933|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.1156893,
+   "agent_elapsed_s": 39.331950708059594,
+   "explore_elapsed_s": 0.5786533339414746,
+   "writer_elapsed_s": 37.578001260757446,
+   "evaluation_elapsed_s": 0.6470557919237763,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 11,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filereader.py"
+   ]
+  },
+  "pydicom__pydicom-938|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.122219694,
+   "agent_elapsed_s": 35.261563332984224,
+   "explore_elapsed_s": 0.860658457968384,
+   "writer_elapsed_s": 30.84348750114441,
+   "evaluation_elapsed_s": 0.46437991689890623,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-938|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.2154398,
+   "agent_elapsed_s": 76.69468145794235,
+   "explore_elapsed_s": 34.355456829071045,
+   "writer_elapsed_s": 33.24463486671448,
+   "evaluation_elapsed_s": 0.5022772918455303,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 16,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-938|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1239315,
+   "agent_elapsed_s": 34.3846981250681,
+   "explore_elapsed_s": 0.019266707822680473,
+   "writer_elapsed_s": 32.73352670669556,
+   "evaluation_elapsed_s": 0.5353617090731859,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-938|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.0682998,
+   "agent_elapsed_s": 27.8281281250529,
+   "explore_elapsed_s": 0.5820331249851733,
+   "writer_elapsed_s": 25.613861799240112,
+   "evaluation_elapsed_s": 0.4953379170037806,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py"
+   ]
+  },
+  "pydicom__pydicom-944|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.0908295,
+   "agent_elapsed_s": 28.24068300006911,
+   "explore_elapsed_s": 0.8192735419142991,
+   "writer_elapsed_s": 26.014217138290405,
+   "evaluation_elapsed_s": 0.45561754098162055,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-944|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.1441244,
+   "agent_elapsed_s": 41.75267495797016,
+   "explore_elapsed_s": 22.32800316810608,
+   "writer_elapsed_s": 17.203381538391113,
+   "evaluation_elapsed_s": 0.4592257500626147,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-944|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0908457,
+   "agent_elapsed_s": 23.118231958011165,
+   "explore_elapsed_s": 0.025494417175650597,
+   "writer_elapsed_s": 21.16247868537903,
+   "evaluation_elapsed_s": 0.47697758418507874,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-944|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0931003,
+   "agent_elapsed_s": 22.852796208113432,
+   "explore_elapsed_s": 0.5970889581367373,
+   "writer_elapsed_s": 20.355775594711304,
+   "evaluation_elapsed_s": 0.4589739581570029,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/valuerep.py",
+    "pydicom/values.py"
+   ]
+  },
+  "pydicom__pydicom-958|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.10996929999999999,
+   "agent_elapsed_s": 38.26219266606495,
+   "explore_elapsed_s": 0.8059402499347925,
+   "writer_elapsed_s": 35.53687238693237,
+   "evaluation_elapsed_s": 0.6973645829129964,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-958|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1649399,
+   "agent_elapsed_s": 51.07810508389957,
+   "explore_elapsed_s": 21.84939169883728,
+   "writer_elapsed_s": 34.735076665878296,
+   "evaluation_elapsed_s": 0.49437041697092354,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-958|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.1104147,
+   "agent_elapsed_s": 32.915892750024796,
+   "explore_elapsed_s": 0.013485874980688095,
+   "writer_elapsed_s": 31.00381851196289,
+   "evaluation_elapsed_s": 0.5102011659182608,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-958|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.1261773,
+   "agent_elapsed_s": 52.146167875034735,
+   "explore_elapsed_s": 0.5683698749635369,
+   "writer_elapsed_s": 49.7086079120636,
+   "evaluation_elapsed_s": 0.5167289581149817,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/charset.py"
+   ]
+  },
+  "pydicom__pydicom-965|jev": {
+   "passed": true,
+   "accounted_cost_usd": 0.094464026,
+   "agent_elapsed_s": 22.02768970816396,
+   "explore_elapsed_s": 0.7872793339192867,
+   "writer_elapsed_s": 19.23172616958618,
+   "evaluation_elapsed_s": 0.5071021670009941,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-965|native": {
+   "passed": true,
+   "accounted_cost_usd": 0.1403211,
+   "agent_elapsed_s": 47.135475042043254,
+   "explore_elapsed_s": 24.771271228790283,
+   "writer_elapsed_s": 19.78515100479126,
+   "evaluation_elapsed_s": 0.49429366714321077,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 6,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-965|oracle": {
+   "passed": true,
+   "accounted_cost_usd": 0.08507200000000001,
+   "agent_elapsed_s": 24.679918124806136,
+   "explore_elapsed_s": 0.016167999943718314,
+   "writer_elapsed_s": 30.283013343811035,
+   "evaluation_elapsed_s": 0.4975590000394732,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 2,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-965|search": {
+   "passed": true,
+   "accounted_cost_usd": 0.08483689999999999,
+   "agent_elapsed_s": 26.91030624997802,
+   "explore_elapsed_s": 0.5963665421586484,
+   "writer_elapsed_s": 24.537851333618164,
+   "evaluation_elapsed_s": 0.4842433328740299,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": false,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataelem.py"
+   ]
+  },
+  "pydicom__pydicom-996|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.08426246400000001,
+   "agent_elapsed_s": 27.940202957950532,
+   "explore_elapsed_s": 0.8073304158169776,
+   "writer_elapsed_s": 26.68438959121704,
+   "evaluation_elapsed_s": 0.6829792920034379,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-996|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.168956,
+   "agent_elapsed_s": 49.883184750098735,
+   "explore_elapsed_s": 19.756288290023804,
+   "writer_elapsed_s": 28.60449528694153,
+   "evaluation_elapsed_s": 0.874789958121255,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-996|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.0952262,
+   "agent_elapsed_s": 29.15529029117897,
+   "explore_elapsed_s": 0.056691457983106375,
+   "writer_elapsed_s": 27.698612689971924,
+   "evaluation_elapsed_s": 0.7399363750591874,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 8,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-996|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.0886922,
+   "agent_elapsed_s": 28.088918749941513,
+   "explore_elapsed_s": 0.572398415999487,
+   "writer_elapsed_s": 26.713222980499268,
+   "evaluation_elapsed_s": 0.668927958002314,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 7,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ]
+  },
+  "pydicom__pydicom-997|jev": {
+   "passed": false,
+   "accounted_cost_usd": 0.150195618,
+   "agent_elapsed_s": 36.31901725009084,
+   "explore_elapsed_s": 0.8535327091813087,
+   "writer_elapsed_s": 35.70325303077698,
+   "evaluation_elapsed_s": 0.47987379087135196,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 1,
+   "request_count": 10,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-997|native": {
+   "passed": false,
+   "accounted_cost_usd": 0.18664,
+   "agent_elapsed_s": 61.09039374999702,
+   "explore_elapsed_s": 21.825615406036377,
+   "writer_elapsed_s": 36.775089263916016,
+   "evaluation_elapsed_s": 0.5242115000728518,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 5,
+   "jev_calls": 0,
+   "request_count": 13,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 4,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-997|oracle": {
+   "passed": false,
+   "accounted_cost_usd": 0.1412331,
+   "agent_elapsed_s": 37.7602519588545,
+   "explore_elapsed_s": 0.010328375035896897,
+   "writer_elapsed_s": 37.30510973930359,
+   "evaluation_elapsed_s": 0.4965163751039654,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 9,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 1,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  },
+  "pydicom__pydicom-997|search": {
+   "passed": false,
+   "accounted_cost_usd": 0.1310944,
+   "agent_elapsed_s": 46.0275564158801,
+   "explore_elapsed_s": 0.6062563750892878,
+   "writer_elapsed_s": 44.85724401473999,
+   "evaluation_elapsed_s": 0.5485674999654293,
+   "timed_out": false,
+   "fallbacks": 0,
+   "explore_generation_calls": 0,
+   "jev_calls": 0,
+   "request_count": 12,
+   "costs_complete": true,
+   "explorer_hit": true,
+   "explorer_files": 3,
+   "patch_hit": true,
+   "gold": [
+    "pydicom/encaps.py"
+   ]
+  }
+ }
+}

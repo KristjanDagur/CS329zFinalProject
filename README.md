@@ -81,6 +81,25 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 - **Spend / jobs:** corrected pilot **$1.225791308 OpenRouter**; historical synthetic pilot $0.126075004; combined recorded project total **$1.351866312**. **$0 Tinker**, no training/checkpoints, no active paid jobs. These are recorded project expenses, not account-wide usage. The last key allowance snapshot before this pilot was $195.809830466; other account activity may affect it.
 - **Exact next action:** a teammate follows the setup above, runs `python3 build_coding_report.py` offline, then launches one fresh Jev run on task 1256 with a unique ID and checks its decision receipt, patch and 23 benchmark regression cases. Review the report against the actual results. Video work is deferred at the user’s request.
 
+### November 6 handoff — end-to-end agent runs on 41 more pydicom issues (Omar, `omar`)
+
+- **Protocol `internal-explore-v2`** (`coding_protocol_v2.json`, committed d3c0287 before any run; one amendment before outcomes, recorded in the file): 51 further pydicom dev issues; 41 pass the environment controls (10 need older numpy/Python and are dropped and listed). Four conditions per issue: native, Jev (12 candidates, as v1), search, and an **oracle** given the gold implementation files (upper bound, paths only). Writer, limits and evaluator unchanged from v1. 164 runs, all complete.
+- **Results (41 issues, paired):**
+
+| Condition | Repairs | Mean cost | Mean agent time | Exploration time | Explorer named a gold file |
+|---|---|---|---|---|---|
+| native | 18/41 | $0.139 | 46.5 s | 21.6 s | 98% |
+| Jev | 19/41 | $0.091 | 30.2 s | 1.6 s | 93% |
+| search | 21/41 | $0.087 | 28.7 s | 1.4 s | 63% |
+| oracle | 20/41 | $0.091 | 27.4 s | 0.0 s | 100% |
+
+- **Time and cost:** Jev vs native −16.3 s per issue (−35%; 95% paired bootstrap −19.1 to −13.7 s) and −35% cost. Search and the oracle are similar. Jev vs search: no clear difference (+1.4 s, −0.2 to +3.1; cost +5%).
+- **Repairs:** no condition differs (discordant issues: Jev vs native 1/0, search vs native 3/0, oracle vs native 2/0). Even the oracle does not repair more, so on these issues localization is not the limiting step; the patch writing is. When search's files missed the gold file, 4 of 15 runs passed, against 17 of 26 when they hit, but this is confounded with issue difficulty.
+- **Spend:** $16.71 of the $25 cap (HW1 course key). Two runs were refused by a lane's conservative budget guard and then completed on lane 3's ledger with the same run IDs and settings.
+- **Reproduce offline:** `python3 analyze_agent_runs.py` (restores from `agent_runs_v2.zip` in a fresh clone). The full archive with every request payload (52 MB) is kept outside git.
+- **Changed:** `coding_probe.py` (`--protocol`, oracle, per-phase timing, lanes, `batch`; v1 unchanged by default, 16 offline tests pass), `coding_protocol_v2.json`, `analyze_agent_runs.py`, `agent_runs_evidence.json`, `agent_runs_v2.zip`, `report/agent_results.tex`. Note: `coding_probe.py pack` still writes `coding_runs.zip` (the v1 archive); do not run it with the v2 protocol.
+- **Next action:** add these results to the report; consider repeated rollouts and a harder repository where localization matters more.
+
 ### November 6 handoff — shortlist sweep, 24 and 48 candidates (Omar, `omar`)
 
 - **Question:** does a longer shortlist let Jev recover gold files that search ranks just below 12, and at what cost in time? Protocol `localization_sweep_protocol.json` committed before outcomes; 12-candidate results reused.

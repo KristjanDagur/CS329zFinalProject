@@ -63,7 +63,24 @@ def sign_test(wins, losses):
     return 1.0 if n == 0 else min(1.0, 2 * sum(math.comb(n, i) for i in range(k + 1)) / 2 ** n)
 
 
+def restore_from_archive():
+    """In a fresh clone, restore runs and task metadata from agent_runs_v2.zip (no model calls)."""
+    archive = ROOT / 'agent_runs_v2.zip'
+    if (CACHE / 'tasks.json').exists() or not archive.exists():
+        return
+    import zipfile
+    with zipfile.ZipFile(archive) as z:
+        for name in z.namelist():
+            if name.startswith('runs/coding-v2/'):
+                z.extract(name, ROOT)
+            elif name.startswith('environment/'):
+                target = CACHE / name.split('/', 1)[1]
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(z.read(name))
+
+
 def load():
+    restore_from_archive()
     rows = {r['instance_id']: r for r in json.loads((CACHE / 'tasks.json').read_text())}
     valid = json.loads((CACHE / 'environment_checks.json').read_text())
     runs = {}
