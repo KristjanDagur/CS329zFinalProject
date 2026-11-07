@@ -59,13 +59,15 @@ The other protocols use the same commands with `--protocol coding_protocol_v2.js
 
 ## Reproduce the reported results offline (no API calls)
 
+Use Python 3.12 as shown: with older interpreters the rebuilt JSON can differ in the last floating-point digit.
+
 | Result | Command | Output |
 |---|---|---|
-| v1 development pilot | `python3 build_coding_report.py` | `coding_evidence.json`, `report/coding_results.tex` |
-| v2 extended run (41 issues, oracle, timing) | `python3 analyze_agent_runs.py` | `agent_runs_evidence.json`, `report/agent_results.tex` (restores from `agent_runs_v2.zip`) |
-| File-selection study (225 issues) | `python3 localization_study.py analyze` | `localization_evidence.json`, `report/localization_results.tex` (restores from `localization_runs.zip`) |
-| Shortlist sweep (12/24/48) | `python3 localization_study.py sweep` | `localization_sweep_evidence.json`, `report/sweep_results.tex` |
-| Verified pilot | `python3 build_verified_report.py` | `verified_evidence.json`, `report/verified_results.tex` (needs the local `runs/verified/` directory; not yet archived) |
+| v1 development pilot | `uv run --no-project --python 3.12 python build_coding_report.py` | `coding_evidence.json`, `report/coding_results.tex` |
+| v2 extended run (41 issues, oracle, timing) | `uv run --no-project --python 3.12 python analyze_agent_runs.py` | `agent_runs_evidence.json`, `report/agent_results.tex` (restores from `agent_runs_v2.zip`) |
+| File-selection study (225 issues) | `uv run --no-project --python 3.12 python localization_study.py analyze` | `localization_evidence.json`, `report/localization_results.tex` (restores from `localization_runs.zip`) |
+| Shortlist sweep (12/24/48) | `uv run --no-project --python 3.12 python localization_study.py sweep` | `localization_sweep_evidence.json`, `report/sweep_results.tex` |
+| Verified pilot | `uv run --no-project --python 3.12 python build_verified_report.py` | `verified_evidence.json`, `report/verified_results.tex` (needs the local `runs/verified/` directory; not yet archived) |
 | Report PDF | `cd report && pdflatex coding_midpoint.tex && pdflatex coding_midpoint.tex` | `report/coding_midpoint.pdf` |
 
 ## Current status (November 6)
