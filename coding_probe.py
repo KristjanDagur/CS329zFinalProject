@@ -18,6 +18,7 @@ import json
 import math
 import os
 from pathlib import Path
+import random
 import re
 import secrets
 import shutil
@@ -34,12 +35,27 @@ import zipfile
 from midpoint import Ledger, api_request, digest, dump, key_from_environment
 
 ROOT = Path(__file__).resolve().parent
-PROTOCOL = json.loads((ROOT / 'coding_protocol.json').read_text())
-CACHE = ROOT / '.runtime' / 'coding'
-RUNS = ROOT / 'runs' / 'coding'
+
+
+def _protocol_name():
+    """--protocol FILE selects a protocol version; without it the frozen v1 pilot is used."""
+    for i, arg in enumerate(sys.argv):
+        if arg == '--protocol' and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+        if arg.startswith('--protocol='):
+            return arg.split('=', 1)[1]
+    return 'coding_protocol.json'
+
+
+PROTOCOL_FILE = _protocol_name()
+if Path(PROTOCOL_FILE).name != PROTOCOL_FILE:
+    raise SystemExit('--protocol must name a protocol file in the repository root')
+PROTOCOL = json.loads((ROOT / PROTOCOL_FILE).read_text())
+CACHE = ROOT / PROTOCOL.get('cache_dir', '.runtime/coding')
+RUNS = ROOT / PROTOCOL.get('runs_dir', 'runs/coding')
 API = 'https://openrouter.ai/api'
-DATA_URL = ('https://datasets-server.huggingface.co/rows?'
-            'dataset=princeton-nlp%2FSWE-bench_Lite&config=default&split=dev&offset=0&length=100')
+DATA_URL = PROTOCOL.get('data_url', 'https://datasets-server.huggingface.co/rows?'
+                        'dataset=princeton-nlp%2FSWE-bench_Lite&config=default&split=dev&offset={offset}&length=100')
 
 
 def fetch(url):
@@ -70,10 +86,17 @@ def prepare():
     if metadata['sha'] != PROTOCOL['dataset_revision']:
         raise RuntimeError('Dataset revision changed; amend the protocol explicitly before using new rows.')
     if not (CACHE / 'tasks.json').exists():
-        raw = fetch(DATA_URL)
-        (CACHE / 'dev-response.json').write_bytes(raw)
-        rows = [r['row'] for r in json.loads(raw)['rows'] if r['row']['repo'] == 'pydicom/pydicom']
-        if {r['instance_id'] for r in rows} != {r['instance_id'] for r in PROTOCOL['tasks']}:
+        wanted = {r['instance_id'] for r in PROTOCOL['tasks']}
+        rows, pages = [], []
+        for offset in range(0, 1000, 100):
+            raw = fetch(DATA_URL.format(offset=offset))
+            pages.append(json.loads(raw))
+            page = [r['row'] for r in pages[-1]['rows']]
+            rows += [r for r in page if r['instance_id'] in wanted]
+            if len(page) < 100:
+                break
+        (CACHE / 'dev-response.json').write_text(json.dumps(pages))
+        if {r['instance_id'] for r in rows} != wanted:
             raise RuntimeError('Official rows do not match frozen task IDs')
         dump(CACHE / 'tasks.json', rows)
     receipts = []
@@ -164,7 +187,11 @@ def check():
         dump(CACHE / 'environment_checks.json', results)
         print(name, 'base:', base['passed'], 'gold:', gold['passed'],
               'collected:', gold.get('collected'), flush=True)
-    if not all(r['valid'] for r in results.values()):
+    invalid = sorted(name for name, r in results.items() if not r['valid'])
+    if invalid and 'invalid_environments' in PROTOCOL:
+        print(f'{len(invalid)} of {len(results)} environments failed controls and are dropped (see environment_checks.json):',
+              ', '.join(invalid), flush=True)
+    elif invalid:
         raise RuntimeError('At least one environment failed controls; inspect .runtime/coding/environment_checks.json')
 
 
@@ -201,6 +228,22 @@ def candidates(workspace, query):
     return sorted(ranked, key=lambda r: (-r['retrieval_score'], r['path']))[:PROTOCOL['candidate_files']]
 
 
+def oracle_files(workspace, row, query):
+    """Gold-patch implementation files that exist at the base commit, as candidate entries."""
+    gold = sorted({p for p in re.findall(r'^diff --git a/(\S+) b/', row['patch'], flags=re.M)
+                   if p.startswith('pydicom/') and p.endswith('.py') and 'tests' not in Path(p).parts
+                   and (workspace / p).is_file()})
+    query_terms = set(words(query))
+    entries = []
+    for rel in gold:
+        lines = (workspace / rel).read_text(errors='replace').splitlines()
+        starts = range(0, max(1, len(lines) - 15))
+        start = max(starts, key=lambda i: sum(len(query_terms.intersection(words(l))) for l in lines[i:i+16]))
+        snippet = '\n'.join(f'{i+1}: {lines[i]}' for i in range(start, min(start+16, len(lines))))
+        entries.append({'path': rel, 'retrieval_score': None, 'snippet': snippet[:PROTOCOL['snippet_chars_per_file']]})
+    return entries
+
+
 def choose(response, count):
     scores = []
     for i in range(count):
@@ -218,8 +261,9 @@ class ExplorerMeter:
     Both URLs forward to the same strong model in the native condition. In the
     Jev condition, only /explore is replaced with a typed decision API request.
     """
-    def __init__(self, key, ledger, out, workspace, condition, prices):
+    def __init__(self, key, ledger, out, workspace, condition, prices, row=None):
         self.key, self.ledger, self.out, self.workspace = key, ledger, out, workspace
+        self.row = row
         self.condition, self.prices = condition, prices
         self.token = secrets.token_urlsafe(24)
         self.records, self.lock = [], threading.Lock()
@@ -277,7 +321,7 @@ class ExplorerMeter:
     def exploration(self, body):
         query = '\n'.join(str(m.get('content', '')) for m in body['messages'] if m['role'] == 'user')
         started = time.monotonic()
-        files = candidates(self.workspace, query)
+        files = oracle_files(self.workspace, self.row, query) if self.condition == 'oracle' else candidates(self.workspace, query)
         report = {'query': query, 'candidates': files, 'retrieval_s': time.monotonic()-started,
                   'condition': self.condition, 'fallback': False}
         index = len(list(self.out.glob('localization-*.json')))
@@ -294,6 +338,8 @@ class ExplorerMeter:
                 self.settle(record, response)
                 report['scores'], chosen = choose(response, len(files))
                 report['decision_receipt'] = record['id']
+            elif self.condition == 'oracle':
+                chosen = list(range(len(files)))  # every gold file, whatever its count
             else:
                 chosen = list(range(min(PROTOCOL['selected_files'], len(files))))
             report['selected'] = [files[i]['path'] for i in chosen]
@@ -371,9 +417,10 @@ def run(args):
         raise RuntimeError('Task environment has not passed broken-base/gold controls')
     key = key_from_environment()
     RUNS.mkdir(parents=True, exist_ok=True)
-    with (RUNS / '.lock').open('a') as lock:
+    lock_name = f'.lock-lane{args.lane}' if getattr(args, 'lane', None) is not None else '.lock'
+    with (RUNS / lock_name).open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        source_hash = digest({p: (ROOT / p).read_text() for p in ('coding_probe.py', 'coding_protocol.json')})
+        source_hash = digest({p: (ROOT / p).read_text() for p in ('coding_probe.py', PROTOCOL_FILE)})
         out = RUNS / args.run_id
         if not re.fullmatch(r'[A-Za-z0-9_.-]+', args.run_id):
             raise ValueError('Unsafe run ID')
@@ -385,7 +432,9 @@ def run(args):
                 print(json.dumps(result, indent=2))
                 return
             raise RuntimeError('Incomplete run exists; inspect and preserve it before choosing a new ID')
-        ledger = Ledger(RUNS / 'spend_ledger.jsonl', PROTOCOL['experiment_budget_usd'])
+        ledger = (Ledger(RUNS / f'spend_ledger-lane{args.lane}.jsonl', PROTOCOL['experiment_budget_usd'] / PROTOCOL['lanes'])
+                  if getattr(args, 'lane', None) is not None and PROTOCOL.get('lanes')
+                  else Ledger(RUNS / 'spend_ledger.jsonl', PROTOCOL['experiment_budget_usd']))
         if ledger.charged + PROTOCOL['task_budget_usd'] > ledger.cap:
             raise RuntimeError('Insufficient session budget for another task')
         snapshot = json.loads((CACHE / 'model_snapshot.json').read_text())
@@ -399,7 +448,7 @@ def run(args):
         command(['git', 'init', '-q'], workspace)
         command(['git', 'add', '.'], workspace)
         command(['git', '-c', 'user.name=CS329Z experiment', '-c', 'user.email=experiment@example.invalid', 'commit', '-qm', 'upstream base snapshot'], workspace)
-        meter = ExplorerMeter(key, ledger, out, workspace, args.condition, snapshot['models'])
+        meter = ExplorerMeter(key, ledger, out, workspace, args.condition, snapshot['models'], row)
         base_url = meter.start()
         model = PROTOCOL['writer_model']
         providers = {name: {'npm': '@ai-sdk/openai-compatible', 'name': name,
@@ -478,9 +527,59 @@ def run(args):
             'billed_cost_usd': sum(r['cost_usd'] for r in meter.records) if costs_complete else None,
             'accounted_cost_usd': sum(e['amount'] for e in ledger.entries.values() if e['run_id']==args.run_id),
             'agent_elapsed_s': agent_elapsed, 'evaluation_elapsed_s': evaluation['elapsed_s'],
+            # Time split: exploration is retrieval plus the Jev decision (localization records), or
+            # the native explorer's model calls; writer is the build agent's model calls.
+            'explore_elapsed_s': sum(r.get('elapsed_s') or 0 for r in localization if not r.get('fallback'))
+                                 + sum(r.get('elapsed_s') or 0 for r in meter.records
+                                       if r['role'].startswith('explore') and r['kind'] == 'generation'),
+            'writer_elapsed_s': sum(r.get('elapsed_s') or 0 for r in meter.records if r['role'] == 'build_or_aux'),
+            'started_at': json.loads((out / 'manifest.json').read_text())['started_at'],
+            'finished_at': dt.datetime.now(dt.timezone.utc).isoformat(),
+            'protocol': PROTOCOL['protocol'], 'lane': getattr(args, 'lane', None),
             'official_docker_score': False}
         dump(out / 'result.json', result)
-        print(json.dumps(result, indent=2), flush=True)
+        if not getattr(args, 'quiet', False):
+            print(json.dumps(result, indent=2), flush=True)
+
+
+def lane_plan(lane):
+    """(task, condition, run_id) for one lane: round-robin tasks, shuffled condition order per task."""
+    valid = json.loads((CACHE / 'environment_checks.json').read_text())
+    plan = []
+    for index, spec in enumerate(PROTOCOL['tasks']):
+        if index % PROTOCOL['lanes'] != lane or not valid.get(spec['instance_id'], {}).get('valid'):
+            continue
+        order = list(PROTOCOL['conditions'])
+        random.Random(f"329-{spec['instance_id']}").shuffle(order)
+        number = spec['instance_id'].rsplit('-', 1)[1]
+        plan += [(spec['instance_id'], c, f"v2-{number}-{c}") for c in order]
+    return plan
+
+
+def batch(args):
+    if not PROTOCOL.get('lanes') or args.lane is None or not 0 <= args.lane < PROTOCOL['lanes']:
+        raise SystemExit('batch requires --lane 0..lanes-1 with a protocol that defines lanes')
+    plan = lane_plan(args.lane)
+    print(f'lane {args.lane}: {len(plan)} runs', flush=True)
+    for number, (task, condition, run_id) in enumerate(plan, 1):
+        if (RUNS / run_id / 'result.json').exists():
+            continue
+        if (RUNS / run_id).exists():
+            print(f'[{number}/{len(plan)}] {run_id}: incomplete earlier attempt preserved; skipped', flush=True)
+            continue
+        started = time.monotonic()
+        try:
+            run(argparse.Namespace(task=task, condition=condition, run_id=run_id, opencode=args.opencode, lane=args.lane,
+                                   quiet=True))
+            result = json.loads((RUNS / run_id / 'result.json').read_text())
+            print(f"[{number}/{len(plan)}] {run_id}: passed={result['passed']} "
+                  f"cost=${result['accounted_cost_usd']:.4f} agent={result['agent_elapsed_s']:.1f}s", flush=True)
+        except Exception as error:
+            dump(RUNS / f'{run_id}.batch-error.json', {'error_type': type(error).__name__, 'message': str(error)[:1000],
+                                                       'elapsed_s': time.monotonic() - started})
+            print(f'[{number}/{len(plan)}] {run_id}: ERROR {type(error).__name__}: {str(error)[:200]}', flush=True)
+            if 'budget' in str(error).lower():
+                break
 
 
 def snapshot():
@@ -523,7 +622,9 @@ def pack():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['prepare', 'check', 'snapshot', 'run', 'summarize', 'pack'])
+    parser.add_argument('action', choices=['prepare', 'check', 'snapshot', 'run', 'batch', 'summarize', 'pack'])
+    parser.add_argument('--protocol', default='coding_protocol.json', help='protocol file (default: frozen v1 pilot)')
+    parser.add_argument('--lane', type=int, help='batch lane (protocols that define lanes)')
     parser.add_argument('--task', choices=[r['instance_id'] for r in PROTOCOL['tasks']])
     parser.add_argument('--condition', choices=PROTOCOL['conditions'])
     parser.add_argument('--run-id')
@@ -533,5 +634,7 @@ if __name__ == '__main__':
         if not all((args.task, args.condition, args.run_id)):
             parser.error('run requires --task, --condition, --run-id')
         run(args)
+    elif args.action == 'batch':
+        batch(args)
     else:
         globals()[args.action]()
