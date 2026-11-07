@@ -137,9 +137,9 @@ def source_files(repo, commit, root):
     return files
 
 
-def candidates(files, query, size=None):
+def candidates(files, query, shortlist=None):
     """coding_probe.candidates() over an explicit file set; same scores, snippets and order."""
-    size = size or PROTOCOL['candidate_files']
+    shortlist = shortlist or PROTOCOL['candidate_files']
     docs = []
     for rel in sorted(files):
         content = files[rel]
@@ -154,7 +154,7 @@ def candidates(files, query, size=None):
                     * counts[t] * 2.5 / (counts[t] + 1.5 * (.25 + .75 * size / max(mean, 1)))
                     for t in query_terms if counts[t])
         scored.append((rel, content, score))
-    top = sorted(scored, key=lambda r: (-r[2], r[0]))[:size]
+    top = sorted(scored, key=lambda r: (-r[2], r[0]))[:shortlist]
     out = []
     for rel, content, score in top:  # snippets only for the kept files; they do not affect ranking
         lines = content.splitlines()
