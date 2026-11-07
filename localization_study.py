@@ -9,6 +9,8 @@ official fix changed. See localization_protocol.json (frozen before outcomes).
     python3 localization_study.py verify    # retrieval reproduces the pilot's archived candidates (free)
     python3 localization_study.py run       # one Jev decision per bug (paid, resumable, capped)
     python3 localization_study.py analyze   # offline scoring -> localization_evidence.json + report macros
+    python3 localization_study.py run --candidates 24   # shortlist sweep (localization_sweep_protocol.json)
+    python3 localization_study.py sweep     # offline scoring of shortlists 12/24/48 -> localization_sweep_evidence.json
     python3 localization_study.py archive   # package the records as localization_runs.zip
 
 analyze also works from a fresh clone: it restores the records from localization_runs.zip.
@@ -478,6 +480,133 @@ def write_tex(evidence):
     (ROOT / 'report' / 'localization_results.tex').write_text('\n'.join(lines) + '\n')
 
 
+# ------------------------------------------------------------------- sweep ---
+
+def quantile(values, q):
+    values = sorted(values)
+    if not values:
+        return None
+    position = (len(values) - 1) * q
+    low, high = math.floor(position), math.ceil(position)
+    return values[low] + (values[high] - values[low]) * (position - low)
+
+
+def paired(a, b):
+    """Paired hit comparison of condition a against b on the same issues."""
+    wins = sum(x and not y for x, y in zip(a, b))
+    losses = sum(y and not x for x, y in zip(a, b))
+    low, high = bootstrap([int(x) - int(y) for x, y in zip(a, b)])
+    return {'diff': (sum(a) - sum(b)) / len(a), 'ci95': [low, high], 'wins': wins, 'losses': losses,
+            'sign_test_p': sign_test(wins, losses)}
+
+
+def sweep_analyze():
+    meta = load_tasks()
+    sizes = [PROTOCOL['candidate_files'], *SWEEP['candidate_sizes']]
+    rows = []
+    for task in meta['tasks']:
+        records = {n: json.loads((runs_dir(n) / f"{task['instance_id']}.json").read_text()) for n in sizes}
+        gold = set(gold_files(task['patch'], records[sizes[0]]['package_root']))
+        if not gold:
+            continue
+        row = {'instance_id': task['instance_id'], 'repo': task['repo'], 'gold': sorted(gold)}
+        paths12 = [c['path'] for c in records[sizes[0]]['candidates']]
+        row['search_hit'] = bool(set(paths12[:3]) & gold)
+        for n in sizes:
+            record = records[n]
+            paths = [c['path'] for c in record['candidates']]
+            row[f'shortlist_{n}'] = len(paths)
+            row[f'recall_{n}'] = bool(set(paths) & gold)
+            ok = record['state'] == 'complete'
+            row[f'jev_hit_{n}'] = ok and bool(set(record['selected']) & gold)
+            row[f'jev_all_{n}'] = ok and gold <= set(record['selected'])
+            row[f'latency_{n}'] = record.get('elapsed_s') if ok else None
+            row[f'cost_{n}'] = record.get('cost_usd') if ok else None
+            row[f'failed_{n}'] = not ok
+        rows.append(row)
+    n_rows = len(rows)
+    per_size = {}
+    for n in sizes:
+        lat = [r[f'latency_{n}'] for r in rows if r[f'latency_{n}'] is not None]
+        cost = [r[f'cost_{n}'] for r in rows if r[f'cost_{n}'] is not None]
+        with_gold = [r for r in rows if r[f'recall_{n}']]
+        per_size[n] = {
+            'candidate_recall': sum(r[f'recall_{n}'] for r in rows) / n_rows,
+            'jev_hit_at_3': sum(r[f'jev_hit_{n}'] for r in rows) / n_rows,
+            'jev_all_at_3': sum(r[f'jev_all_{n}'] for r in rows) / n_rows,
+            'conditional_n': len(with_gold),
+            'jev_conditional_hit': sum(r[f'jev_hit_{n}'] for r in with_gold) / max(1, len(with_gold)),
+            'failed': sum(r[f'failed_{n}'] for r in rows),
+            'latency_median_s': quantile(lat, .5), 'latency_p90_s': quantile(lat, .9),
+            'cost_mean_usd': sum(cost) / max(1, len(cost)), 'cost_total_usd': sum(cost),
+            'full_repository_issues': sum(r[f'shortlist_{n}'] < n for r in rows),
+        }
+    jev = {n: [r[f'jev_hit_{n}'] for r in rows] for n in sizes}
+    search = [r['search_hit'] for r in rows]
+    comparisons = {f'jev{n}_vs_search': paired(jev[n], search) for n in sizes}
+    comparisons.update({f'jev{n}_vs_jev12': paired(jev[n], jev[sizes[0]]) for n in sizes[1:]})
+    # Issues whose gold file exists but was outside the 12 candidates.
+    near = [r for r in rows if not r['recall_12']]
+    rescue = {n: {'in_shortlist': sum(r[f'recall_{n}'] for r in near), 'chosen_by_jev': sum(r[f'jev_hit_{n}'] for r in near)}
+              for n in sizes}
+    # Issues the 12-shortlist already got right: does a longer shortlist lose them?
+    kept = {n: sum(r[f'jev_hit_{n}'] for r in rows if r['jev_hit_12']) for n in sizes}
+    repos = sorted({r['repo'] for r in rows})
+    by_repo = {repo: {'n': sum(r['repo'] == repo for r in rows),
+                      'search': sum(r['search_hit'] for r in rows if r['repo'] == repo) / sum(r['repo'] == repo for r in rows),
+                      **{f'jev_{n}': sum(r[f'jev_hit_{n}'] for r in rows if r['repo'] == repo) / sum(r['repo'] == repo for r in rows)
+                         for n in sizes}} for repo in repos}
+    evidence = {'protocol': SWEEP['protocol'], 'n': n_rows, 'near_misses_at_12': len(near), 'per_size': per_size,
+                'comparisons': comparisons, 'near_miss_rescue': rescue, 'kept_from_12': {'base': kept[sizes[0]], **kept},
+                'by_repo': by_repo, 'spend_usd': {n: spent(n) for n in sizes}, 'rows': rows}
+    (ROOT / 'localization_sweep_evidence.json').write_text(json.dumps(evidence, indent=1))
+    write_sweep_tex(evidence, sizes)
+    print(f"{n_rows} issues; search hit@3 {pct(sum(search) / n_rows)}%")
+    for n in sizes:
+        q = per_size[n]
+        print(f"shortlist {n:2d}: recall {pct(q['candidate_recall'])}%  jev hit@3 {pct(q['jev_hit_at_3'])}%  "
+              f"all@3 {pct(q['jev_all_at_3'])}%  conditional {pct(q['jev_conditional_hit'])}% (n={q['conditional_n']})  "
+              f"latency median {q['latency_median_s']:.2f}s p90 {q['latency_p90_s']:.2f}s  mean ${q['cost_mean_usd']:.6f}  "
+              f"failed {q['failed']}  whole-repo issues {q['full_repository_issues']}")
+    for name, c in comparisons.items():
+        print(f"{name:18s} diff {pct(c['diff']):>5}  CI [{pct(c['ci95'][0])}, {pct(c['ci95'][1])}]  W/L {c['wins']}/{c['losses']}  p={c['sign_test_p']:.4f}")
+    print('near misses at 12:', len(near), {n: v for n, v in rescue.items()})
+    print('of the', kept[sizes[0]], 'issues Jev@12 got right, still right at:', {n: kept[n] for n in sizes[1:]})
+    for repo, v in by_repo.items():
+        print(f"  {repo:30s} n={v['n']:3d} search {pct(v['search'])}  " + '  '.join(f"jev{n} {pct(v[f'jev_{n}'])}" for n in sizes))
+
+
+def write_sweep_tex(evidence, sizes):
+    q, c = evidence['per_size'], evidence['comparisons']
+    rows = []
+    for n in sizes:
+        rows.append(f"{n} & {pct(q[n]['candidate_recall'])} & {pct(q[n]['jev_hit_at_3'])} & {pct(q[n]['jev_conditional_hit'])} & "
+                    f"{q[n]['latency_median_s']:.2f} & {q[n]['latency_p90_s']:.2f} & {1000 * q[n]['cost_mean_usd']:.2f} \\\\")
+    names = {12: 'Twelve', 24: 'TwentyFour', 48: 'FortyEight'}
+    macros = {'SwN': evidence['n'], 'SwNear': evidence['near_misses_at_12'], 'SwKeptBase': evidence['kept_from_12']['base']}
+    for n in sizes:
+        k = names[n]
+        macros[f'SwHit{k}'] = pct(q[n]['jev_hit_at_3'])
+        macros[f'SwRecall{k}'] = pct(q[n]['candidate_recall'])
+        macros[f'SwRescue{k}'] = evidence['near_miss_rescue'][n]['chosen_by_jev']
+        macros[f'SwInList{k}'] = evidence['near_miss_rescue'][n]['in_shortlist']
+        macros[f'SwLat{k}'] = f"{q[n]['latency_median_s']:.2f}"
+        macros[f'SwCost{k}'] = f"{1000 * q[n]['cost_mean_usd']:.2f}"
+        if n != sizes[0]:
+            v = c[f'jev{n}_vs_jev12']
+            macros[f'SwDiff{k}'] = pct(v['diff'])
+            macros[f'SwLow{k}'] = pct(v['ci95'][0])
+            macros[f'SwHigh{k}'] = pct(v['ci95'][1])
+            macros[f'SwWins{k}'] = v['wins']
+            macros[f'SwLosses{k}'] = v['losses']
+            macros[f'SwP{k}'] = '< 0.001' if v['sign_test_p'] < 0.001 else f"= {v['sign_test_p']:.3f}"
+            macros[f'SwKept{k}'] = evidence['kept_from_12'][n]
+    lines = ['% Generated by localization_study.py sweep; do not edit by hand.']
+    lines += [f'\\newcommand{{\\{k}}}{{{v}}}' for k, v in macros.items()]
+    lines.append('\\newcommand{\\SweepRows}{' + '\n'.join(rows) + '}')
+    (ROOT / 'report' / 'sweep_results.tex').write_text('\n'.join(lines) + '\n')
+
+
 def archive():
     """Write localization_runs.zip: task metadata, every decision record and the spend log."""
     with zipfile.ZipFile(ROOT / 'localization_runs.zip', 'w', zipfile.ZIP_DEFLATED) as z:
@@ -499,8 +628,9 @@ def main():
     run_parser.add_argument('--candidates', type=int, default=0, help='shortlist size (12, or a frozen sweep size)')
     sub.add_parser('analyze')
     sub.add_parser('archive')
+    sub.add_parser('sweep')
     args = parser.parse_args()
-    {'prepare': lambda: prepare(), 'verify': lambda: verify(), 'run': lambda: run(args), 'analyze': lambda: analyze(), 'archive': lambda: archive()}[args.command]()
+    {'prepare': lambda: prepare(), 'verify': lambda: verify(), 'run': lambda: run(args), 'analyze': lambda: analyze(), 'archive': lambda: archive(), 'sweep': lambda: sweep_analyze()}[args.command]()
 
 
 if __name__ == '__main__':

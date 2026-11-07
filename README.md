@@ -81,6 +81,16 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 - **Spend / jobs:** corrected pilot **$1.225791308 OpenRouter**; historical synthetic pilot $0.126075004; combined recorded project total **$1.351866312**. **$0 Tinker**, no training/checkpoints, no active paid jobs. These are recorded project expenses, not account-wide usage. The last key allowance snapshot before this pilot was $195.809830466; other account activity may affect it.
 - **Exact next action:** a teammate follows the setup above, runs `python3 build_coding_report.py` offline, then launches one fresh Jev run on task 1256 with a unique ID and checks its decision receipt, patch and 23 benchmark regression cases. Review the report against the actual results. Video work is deferred at the user’s request.
 
+### November 6 handoff — shortlist sweep, 24 and 48 candidates (Omar, `omar`)
+
+- **Question:** does a longer shortlist let Jev recover gold files that search ranks just below 12, and at what cost in time? Protocol `localization_sweep_protocol.json` committed before outcomes; 12-candidate results reused.
+- **Result (225 issues):** Jev hit@3 **85.3% / 90.2% / 91.1%** at 12 / 24 / 48 candidates (search 70.2%). 24 vs 12: +4.9 points (95% bootstrap 1.3 to 8.4; 14 wins, 3 losses, p = 0.013). 48 vs 12: +5.8 points (2.2 to 9.8; 16/3, p = 0.004). Of the 25 issues whose gold file was outside the 12 candidates, Jev recovers 13 at 24 and 15 at 48 (2 are files created by the fix). Of the 192 issues already right at 12, 189 stay right at 24 and 48. Accuracy when a gold file is listed dips slightly (96.0 / 94.9 / 93.6%).
+- **Time and cost per decision:** median latency 0.29 / 0.34 / 0.40 s; at 48 candidates 44 of 225 calls took about 8 s (none above 0.63 s at 24). Mean cost $0.00022 / $0.00039 / $0.00069.
+- **Recommendation:** 24 candidates — almost all of the gain, no latency tail.
+- **Spend:** $0.088 (24) + $0.156 (48); study total including v1 $0.293. HW1 course key, no failures.
+- **Changed:** `localization_sweep_protocol.json`, `localization_study.py` (`run --candidates`, `sweep`), `localization_sweep_evidence.json`, `report/sweep_results.tex`, `localization_runs.zip`.
+- **Next action:** end-to-end agent runs on the 51 further pydicom dev issues (native, Jev, search, oracle), logging wall time per run.
+
 ### November 6 handoff — offline file-selection study (Omar, `omar`)
 
 - **Question:** does Jev choose the right files more often than search alone? Measured directly, without the coding agent, on all 225 SWE-bench dev issues (six repositories). Protocol `localization_protocol.json` was committed (4db00ca) before any Jev request.
