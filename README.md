@@ -83,6 +83,13 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 - **Spend / jobs:** corrected pilot **$1.225791308 OpenRouter**; historical synthetic pilot $0.126075004; combined recorded project total **$1.351866312**. **$0 Tinker**, no training/checkpoints, no active paid jobs. These are recorded project expenses, not account-wide usage. The last key allowance snapshot before this pilot was $195.809830466; other account activity may affect it.
 - **Exact next action:** a teammate follows the setup above, runs `python3 build_coding_report.py` offline, then launches one fresh Jev run on task 1256 with a unique ID and checks its decision receipt, patch and 23 benchmark regression cases. Review the report against the actual results. Video work is deferred at the user’s request.
 
+### November 6 handoff — shared 20-task comparison, unrestricted arm (Kristjan with Claude, `kristjan`)
+
+- Plan agreed in the team: on the same 20 SWE-bench Verified tasks, Kristjan runs the writer exactly as in the pilot (read/grep/glob allowed) and a teammate runs a restricted writer without those tools. The teammate's arm needs its own protocol version, its own OpenRouter key/ledger, and the same commit otherwise.
+- `verified_sample.json` gains `shared_subset_20`, drawn by the same rule (re-fetched index verified against the recorded `index_sha256`): django 9, sympy 3, sphinx 2, and one each from astropy, matplotlib, pylint, pytest, scikit-learn, xarray. It contains the 10 pilot tasks and is contained in the 50-task sample.
+- Added `verified_protocol_v2.json` (`verified-explore-v2`): identical to v1 except the task list and a $15 experiment cap on the shared ledger. `verified_probe.py` now selects a protocol with `VERIFIED_PROTOCOL=...` (default remains the frozen pilot file, which is unchanged) and hashes the selected file. 28 offline tests pass.
+- Started: `VERIFIED_PROTOCOL=verified_protocol_v2.json` prepare → check → `batch --prefix v20` (60 runs, images kept on disk), log `runs/verified/v20-batch.log`. Results pending.
+
 ### November 6 handoff — SWE-bench Verified extension drafted (Kristjan with Claude, `kristjan`)
 
 - Decisions (Kristjan, agreed with Rami): move from five pydicom Lite dev tasks to SWE-bench Verified, keep the v1 method unchanged, let the agent run tests inside each task's official image (option b), and start with a **10-task pilot × 3 conditions = 30 runs**. Reason: Verified's human screening removes vague issues and tests that check behaviour the issue never requested.

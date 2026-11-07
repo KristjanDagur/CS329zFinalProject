@@ -36,7 +36,12 @@ import coding_probe as v1
 from midpoint import Ledger, api_request, digest, dump, key_from_environment
 
 ROOT = Path(__file__).resolve().parent
-PROTOCOL = json.loads((ROOT / 'verified_protocol.json').read_text())
+# The pilot's frozen protocol is the default; later versions are selected explicitly,
+# e.g. VERIFIED_PROTOCOL=verified_protocol_v2.json. The chosen file enters the source hash.
+PROTOCOL_FILE = os.environ.get('VERIFIED_PROTOCOL', 'verified_protocol.json')
+if not re.fullmatch(r'verified_protocol[A-Za-z0-9_]*\.json', PROTOCOL_FILE):
+    raise ValueError('VERIFIED_PROTOCOL must name a verified_protocol*.json file in the repository root')
+PROTOCOL = json.loads((ROOT / PROTOCOL_FILE).read_text())
 SAMPLE = json.loads((ROOT / PROTOCOL['sample_file']).read_text())
 CACHE = ROOT / '.runtime' / 'verified'
 RUNS = ROOT / 'runs' / 'verified'
@@ -60,9 +65,9 @@ assert_method_unchanged()
 
 
 def instance_ids():
-    if PROTOCOL['sample'] == 'pilot_subset':
-        return list(SAMPLE['pilot_subset']['instance_ids'])
-    return [t['instance_id'] for t in SAMPLE['tasks']]
+    if PROTOCOL['sample'] == 'all':
+        return [t['instance_id'] for t in SAMPLE['tasks']]
+    return list(SAMPLE[PROTOCOL['sample']]['instance_ids'])
 
 
 def tasks():
@@ -507,7 +512,7 @@ def edit_permissions(workspace, roots):
 
 def source_hash():
     return digest({p: (ROOT / p).read_text() for p in
-                   ('verified_probe.py', 'verified_protocol.json', 'verified_sample.json', 'coding_probe.py')})
+                   ('verified_probe.py', PROTOCOL_FILE, 'verified_sample.json', 'coding_probe.py')})
 
 
 def run(args):

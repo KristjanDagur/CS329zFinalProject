@@ -1,0 +1,92 @@
+{
+  "protocol": "verified-explore-v2",
+  "date": "2026-11-06",
+  "status": "frozen 2026-11-06 before any v2 run: identical method and writer tools to verified-explore-v1 (read/grep/glob allowed); only the task list and experiment cap change. Run with VERIFIED_PROTOCOL=verified_protocol_v2.json.",
+  "derived_from": "verified-explore-v1 (verified_protocol.json); every setting identical except sample, selection, experiment_budget_usd",
+  "dataset": "SWE-bench/SWE-bench_Verified",
+  "dataset_revision": "78f471bf655a3137b2e8a75af1501690ec009ec3",
+  "split": "test",
+  "sample_file": "verified_sample.json",
+  "sample": "shared_subset_20",
+  "selection": "20-task shared subset of the 50-task stratified sample in verified_sample.json (contains the 10 pilot tasks). Kristjan runs this unrestricted arm; a teammate runs a separately versioned restricted-writer arm on the same 20 tasks.",
+  "harness": "OpenCode",
+  "harness_version": "1.19.5",
+  "writer_model": "openai/gpt-6.1-sol",
+  "explorer_baseline_model": "openai/gpt-6.1-sol",
+  "jev_model": "typesafe/jev-1.14",
+  "conditions": [
+    "native",
+    "jev",
+    "search"
+  ],
+  "intervention": "Replace only the native explore subagent model response with Jev ranking deterministic file candidates. Writer, tools, issue, and budget stay fixed.",
+  "candidate_files": 12,
+  "selected_files": 3,
+  "snippet_chars_per_file": 1800,
+  "confidence_policy": "Select three highest finite Noul relevance scores. This is a ranking experiment; no calibrated acceptance claim. On decision API or validation error, use the native explorer and charge both costs.",
+  "main_steps": 16,
+  "explore_steps": 6,
+  "max_requests": 32,
+  "max_output_tokens": 4096,
+  "max_input_bytes": 196608,
+  "timeout_s": 480,
+  "task_budget_usd": 2,
+  "experiment_budget_usd": 15,
+  "source_roots": {
+    "astropy/astropy": [
+      "astropy"
+    ],
+    "django/django": [
+      "django"
+    ],
+    "matplotlib/matplotlib": [
+      "lib/matplotlib",
+      "lib/mpl_toolkits"
+    ],
+    "mwaskom/seaborn": [
+      "seaborn"
+    ],
+    "pallets/flask": [
+      "src/flask"
+    ],
+    "psf/requests": [
+      "requests"
+    ],
+    "pydata/xarray": [
+      "xarray"
+    ],
+    "pylint-dev/pylint": [
+      "pylint"
+    ],
+    "pytest-dev/pytest": [
+      "src"
+    ],
+    "scikit-learn/scikit-learn": [
+      "sklearn"
+    ],
+    "sphinx-doc/sphinx": [
+      "sphinx"
+    ],
+    "sympy/sympy": [
+      "sympy"
+    ]
+  },
+  "agent_testing": {
+    "decision": "Option (b), chosen 2026-11-06: the agent may run existing repository tests inside the task's official SWE-bench image via a run_tests wrapper.",
+    "mechanism": "One container per run from the task image, network disabled, upstream git history replaced by a fresh single-commit repository. Before each run_tests call the workspace diff is applied to a clean /testbed, then the repository's standard test runner runs with the agent's targets passed as quoted arguments. The agent never sees the benchmark's test targets, test_patch or gold patch.",
+    "runner_prefixes": {
+      "django/django": "./tests/runtests.py --verbosity 2 --settings=test_sqlite --parallel 1",
+      "sympy/sympy": "PYTHONWARNINGS='ignore::UserWarning,ignore::SyntaxWarning' bin/test -C --verbose",
+      "sphinx-doc/sphinx": "tox --current-env -epy39 -v --",
+      "default": "pytest -rA"
+    },
+    "call_timeout_s": 240,
+    "output_tail_chars": 12000
+  },
+  "evaluation": "Official swebench 5.0.2 harness on a local JSON copy of the pinned rows, one prediction per run, prebuilt images pulled from Docker Hub. Images are deleted after each task's conditions finish (replacement for the removed --cache_level option).",
+  "evaluator_version": "swebench==5.0.2",
+  "changes_from_v1": [
+    "Task list: shared_subset_20 instead of pilot_subset.",
+    "Experiment cap: $15 on the shared runs/verified ledger, which already holds $2.21 of v1 pilot and smoke spend; projected v2 spend about $4.3 for 60 runs."
+  ]
+}

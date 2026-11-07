@@ -346,5 +346,55 @@
    "sympy__sympy-13852",
    "sympy__sympy-21847"
   ]
+ },
+ "shared_subset_20": {
+  "size": 20,
+  "purpose": "Shared task list for the paired tool-access comparison: Kristjan runs the unrestricted writer (read/grep/glob), a teammate runs the restricted writer, on exactly these tasks.",
+  "method": "Same allocation rule and hash ordering applied with N=20; nested: contains the 10-task pilot subset and is contained in the 50-task sample.",
+  "allocation": {
+   "astropy/astropy": 1,
+   "django/django": 9,
+   "matplotlib/matplotlib": 1,
+   "pydata/xarray": 1,
+   "pylint-dev/pylint": 1,
+   "pytest-dev/pytest": 1,
+   "scikit-learn/scikit-learn": 1,
+   "sphinx-doc/sphinx": 2,
+   "sympy/sympy": 3
+  },
+  "instance_ids": [
+   "astropy__astropy-13398",
+   "django__django-12050",
+   "django__django-12965",
+   "django__django-13112",
+   "django__django-13516",
+   "django__django-14351",
+   "django__django-15525",
+   "django__django-15695",
+   "django__django-16100",
+   "django__django-16333",
+   "matplotlib__matplotlib-26291",
+   "pydata__xarray-3095",
+   "pylint-dev__pylint-8898",
+   "pytest-dev__pytest-6197",
+   "scikit-learn__scikit-learn-14496",
+   "sphinx-doc__sphinx-10449",
+   "sphinx-doc__sphinx-8056",
+   "sympy__sympy-13852",
+   "sympy__sympy-21847",
+   "sympy__sympy-22456"
+  ],
+  "new_vs_pilot": [
+   "astropy__astropy-13398",
+   "django__django-12965",
+   "django__django-13516",
+   "django__django-16100",
+   "django__django-16333",
+   "pydata__xarray-3095",
+   "pylint-dev__pylint-8898",
+   "pytest-dev__pytest-6197",
+   "sphinx-doc__sphinx-10449",
+   "sympy__sympy-22456"
+  ]
  }
 }

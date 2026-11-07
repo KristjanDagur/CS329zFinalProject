@@ -122,6 +122,19 @@ class VerifiedChecks(unittest.TestCase):
         self.assertEqual(sample['dataset_revision'], vp.PROTOCOL['dataset_revision'])
         self.assertTrue({t['repo'] for t in sample['tasks']} <= set(vp.PROTOCOL['source_roots']))
 
+    def test_v2_protocol_changes_only_the_task_list_and_cap(self):
+        v1p = json.loads((vp.ROOT / 'verified_protocol.json').read_text())
+        v2p = json.loads((vp.ROOT / 'verified_protocol_v2.json').read_text())
+        bookkeeping = {'protocol', 'status', 'derived_from', 'selection', 'changes_from_v1'}
+        self.assertEqual({k for k in set(v1p) | set(v2p) if v1p.get(k) != v2p.get(k)} - bookkeeping,
+                         {'sample', 'experiment_budget_usd'})
+        shared = vp.SAMPLE[v2p['sample']]['instance_ids']
+        self.assertEqual(len(shared), 20)
+        self.assertTrue(set(vp.SAMPLE['pilot_subset']['instance_ids']) <= set(shared)
+                        <= {t['instance_id'] for t in vp.SAMPLE['tasks']})
+        with patch.dict(vp.PROTOCOL, v2p):
+            self.assertEqual(vp.instance_ids(), shared)
+
     def test_image_setup_commit_permission_changes_are_not_content(self):
         a, b = 'a' * 40, 'b' * 40
         raw = (f':100644 100755 {a} {a} M\tdjango/conf/locale/af/LC_MESSAGES/django.mo\n'
