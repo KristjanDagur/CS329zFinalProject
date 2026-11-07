@@ -11,6 +11,8 @@ official fix changed. See localization_protocol.json (frozen before outcomes).
     python3 localization_study.py analyze   # offline scoring -> localization_evidence.json + report macros
     python3 localization_study.py run --candidates 24   # shortlist sweep (localization_sweep_protocol.json)
     python3 localization_study.py sweep     # offline scoring of shortlists 12/24/48 -> localization_sweep_evidence.json
+    python3 localization_study.py run-llm --model openai/gpt-6.1-sol   # LLM on Jev's 12 candidates (localization_llm_protocol.json)
+    python3 localization_study.py llm       # offline scoring of the LLM selectors -> localization_llm_evidence.json
     python3 localization_study.py archive   # package the records as localization_runs.zip
 
 analyze also works from a fresh clone: it restores the records from localization_runs.zip.
@@ -40,6 +42,7 @@ ROOT = Path(__file__).resolve().parent
 PROTOCOL = json.loads((ROOT / 'localization_protocol.json').read_text())
 PILOT = json.loads((ROOT / 'coding_protocol.json').read_text())
 SWEEP = json.loads((ROOT / 'localization_sweep_protocol.json').read_text())
+LLM = json.loads((ROOT / 'localization_llm_protocol.json').read_text())
 WORK = ROOT / '.runtime' / 'localization'
 TASKS = WORK / 'tasks.json'
 RUNS = WORK / 'runs'
@@ -609,10 +612,206 @@ def write_sweep_tex(evidence, sizes):
     (ROOT / 'report' / 'sweep_results.tex').write_text('\n'.join(lines) + '\n')
 
 
+# ------------------------------------------------------- LLM over 12 candidates ---
+
+def llm_slug(model):
+    return model.split('/')[-1]
+
+
+def llm_dir(model):
+    return WORK / f'runs-llm-{llm_slug(model)}'
+
+
+def llm_spend_file(model):
+    return WORK / f'spend-llm-{llm_slug(model)}.jsonl'
+
+
+def llm_spent():
+    total = 0.0
+    for model in LLM['models']:
+        path = llm_spend_file(model)
+        if path.exists():
+            total += sum(json.loads(l)['cost_usd'] for l in path.read_text().splitlines() if l.strip())
+    return total
+
+
+def llm_request(key, model, query, files):
+    """The Jev request's state and questions, given to a chat model as JSON."""
+    state = {'search_request': query, 'candidate_files': files}
+    questions = {f'file_{i}': {'type': 'noul', 'instructions': QUESTION.format(i=i, path=f['path'])}
+                 for i, f in enumerate(files)}
+    body = {'model': model, 'max_tokens': LLM['sampling']['max_tokens'],
+            'reasoning': {'effort': LLM['sampling']['reasoning_effort']}, 'usage': {'include': True},
+            'messages': [{'role': 'system', 'content': LLM['system_message']},
+                         {'role': 'user', 'content': json.dumps({'state': state, 'questions': questions})}]}
+    request = urllib.request.Request(API + '/v1/chat/completions', data=json.dumps(body).encode(),
+                                     headers={'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
+    try:
+        with urllib.request.urlopen(request, timeout=LLM['model_limits']['timeout_s']) as response:
+            return json.load(response)
+    except urllib.error.HTTPError as error:
+        raise RuntimeError(f'OpenRouter HTTP {error.code}') from None
+
+
+def parse_scores(text, count):
+    """A JSON object (optionally in one fenced block) with a probability in [0, 1] for every file_i."""
+    text = (text or '').strip()
+    fenced = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', text, flags=re.S)
+    obj = json.loads(fenced.group(1) if fenced else text)
+    scores = []
+    for i in range(count):
+        value = obj[f'file_{i}']
+        if isinstance(value, dict):  # tolerate {"noul": p}, the shape Jev returns
+            value = value.get('noul', value.get('probability'))
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 1:
+            raise ValueError(f'invalid probability for file_{i}')
+        scores.append(float(value))
+    return scores, sorted(range(count), key=lambda i: (-scores[i], i))[:PROTOCOL['selected_files']]
+
+
+def run_llm_one(task, key, model):
+    out = llm_dir(model) / f"{task['instance_id']}.json"
+    if out.exists() and json.loads(out.read_text()).get('state') == 'complete':
+        return 'cached'
+    base = json.loads((RUNS / f"{task['instance_id']}.json").read_text())  # the v1 record: Jev's exact candidates
+    files = base['candidates']
+    record = {'instance_id': task['instance_id'], 'repo': task['repo'], 'package_root': base['package_root'],
+              'model': model, 'candidates_from': 'localization-offline-v1 record', 'state': 'started', 'attempts': []}
+    for attempt in range(2):
+        with _spend_lock:
+            if llm_spent() + 0.05 > LLM['budget_usd']:
+                record['state'] = 'budget_stop'
+                break
+        started = time.time()
+        try:
+            response = llm_request(key, model, task['problem_statement'], files)
+            elapsed = round(time.time() - started, 3)
+            usage = response.get('usage', {}) or {}
+            cost = float(usage.get('cost') or 0.0)
+            with _spend_lock, llm_spend_file(model).open('a') as stream:
+                stream.write(json.dumps({'instance_id': task['instance_id'], 'cost_usd': cost,
+                                         'generation_id': response.get('id'), 'elapsed_s': elapsed}) + '\n')
+            text = response['choices'][0]['message'].get('content') or ''
+            try:
+                scores, chosen = parse_scores(text, len(files))
+            except Exception as error:
+                record['attempts'].append({'error': f'{type(error).__name__}: {error}', 'elapsed_s': elapsed,
+                                           'cost_usd': cost, 'reply': text[:2000]})
+                record['state'] = 'failed'
+                continue
+            record.update(state='complete', scores=scores, selected=[files[i]['path'] for i in chosen],
+                          cost_usd=cost, elapsed_s=elapsed, reply=text[:4000],
+                          usage={k: usage.get(k) for k in ('prompt_tokens', 'completion_tokens')},
+                          reasoning_tokens=(usage.get('completion_tokens_details') or {}).get('reasoning_tokens'),
+                          provider=response.get('provider'), generation_id=response.get('id'))
+            break
+        except Exception as error:  # recorded, never silently replaced by search
+            record['attempts'].append({'error': f'{type(error).__name__}: {error}', 'elapsed_s': round(time.time() - started, 3)})
+            record['state'] = 'failed'
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(record, indent=1))
+    return record['state']
+
+
+def run_llm(args):
+    key = os.environ.get('OPENROUTER_API_KEY', '').strip()
+    if not key:
+        raise SystemExit('Set OPENROUTER_API_KEY in the environment.')
+    if args.model not in LLM['models']:
+        raise SystemExit(f'Model {args.model} is not in the frozen protocol: {LLM["models"]}')
+    tasks = load_tasks()['tasks'][: args.limit or None]
+    states = collections.Counter()
+    started = time.time()
+    with concurrent.futures.ThreadPoolExecutor(LLM['model_limits']['concurrency']) as pool:
+        for state in pool.map(lambda t: run_llm_one(t, key, args.model), tasks):
+            states[state] += 1
+    print(dict(states), f'{args.model}: total LLM spend ${llm_spent():.4f} of ${LLM["budget_usd"]} in {time.time() - started:.0f} s')
+
+
+def llm_analyze():
+    meta = load_tasks()
+    rows = []
+    for task in meta['tasks']:
+        base = json.loads((RUNS / f"{task['instance_id']}.json").read_text())
+        gold = set(gold_files(task['patch'], base['package_root']))
+        if not gold:
+            continue
+        paths = [c['path'] for c in base['candidates']]
+        row = {'instance_id': task['instance_id'], 'repo': task['repo'], 'recall': bool(set(paths) & gold),
+               'search_hit': bool(set(paths[:3]) & gold),
+               'jev_hit': base['state'] == 'complete' and bool(set(base['selected']) & gold),
+               'jev_latency': base.get('elapsed_s'), 'jev_cost': base.get('cost_usd')}
+        for model in LLM['models']:
+            path = llm_dir(model) / f"{task['instance_id']}.json"
+            rec = json.loads(path.read_text()) if path.exists() else {'state': 'missing'}
+            ok = rec.get('state') == 'complete'
+            tag = llm_slug(model)
+            row[f'{tag}_hit'] = ok and bool(set(rec['selected']) & gold)
+            row[f'{tag}_all'] = ok and gold <= set(rec['selected'])
+            row[f'{tag}_state'] = rec.get('state')
+            row[f'{tag}_latency'] = rec.get('elapsed_s') if ok else None
+            row[f'{tag}_cost'] = sum([a.get('cost_usd', 0) for a in rec.get('attempts', [])] + [rec.get('cost_usd') or 0])
+            row[f'{tag}_reasoning'] = rec.get('reasoning_tokens') if ok else None
+        rows.append(row)
+    n = len(rows)
+    search = [r['search_hit'] for r in rows]
+    jev = [r['jev_hit'] for r in rows]
+    summary = {'n': n, 'search_hit_at_3': sum(search) / n, 'jev_hit_at_3': sum(jev) / n,
+               'jev_latency_median_s': quantile([r['jev_latency'] for r in rows if r['jev_latency'] is not None], .5),
+               'jev_cost_total_usd': sum(r['jev_cost'] or 0 for r in rows), 'models': {}}
+    with_gold = [r for r in rows if r['recall']]
+    for model in LLM['models']:
+        tag = llm_slug(model)
+        hits = [r[f'{tag}_hit'] for r in rows]
+        lat = [r[f'{tag}_latency'] for r in rows if r[f'{tag}_latency'] is not None]
+        reasoning = [r[f'{tag}_reasoning'] for r in rows if r[f'{tag}_reasoning'] is not None]
+        summary['models'][model] = {
+            'hit_at_3': sum(hits) / n, 'all_at_3': sum(r[f'{tag}_all'] for r in rows) / n,
+            'conditional_hit': sum(r[f'{tag}_hit'] for r in with_gold) / max(1, len(with_gold)),
+            'failed': sum(r[f'{tag}_state'] != 'complete' for r in rows),
+            'latency_median_s': quantile(lat, .5), 'latency_p90_s': quantile(lat, .9),
+            'cost_total_usd': sum(r[f'{tag}_cost'] for r in rows),
+            'reasoning_tokens_median': quantile(reasoning, .5) if reasoning else None,
+            'vs_search': paired(hits, search), 'vs_jev12': paired(hits, jev),
+            'by_repo': {repo: sum(r[f'{tag}_hit'] for r in rows if r['repo'] == repo) / sum(r['repo'] == repo for r in rows)
+                        for repo in sorted({r['repo'] for r in rows})}}
+    evidence = {'protocol': LLM['protocol'], 'summary': summary, 'spend_usd': llm_spent(), 'rows': rows}
+    (ROOT / 'localization_llm_evidence.json').write_text(json.dumps(evidence, indent=1))
+    write_llm_tex(summary)
+    print(f"{n} issues: search {pct(summary['search_hit_at_3'])}%  Jev {pct(summary['jev_hit_at_3'])}% "
+          f"(median {summary['jev_latency_median_s']:.2f}s, ${summary['jev_cost_total_usd']:.4f} total)")
+    for model, m in summary['models'].items():
+        vs, vj = m['vs_search'], m['vs_jev12']
+        print(f"{model:22s} hit@3 {pct(m['hit_at_3'])}%  all@3 {pct(m['all_at_3'])}%  cond {pct(m['conditional_hit'])}%  "
+              f"failed {m['failed']}  latency median {m['latency_median_s']}s p90 {m['latency_p90_s']}s  "
+              f"${m['cost_total_usd']:.4f}  reasoning tok median {m['reasoning_tokens_median']}")
+        print(f"   vs search {pct(vs['diff'])} pts CI [{pct(vs['ci95'][0])}, {pct(vs['ci95'][1])}] W/L {vs['wins']}/{vs['losses']} p={vs['sign_test_p']:.4f}"
+              f" | vs Jev {pct(vj['diff'])} pts CI [{pct(vj['ci95'][0])}, {pct(vj['ci95'][1])}] W/L {vj['wins']}/{vj['losses']} p={vj['sign_test_p']:.4f}")
+
+
+def write_llm_tex(summary):
+    macros = {'LlmN': summary['n'], 'LlmJevLat': f"{summary['jev_latency_median_s']:.2f}",
+              'LlmJevCost': f"{summary['jev_cost_total_usd']:.2f}"}
+    names = {'gpt-6.1-sol': 'Sol', 'gpt-6-luna': 'Luna'}
+    for model, m in summary['models'].items():
+        k = names.get(llm_slug(model), llm_slug(model))
+        macros.update({f'Llm{k}Hit': pct(m['hit_at_3']), f'Llm{k}Cond': pct(m['conditional_hit']),
+                       f'Llm{k}Lat': f"{m['latency_median_s']:.2f}" if m['latency_median_s'] is not None else 'n/a',
+                       f'Llm{k}Cost': f"{m['cost_total_usd']:.2f}", f'Llm{k}Failed': m['failed'],
+                       f'Llm{k}VsJev': pct(m['vs_jev12']['diff']), f'Llm{k}VsJevLow': pct(m['vs_jev12']['ci95'][0]),
+                       f'Llm{k}VsJevHigh': pct(m['vs_jev12']['ci95'][1]), f'Llm{k}VsJevWins': m['vs_jev12']['wins'],
+                       f'Llm{k}VsJevLosses': m['vs_jev12']['losses'],
+                       f'Llm{k}VsSearch': pct(m['vs_search']['diff'])})
+    lines = ['% Generated by localization_study.py llm; do not edit by hand.']
+    lines += [f'\\newcommand{{\\{k}}}{{{v}}}' for k, v in macros.items()]
+    (ROOT / 'report' / 'llm_results.tex').write_text('\n'.join(lines) + '\n')
+
+
 def archive():
     """Write localization_runs.zip: task metadata, every decision record and the spend log."""
     with zipfile.ZipFile(ROOT / 'localization_runs.zip', 'w', zipfile.ZIP_DEFLATED) as z:
         sweep = [p for size in SWEEP['candidate_sizes'] for p in [spend_file(size), *sorted(runs_dir(size).glob('*.json'))]]
+        sweep += [p for model in LLM['models'] for p in [llm_spend_file(model), *sorted(llm_dir(model).glob('*.json'))]]
         for path in [TASKS, SPEND, *sorted(RUNS.glob('*.json')), *sweep]:
             if not path.exists():
                 continue
@@ -631,8 +830,12 @@ def main():
     sub.add_parser('analyze')
     sub.add_parser('archive')
     sub.add_parser('sweep')
+    llm_parser = sub.add_parser('run-llm')
+    llm_parser.add_argument('--model', required=True)
+    llm_parser.add_argument('--limit', type=int, default=0)
+    sub.add_parser('llm')
     args = parser.parse_args()
-    {'prepare': lambda: prepare(), 'verify': lambda: verify(), 'run': lambda: run(args), 'analyze': lambda: analyze(), 'archive': lambda: archive(), 'sweep': lambda: sweep_analyze()}[args.command]()
+    {'prepare': lambda: prepare(), 'verify': lambda: verify(), 'run': lambda: run(args), 'analyze': lambda: analyze(), 'archive': lambda: archive(), 'sweep': lambda: sweep_analyze(), 'run-llm': lambda: run_llm(args), 'llm': lambda: llm_analyze()}[args.command]()
 
 
 if __name__ == '__main__':
