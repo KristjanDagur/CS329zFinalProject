@@ -1,8 +1,10 @@
-"""Analyze the protocol-v2 end-to-end agent runs (coding_protocol_v2.json).
+"""Analyze end-to-end agent runs of protocol v2 (default) or v3 (restricted writer).
 
-    python3 analyze_agent_runs.py            # -> agent_runs_evidence.json and report/agent_results.tex
+    python3 analyze_agent_runs.py                                  # v2 -> agent_runs_evidence.json, report/agent_results.tex
+    python3 analyze_agent_runs.py --protocol coding_protocol_v3.json  # v3 -> agent_runs_v3_evidence.json, report/agent_v3_results.tex
 
-Reads runs/coding-v2/*/result.json plus each run's localization, trace and patch.
+Reads <runs_dir>/<prefix>-*/result.json plus each run's localization, trace and patch. For v3 the
+time outcome is total_elapsed_s (file choice before launch plus agent time).
 Paired comparisons use only issues where both conditions completed. Standard library
 only; no model calls.
 """
@@ -11,13 +13,21 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 import random
 import re
 import statistics
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-PROTOCOL = json.loads((ROOT / 'coding_protocol_v2.json').read_text())
+PROTOCOL_FILE = sys.argv[sys.argv.index('--protocol') + 1] if '--protocol' in sys.argv else 'coding_protocol_v2.json'
+PROTOCOL = json.loads((ROOT / PROTOCOL_FILE).read_text())
+PREFIX = PROTOCOL.get('run_prefix', 'v2')
+V3 = PREFIX != 'v2'
+EVIDENCE = 'agent_runs_v3_evidence.json' if V3 else 'agent_runs_evidence.json'
+TEX = 'agent_v3_results.tex' if V3 else 'agent_results.tex'
+MACRO = 'Rs' if V3 else 'Ag'
+ARCHIVE = f"runs_{PROTOCOL['protocol']}.zip" if V3 else 'agent_runs_v2.zip'
 RUNS = ROOT / PROTOCOL['runs_dir']
 CACHE = ROOT / PROTOCOL['cache_dir']
 CONDITIONS = PROTOCOL['conditions']
@@ -38,6 +48,17 @@ def explorer_reported(run_dir):
             found |= {p for p in re.findall(r'(pydicom/[\w./-]+?\.py)', str(part['state'].get('output', '')))
                       if 'tests' not in p.split('/')}
     return found
+
+
+def denied_calls(run_dir):
+    """Tool calls the permission rules refused (the restriction biting)."""
+    count = 0
+    for line in (run_dir / 'events.jsonl').read_text().splitlines():
+        event = json.loads(line) if line.strip() else {}
+        state = (event.get('part') or {}).get('state') or {}
+        if event.get('type') == 'tool_use' and state.get('status') == 'error' and 'prevents you from using' in str(state.get('error', '')):
+            count += 1
+    return count
 
 
 def wilson(k, n, z=1.96):
@@ -64,16 +85,16 @@ def sign_test(wins, losses):
 
 
 def restore_from_archive():
-    """In a fresh clone, restore runs and task metadata from agent_runs_v2.zip (no model calls)."""
-    archive = ROOT / 'agent_runs_v2.zip'
-    if (CACHE / 'tasks.json').exists() or not archive.exists():
+    """In a fresh clone, restore runs and task metadata from the protocol's archive (no model calls)."""
+    archive = ROOT / ARCHIVE
+    if (RUNS.exists() and any(RUNS.glob(f'{PREFIX}-*/result.json'))) or not archive.exists():
         return
     import zipfile
     with zipfile.ZipFile(archive) as z:
         for name in z.namelist():
-            if name.startswith('runs/coding-v2/'):
+            if name.startswith(PROTOCOL['runs_dir'] + '/'):
                 z.extract(name, ROOT)
-            elif name.startswith('environment/'):
+            elif name.startswith('environment/') and not (CACHE / name.split('/', 1)[1]).exists():
                 target = CACHE / name.split('/', 1)[1]
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(z.read(name))
@@ -84,9 +105,12 @@ def load():
     rows = {r['instance_id']: r for r in json.loads((CACHE / 'tasks.json').read_text())}
     valid = json.loads((CACHE / 'environment_checks.json').read_text())
     runs = {}
-    for path in sorted(RUNS.glob('v2-*/result.json')):
+    for path in sorted(RUNS.glob(f'{PREFIX}-*/result.json')):
+        if 'stalled' in path.parent.name:  # preserved pre-amendment infrastructure failure, not a result
+            continue
         result = json.loads(path.read_text())
         run_dir = path.parent
+        result['agent_elapsed_s'] = result.get('total_elapsed_s', result['agent_elapsed_s'])
         gold = gold_files(rows[result['task']]['patch'])
         reported = explorer_reported(run_dir)
         edited = set(re.findall(r'^diff --git a/(\S+) b/', (run_dir / 'patch.diff').read_text(errors='replace'), flags=re.M))
@@ -95,6 +119,7 @@ def load():
                                            'writer_elapsed_s', 'evaluation_elapsed_s', 'timed_out', 'fallbacks',
                                            'explore_generation_calls', 'jev_calls', 'request_count', 'costs_complete')},
             'explorer_hit': bool(reported & gold), 'explorer_files': len(reported), 'patch_hit': bool(edited & gold),
+            'denied_tool_calls': denied_calls(run_dir),
             'gold': sorted(gold)}
     errors = sorted(p.name for p in RUNS.glob('*.batch-error.json'))
     return rows, valid, runs, errors
@@ -118,6 +143,8 @@ def summarize(runs, tasks):
             'patch_hit_rate': sum(r['patch_hit'] for r in group) / n if n else None,
             'timeouts': sum(bool(r['timed_out']) for r in group),
             'fallbacks': sum(r['fallbacks'] or 0 for r in group),
+            'denied_tool_calls': sum(r['denied_tool_calls'] for r in group),
+            'runs_with_denials': sum(r['denied_tool_calls'] > 0 for r in group),
         }
     return out
 
@@ -160,11 +187,12 @@ def main():
         'conditions': summarize(runs, complete),
         'comparisons': {f'{a}_vs_{b}': compare(runs, complete, a, b)
                         for a, b in [('jev', 'native'), ('search', 'native'), ('oracle', 'native'),
-                                     ('jev', 'search'), ('oracle', 'jev')]},
+                                     ('jev', 'search'), ('oracle', 'jev'), ('oracle', 'search')]
+                        if a in CONDITIONS and b in CONDITIONS},
         'by_localization': by_localization(runs, complete),
         'runs': {f'{t}|{c}': v for (t, c), v in sorted(runs.items())},
     }
-    (ROOT / 'agent_runs_evidence.json').write_text(json.dumps(evidence, indent=1))
+    (ROOT / EVIDENCE).write_text(json.dumps(evidence, indent=1))
     write_tex(evidence)
     print(f"{evidence['runs_completed']} runs; {len(complete)} of {len(valid_tasks)} valid issues complete in all "
           f"conditions; ${evidence['total_cost_usd']:.4f}; batch errors {len(errors)}")
@@ -184,6 +212,7 @@ def main():
               f"cost {v['cost_change_pct']:+.0f}% CI[{v['cost_diff_ci95'][0]:+.4f},{v['cost_diff_ci95'][1]:+.4f}] "
               f"time {v['time_change_pct']:+.0f}% ({v['time_diff_mean_s']:+.1f}s, CI[{v['time_diff_ci95'][0]:+.1f},{v['time_diff_ci95'][1]:+.1f}])")
     print('repairs by localization:', evidence['by_localization'])
+    print('refused tool calls:', {c: (s['denied_tool_calls'], s['runs_with_denials']) for c, s in evidence['conditions'].items()})
 
 
 def write_tex(evidence):
@@ -199,30 +228,35 @@ def write_tex(evidence):
     def fmt(x, digits=0):
         return 'n/a' if x is None else f'{x:.{digits}f}'
     c = evidence['comparisons']
+    m = MACRO
     macros = {
-        'AgFrozen': evidence['tasks_frozen'], 'AgValid': evidence['tasks_valid'],
-        'AgDropped': len(evidence['tasks_dropped']), 'AgComplete': evidence['tasks_complete_all_conditions'],
-        'AgRuns': evidence['runs_completed'], 'AgSpend': f"{evidence['total_cost_usd']:.2f}",
+        f'{m}Frozen': evidence['tasks_frozen'], f'{m}Valid': evidence['tasks_valid'],
+        f'{m}Dropped': len(evidence['tasks_dropped']), f'{m}Complete': evidence['tasks_complete_all_conditions'],
+        f'{m}Runs': evidence['runs_completed'], f'{m}Spend': f"{evidence['total_cost_usd']:.2f}",
     }
     for key, tag in [('jev_vs_native', 'JevNative'), ('search_vs_native', 'SearchNative'), ('jev_vs_search', 'JevSearch'),
-                     ('oracle_vs_native', 'OracleNative'), ('oracle_vs_jev', 'OracleJev')]:
+                     ('oracle_vs_native', 'OracleNative'), ('oracle_vs_jev', 'OracleJev'), ('oracle_vs_search', 'OracleSearch')]:
+        if key not in c:
+            continue
         v = c[key]
-        macros[f'Ag{tag}TimePct'] = fmt(v['time_change_pct'])
-        macros[f'Ag{tag}TimeS'] = fmt(v['time_diff_mean_s'], 1)
-        macros[f'Ag{tag}TimeLow'] = fmt(v['time_diff_ci95'][0], 1)
-        macros[f'Ag{tag}TimeHigh'] = fmt(v['time_diff_ci95'][1], 1)
-        macros[f'Ag{tag}CostPct'] = fmt(v['cost_change_pct'])
-        macros[f'Ag{tag}Wins'] = v['success_wins']
-        macros[f'Ag{tag}Losses'] = v['success_losses']
+        macros[f'{m}{tag}TimePct'] = fmt(v['time_change_pct'])
+        macros[f'{m}{tag}TimeS'] = fmt(v['time_diff_mean_s'], 1)
+        macros[f'{m}{tag}TimeLow'] = fmt(v['time_diff_ci95'][0], 1)
+        macros[f'{m}{tag}TimeHigh'] = fmt(v['time_diff_ci95'][1], 1)
+        macros[f'{m}{tag}CostPct'] = fmt(v['cost_change_pct'])
+        macros[f'{m}{tag}Wins'] = v['success_wins']
+        macros[f'{m}{tag}Losses'] = v['success_losses']
     for cond in CONDITIONS:
         s = evidence['conditions'][cond]
-        macros[f'Ag{cond.capitalize()}Passed'] = s['passed']
-        macros[f'Ag{cond.capitalize()}Time'] = fmt(s['time_mean_s'], 1)
-        macros[f'Ag{cond.capitalize()}Explore'] = fmt(s['explore_mean_s'], 1)
+        macros[f'{m}{cond.capitalize()}Passed'] = s['passed']
+        macros[f'{m}{cond.capitalize()}Time'] = fmt(s['time_mean_s'], 1)
+        macros[f'{m}{cond.capitalize()}Explore'] = fmt(s['explore_mean_s'], 1)
+        macros[f'{m}{cond.capitalize()}Hit'] = fmt(100 * s['explorer_hit_rate']) if s['runs'] else 'n/a'
+        macros[f'{m}{cond.capitalize()}Denied'] = s['runs_with_denials']
     lines = ['% Generated by analyze_agent_runs.py; do not edit by hand.']
     lines += [f'\\newcommand{{\\{k}}}{{{v}}}' for k, v in macros.items()]
-    lines.append('\\newcommand{\\AgentRows}{' + '\n'.join(rows) + '}')
-    (ROOT / 'report' / 'agent_results.tex').write_text('\n'.join(lines) + '\n')
+    lines.append('\\newcommand{\\' + ('RestrictedRows' if V3 else 'AgentRows') + '}{' + '\n'.join(rows) + '}')
+    (ROOT / 'report' / TEX).write_text('\n'.join(lines) + '\n')
 
 
 if __name__ == '__main__':

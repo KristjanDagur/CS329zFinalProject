@@ -38,7 +38,9 @@
    "explorer_hit_rate": 0.975609756097561,
    "patch_hit_rate": 0.9512195121951219,
    "timeouts": 0,
-   "fallbacks": 0
+   "fallbacks": 0,
+   "denied_tool_calls": 41,
+   "runs_with_denials": 41
   },
   "jev": {
    "runs": 41,
@@ -56,7 +58,9 @@
    "explorer_hit_rate": 0.926829268292683,
    "patch_hit_rate": 0.9512195121951219,
    "timeouts": 0,
-   "fallbacks": 0
+   "fallbacks": 0,
+   "denied_tool_calls": 42,
+   "runs_with_denials": 41
   },
   "search": {
    "runs": 41,
@@ -74,7 +78,9 @@
    "explorer_hit_rate": 0.6341463414634146,
    "patch_hit_rate": 0.9512195121951219,
    "timeouts": 0,
-   "fallbacks": 0
+   "fallbacks": 0,
+   "denied_tool_calls": 42,
+   "runs_with_denials": 41
   },
   "oracle": {
    "runs": 41,
@@ -92,7 +98,9 @@
    "explorer_hit_rate": 1.0,
    "patch_hit_rate": 0.9512195121951219,
    "timeouts": 0,
-   "fallbacks": 0
+   "fallbacks": 0,
+   "denied_tool_calls": 41,
+   "runs_with_denials": 41
   }
  },
  "comparisons": {
@@ -185,6 +193,24 @@
     -0.9130646849857507
    ],
    "time_change_pct": -9.289310368013485
+  },
+  "oracle_vs_search": {
+   "pairs": 41,
+   "success_wins": 0,
+   "success_losses": 1,
+   "success_sign_p": 1.0,
+   "cost_diff_mean_usd": 0.003935419512195124,
+   "cost_diff_ci95": [
+    -1.5253658536582275e-05,
+    0.008314295121951218
+   ],
+   "cost_change_pct": 4.53302232944501,
+   "time_diff_mean_s": -1.3631776647085734,
+   "time_diff_ci95": [
+    -3.151021997012743,
+    0.34977826715742305
+   ],
+   "time_change_pct": -4.744834865834747
   }
  },
  "by_localization": {
@@ -222,6 +248,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -242,6 +269,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -262,6 +290,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -282,6 +311,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -302,6 +332,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -323,6 +354,7 @@
    "explorer_hit": true,
    "explorer_files": 9,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -344,6 +376,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -365,6 +398,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -386,6 +420,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -406,6 +441,7 @@
    "explorer_hit": true,
    "explorer_files": 6,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -426,6 +462,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -446,6 +483,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 2,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -466,6 +504,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py"
@@ -487,6 +526,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py"
@@ -508,6 +548,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py"
@@ -529,6 +570,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py"
@@ -550,6 +592,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/data/data_manager.py",
     "pydicom/dataset.py",
@@ -575,6 +618,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/data/data_manager.py",
     "pydicom/dataset.py",
@@ -600,6 +644,7 @@
    "explorer_hit": true,
    "explorer_files": 6,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/data/data_manager.py",
     "pydicom/dataset.py",
@@ -625,6 +670,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/data/data_manager.py",
     "pydicom/dataset.py",
@@ -650,6 +696,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -670,6 +717,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -690,6 +738,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -710,6 +759,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -730,6 +780,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -751,6 +802,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -772,6 +824,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -793,6 +846,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py",
     "pydicom/values.py"
@@ -814,6 +868,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py",
     "pydicom/filewriter.py"
@@ -835,6 +890,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py",
     "pydicom/filewriter.py"
@@ -856,6 +912,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py",
     "pydicom/filewriter.py"
@@ -877,6 +934,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py",
     "pydicom/filewriter.py"
@@ -898,6 +956,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -918,6 +977,7 @@
    "explorer_hit": true,
    "explorer_files": 5,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -938,6 +998,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -958,6 +1019,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -978,6 +1040,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -998,6 +1061,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1018,6 +1082,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1038,6 +1103,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1058,6 +1124,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py",
@@ -1080,6 +1147,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py",
@@ -1102,6 +1170,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py",
@@ -1124,6 +1193,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/dataset.py",
@@ -1146,6 +1216,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -1166,6 +1237,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -1186,6 +1258,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -1206,6 +1279,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -1226,6 +1300,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/_version.py",
     "pydicom/filebase.py",
@@ -1248,6 +1323,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/_version.py",
     "pydicom/filebase.py",
@@ -1270,6 +1346,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/_version.py",
     "pydicom/filebase.py",
@@ -1292,6 +1369,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/_version.py",
     "pydicom/filebase.py",
@@ -1314,6 +1392,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1334,6 +1413,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1354,6 +1434,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1374,6 +1455,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1394,6 +1476,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1414,6 +1497,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1434,6 +1518,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1454,6 +1539,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1474,6 +1560,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 2,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1494,6 +1581,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1514,6 +1602,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1534,6 +1623,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1554,6 +1644,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/pixel_data_handlers/util.py"
    ]
@@ -1574,6 +1665,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/pixel_data_handlers/util.py"
    ]
@@ -1594,6 +1686,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/pixel_data_handlers/util.py"
    ]
@@ -1614,6 +1707,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/pixel_data_handlers/util.py"
    ]
@@ -1634,6 +1728,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1654,6 +1749,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1674,6 +1770,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1694,6 +1791,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -1714,6 +1812,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/encoders/base.py",
@@ -1740,6 +1839,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/encoders/base.py",
@@ -1766,6 +1866,7 @@
    "explorer_hit": true,
    "explorer_files": 7,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/encoders/base.py",
@@ -1792,6 +1893,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/encoders/base.py",
@@ -1818,6 +1920,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/datadict.py"
    ]
@@ -1838,6 +1941,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/datadict.py"
    ]
@@ -1858,6 +1962,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/datadict.py"
    ]
@@ -1878,6 +1983,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/datadict.py"
    ]
@@ -1898,6 +2004,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -1918,6 +2025,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -1938,6 +2046,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -1958,6 +2067,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -1978,6 +2088,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -1998,6 +2109,7 @@
    "explorer_hit": true,
    "explorer_files": 6,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -2018,6 +2130,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -2038,6 +2151,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -2058,6 +2172,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataset.py",
@@ -2080,6 +2195,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataset.py",
@@ -2102,6 +2218,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataset.py",
@@ -2124,6 +2241,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataset.py",
@@ -2146,6 +2264,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/values.py"
    ]
@@ -2166,6 +2285,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/values.py"
    ]
@@ -2186,6 +2306,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/values.py"
    ]
@@ -2206,6 +2327,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/values.py"
    ]
@@ -2226,6 +2348,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/uid.py"
    ]
@@ -2246,6 +2369,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/uid.py"
    ]
@@ -2266,6 +2390,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/uid.py"
    ]
@@ -2286,6 +2411,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/uid.py"
    ]
@@ -2306,6 +2432,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -2328,6 +2455,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -2350,6 +2478,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -2372,6 +2501,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -2394,6 +2524,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -2414,6 +2545,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -2434,6 +2566,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -2454,6 +2587,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filereader.py"
    ]
@@ -2474,6 +2608,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2494,6 +2629,7 @@
    "explorer_hit": true,
    "explorer_files": 5,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2514,6 +2650,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2534,6 +2671,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2554,6 +2692,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2574,6 +2713,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2594,6 +2734,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2614,6 +2755,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2634,6 +2776,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2654,6 +2797,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2674,6 +2818,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2694,6 +2839,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -2714,6 +2860,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/multival.py",
@@ -2736,6 +2883,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/multival.py",
@@ -2758,6 +2906,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/multival.py",
@@ -2780,6 +2929,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/multival.py",
@@ -2802,6 +2952,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -2822,6 +2973,7 @@
    "explorer_hit": true,
    "explorer_files": 5,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -2842,6 +2994,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": false,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -2862,6 +3015,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py"
    ]
@@ -2882,6 +3036,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2902,6 +3057,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2922,6 +3078,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2942,6 +3099,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/filewriter.py"
    ]
@@ -2962,6 +3120,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/jsonrep.py",
@@ -2984,6 +3143,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/jsonrep.py",
@@ -3006,6 +3166,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/jsonrep.py",
@@ -3028,6 +3189,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataelem.py",
     "pydicom/jsonrep.py",
@@ -3050,6 +3212,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filereader.py"
@@ -3071,6 +3234,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filereader.py"
@@ -3092,6 +3256,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filereader.py"
@@ -3113,6 +3278,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filereader.py"
@@ -3134,6 +3300,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -3154,6 +3321,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -3174,6 +3342,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -3194,6 +3363,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py"
    ]
@@ -3214,6 +3384,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py",
     "pydicom/values.py"
@@ -3235,6 +3406,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py",
     "pydicom/values.py"
@@ -3256,6 +3428,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py",
     "pydicom/values.py"
@@ -3277,6 +3450,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/valuerep.py",
     "pydicom/values.py"
@@ -3298,6 +3472,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -3318,6 +3493,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -3338,6 +3514,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -3358,6 +3535,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/charset.py"
    ]
@@ -3378,6 +3556,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataelem.py"
@@ -3399,6 +3578,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataelem.py"
@@ -3420,6 +3600,7 @@
    "explorer_hit": true,
    "explorer_files": 2,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataelem.py"
@@ -3441,6 +3622,7 @@
    "explorer_hit": false,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/config.py",
     "pydicom/dataelem.py"
@@ -3462,6 +3644,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -3484,6 +3667,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -3506,6 +3690,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -3528,6 +3713,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/dataset.py",
     "pydicom/filewriter.py",
@@ -3550,6 +3736,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -3570,6 +3757,7 @@
    "explorer_hit": true,
    "explorer_files": 4,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -3590,6 +3778,7 @@
    "explorer_hit": true,
    "explorer_files": 1,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
@@ -3610,6 +3799,7 @@
    "explorer_hit": true,
    "explorer_files": 3,
    "patch_hit": true,
+   "denied_tool_calls": 1,
    "gold": [
     "pydicom/encaps.py"
    ]
