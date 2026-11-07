@@ -60,7 +60,7 @@ The other protocols use the same commands with `--protocol coding_protocol_v2.js
 
 ## Reproduce the reported results offline (no API calls)
 
-Use Python 3.12 as shown: with older interpreters the rebuilt JSON can differ in the last floating-point digit.
+Each command rebuilds its evidence file and report macros from the committed archives. Every reported number matches; raw floating-point values in the JSON can differ from the committed files below 1e-14 because summation order is not fixed.
 
 | Result | Command | Output |
 |---|---|---|
