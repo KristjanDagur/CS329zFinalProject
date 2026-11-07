@@ -81,6 +81,15 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 - **Spend / jobs:** corrected pilot **$1.225791308 OpenRouter**; historical synthetic pilot $0.126075004; combined recorded project total **$1.351866312**. **$0 Tinker**, no training/checkpoints, no active paid jobs. These are recorded project expenses, not account-wide usage. The last key allowance snapshot before this pilot was $195.809830466; other account activity may affect it.
 - **Exact next action:** a teammate follows the setup above, runs `python3 build_coding_report.py` offline, then launches one fresh Jev run on task 1256 with a unique ID and checks its decision receipt, patch and 23 benchmark regression cases. Review the report against the actual results. Video work is deferred at the user’s request.
 
+### November 6 handoff — offline file-selection study (Omar, `omar`)
+
+- **Question:** does Jev choose the right files more often than search alone? Measured directly, without the coding agent, on all 225 SWE-bench dev issues (six repositories). Protocol `localization_protocol.json` was committed (4db00ca) before any Jev request.
+- **Result:** Jev hit@3 **85.3%** vs search **70.2%** (+15.1 points, 95% paired bootstrap 9.8 to 20.4; 38 wins vs 4 losses, sign test p < 0.001); 96% vs 79% when retrieval found a gold file. Retrieval recall@12 is 88.9%. In the 15 pilot runs every final patch edited the gold file, even when the explorer's report missed it, so end-to-end success hides localization quality.
+- **Verified:** the generalized retrieval reproduces all 10 archived pilot candidate lists exactly (`python3 localization_study.py verify`). Analysis reproduces offline from `localization_runs.zip` with `python3 localization_study.py analyze`.
+- **Spend:** $0.049086 for 225 Jev decisions, on the HW1 course OpenRouter key at the user's choice (team should confirm this is allowed); no failures or retries.
+- **Changed:** `localization_protocol.json`, `localization_study.py`, `localization_evidence.json`, `localization_runs.zip`, `report/localization_results.tex`, `report/coding_midpoint.tex`/`.pdf` (new metric, Table 2, revised control interpretation, uncertainty plan, AI disclosure), `docs/DATA_SOURCES.md`.
+- **Next action:** end-to-end runs on the 51 further pydicom dev issues under a new protocol version (needs `coding_probe.py prepare` generalized to the full dev split).
+
 ### November 6 handoff — Linux setup and `.env` key loading (Kristjan, `kristjan`)
 
 - Agreed with Rami: the team standardizes on Kristjan's machine (Arch Linux, system Python 3.14 for the orchestrator; uv-managed Python 3.12 evaluator venv). Added `requirements.txt` (exact freeze of the verified venv, same pins as `coding_protocol.json`), switched setup docs to uv, and added Python 3.14 to the CI matrix. Teammates: install uv and recreate `.runtime/coding-venv` with the commands above.

@@ -9,6 +9,9 @@ official fix changed. See localization_protocol.json (frozen before outcomes).
     python3 localization_study.py verify    # retrieval reproduces the pilot's archived candidates (free)
     python3 localization_study.py run       # one Jev decision per bug (paid, resumable, capped)
     python3 localization_study.py analyze   # offline scoring -> localization_evidence.json + report macros
+    python3 localization_study.py archive   # package the records as localization_runs.zip
+
+analyze also works from a fresh clone: it restores the records from localization_runs.zip.
 
 Standard library only. Gold patches are read only by the scorer.
 """
@@ -89,7 +92,16 @@ def prepare():
         print(f'  {name}: {sum(t["repo"] == name for t in tasks)} tasks, {len(missing)} commits fetched separately')
 
 
+def extract_archive():
+    """Restore tasks.json and the decision records from localization_runs.zip (no API, no clones)."""
+    archive = ROOT / 'localization_runs.zip'
+    if not TASKS.exists() and archive.exists():
+        with zipfile.ZipFile(archive) as z:
+            z.extractall(WORK)
+
+
 def load_tasks():
+    extract_archive()
     if not TASKS.exists():
         raise SystemExit('Run `python3 localization_study.py prepare` first.')
     return json.loads(TASKS.read_text())
@@ -425,7 +437,7 @@ def write_tex(evidence):
         'LocFailed': len(evidence['jev_failed']), 'LocRecall': pct(o['candidate_recall']),
         'LocSearch': pct(o['search_hit_at_3']), 'LocJev': pct(o['jev_hit_at_3']), 'LocRandom': pct(o['random_hit_at_3']),
         'LocCondN': o['conditional_n'], 'LocSearchCond': pct(o['search_conditional_hit']), 'LocJevCond': pct(o['jev_conditional_hit']),
-        'LocWins': o['jev_wins'], 'LocLosses': o['jev_losses'], 'LocP': f"{o['sign_test_p']:.3f}",
+        'LocWins': o['jev_wins'], 'LocLosses': o['jev_losses'], 'LocP': ('< 0.001' if o['sign_test_p'] < 0.001 else f"= {o['sign_test_p']:.3f}"),
         'LocDiff': pct(o['diff_hit_at_3']), 'LocLow': pct(o['diff_ci95'][0]), 'LocHigh': pct(o['diff_ci95'][1]),
         'LocSpend': f"{evidence['spend_usd']:.4f}",
         'PilotNativeExplorer': sum(r['explorer_hit'] for r in by_condition['native']),
@@ -439,6 +451,14 @@ def write_tex(evidence):
     (ROOT / 'report' / 'localization_results.tex').write_text('\n'.join(lines) + '\n')
 
 
+def archive():
+    """Write localization_runs.zip: task metadata, every decision record and the spend log."""
+    with zipfile.ZipFile(ROOT / 'localization_runs.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+        for path in [TASKS, SPEND, *sorted(RUNS.glob('*.json'))]:
+            z.write(path, path.relative_to(WORK).as_posix())
+    print('wrote localization_runs.zip')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest='command', required=True)
@@ -447,8 +467,9 @@ def main():
     run_parser = sub.add_parser('run')
     run_parser.add_argument('--limit', type=int, default=0, help='only the first N tasks (for a smoke test)')
     sub.add_parser('analyze')
+    sub.add_parser('archive')
     args = parser.parse_args()
-    {'prepare': lambda: prepare(), 'verify': lambda: verify(), 'run': lambda: run(args), 'analyze': lambda: analyze()}[args.command]()
+    {'prepare': lambda: prepare(), 'verify': lambda: verify(), 'run': lambda: run(args), 'analyze': lambda: analyze(), 'archive': lambda: archive()}[args.command]()
 
 
 if __name__ == '__main__':
