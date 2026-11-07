@@ -13,9 +13,9 @@ We replace one component of an existing coding agent, the repository-exploration
 | Verified pilot | 10 SWE-bench Verified tasks, official Docker grader | Native 9/10, Jev 9/10, search 8/10; Jev 48% cheaper than native; writer edited the gold file in all 30 runs. |
 | File-selection study | All 225 SWE-bench dev issues, 6 repositories | Jev picks a gold file in its top 3 for 85.3% of issues vs 70.2% for search (+15.1 points, 95% CI 9.8–20.4). |
 | Shortlist sweep | Same 225 issues, 24 and 48 candidates | 24 candidates: 90.2%, no latency tail; 48: 91.1% but 44/225 decisions take ~8 s. |
-| Restricted writer (v3, option A) | 41 pydicom issues; writer may only read/edit the chosen files | **In progress:** protocol frozen; the first smoke run stalled before any writer call (see status below). |
+| Restricted writer (v3, option A) | 41 pydicom issues; writer may only read/edit the files chosen before launch, no grep/glob | Oracle 16/41 > Jev 14/41 > search 11/41; a wrong file choice is now nearly always fatal (0/5 Jev and 1/13 search runs passed after a miss); search runs 6.9 s slower than Jev. Directions as expected but not yet significant (Jev vs search 4 wins/1 loss, p = 0.38). |
 
-Summary: replacing the generative explorer saves about a third of the time and cost without changing success, and Jev selects files better than search, but with free search tools the writer recovers from poor selections, so better selection does not yet change outcomes.
+Summary: replacing the generative explorer saves about a third of the time and cost without changing success, and Jev selects files better than search. With free search tools the writer recovers from poor selections, so selection quality does not change outcomes; once the writer is restricted to the chosen files, it does (oracle > Jev > search), although 41 issues are not yet enough for significance.
 
 ## Repository map
 
@@ -65,6 +65,7 @@ Use Python 3.12 as shown: with older interpreters the rebuilt JSON can differ in
 |---|---|---|
 | v1 development pilot | `uv run --no-project --python 3.12 python build_coding_report.py` | `coding_evidence.json`, `report/coding_results.tex` |
 | v2 extended run (41 issues, oracle, timing) | `uv run --no-project --python 3.12 python analyze_agent_runs.py` | `agent_runs_evidence.json`, `report/agent_results.tex` (restores from `agent_runs_v2.zip`) |
+| v3 restricted writer (41 issues) | `uv run --no-project --python 3.12 python analyze_agent_runs.py --protocol coding_protocol_v3.json` | `agent_runs_v3_evidence.json`, `report/agent_v3_results.tex` (restores from `runs_internal-explore-v3-restricted.zip`) |
 | File-selection study (225 issues) | `uv run --no-project --python 3.12 python localization_study.py analyze` | `localization_evidence.json`, `report/localization_results.tex` (restores from `localization_runs.zip`) |
 | Shortlist sweep (12/24/48) | `uv run --no-project --python 3.12 python localization_study.py sweep` | `localization_sweep_evidence.json`, `report/sweep_results.tex` |
 | Verified pilot | `uv run --no-project --python 3.12 python build_verified_report.py` | `verified_evidence.json`, `report/verified_results.tex` (needs the local `runs/verified/` directory; not yet archived) |
@@ -72,11 +73,11 @@ Use Python 3.12 as shown: with older interpreters the rebuilt JSON can differ in
 
 ## Current status (November 6)
 
-- **Done:** v1 pilot (15 runs), v2 extended run (164 runs), Verified pilot (30 runs), file-selection study and sweep (675 Jev decisions); combined midway report; 27 offline checks pass.
-- **In progress, option A (v3 restricted writer):** `coding_protocol_v3.json` is frozen. The first smoke run (`runs/coding-v3/v3-793-jev`, one Jev decision, $0.0002) stalled: OpenCode stopped after `init` and never created a session, for 480 s. Debug runs with a 90 s scratch protocol showed the stall also occurs with v2's exact permissions, so the restriction is not the cause; the leading suspect is the shared OpenCode state database (`.runtime/coding-xdg`, 162 MB after the v2 runs). Next: give each run its own OpenCode state directory and repeat the smoke run before the batch.
+- **Done:** v1 pilot (15 runs), v2 extended run (164 runs), v3 restricted run (123 runs), Verified pilot (30 runs), file-selection study and sweep (675 Jev decisions); combined midway report; 27 offline checks pass.
+- **Done, option A (v3 restricted writer):** 123 runs, $10.80, no errors. The first smoke run stalled because OpenCode's shared session database (162 MB after v2) blocked session creation; an amendment recorded before any v3 outcome gives each run its own OpenCode state directory, and the stalled run is preserved as `runs/coding-v3/v3-793-jev-stalled-before-amendment`. About 60% of runs in each condition attempted a refused read or search, so the restriction was exercised.
 - **Next, Verified arm of option A:** Kristjan's `shared_subset_20` (his sampling rule at N = 20: the 10 pilot tasks plus astropy-13398, django-12965/13516/16100/16333, pylint-8898, pytest-6197, sphinx-10449, sympy-22456, xarray-3095), both arms rerun from the same commit; needs Docker on the machine that runs it.
 - **Team decisions open:** (1) whether to move the v2/v3 runner code into a separate `coding_probe_v2.py` so the Verified runner's fingerprint of `coding_probe.py` stays unchanged; (2) whether the course-issued OpenRouter key is the intended key for project runs (Ómar's runs used it).
-- **Spend:** v1 $1.23 and synthetic pilot $0.13 (Rami); Verified $2.21 (Kristjan); file selection $0.29, v2 $16.71, v3 smoke and debug about $0.001 (Ómar).
+- **Spend:** v1 $1.23 and synthetic pilot $0.13 (Rami); Verified $2.21 (Kristjan); file selection $0.29, v2 $16.71, v3 $10.80 plus about $0.001 for the stalled smoke and debug runs (Ómar).
 
 ## Detailed handoff log
 
