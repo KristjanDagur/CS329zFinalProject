@@ -1,7 +1,7 @@
 # Rami's proposed workstream: BANKING77 intent decisions with agent escalation
 
 Date: November 12, 2026. Owner: Rami with Codex. Branch: `rami`.
-Status: recommendation and research plan, not an implemented experiment or frozen protocol. No paid calls or training were performed for this review. Teammates have not yet chosen their final individual workstreams. Review their choices before claiming exclusivity.
+Status: original recommendation, retained as planning history. Implementation is now authorized and underway; the current README and frozen JSON files supersede future-tense milestones below. Teammates have not yet chosen their final individual workstreams. Review their choices before claiming exclusivity.
 
 ## 1. What has changed on main
 
@@ -75,6 +75,18 @@ The common claim is: which generative decisions can a System One model replace, 
 
 Use common run fields: dataset/version/split, task ID, seed, condition, model/provider revisions, harness/source hash, decision/score/threshold, selected route, correctness, cost components, latency components, tool calls and failure category. Report each dataset's success and normalized cost relative to its strong baseline separately. Do not average coding repair success and intent accuracy into a single pooled percentage. Share the paper's methods/accounting conventions and merge the independent result sections/artifacts at the end.
 
-Before implementation, bring `rami` up to current `main` without losing any branch-only work. This review's connector could read but could not write/fast-forward the branch; no successful sync has been claimed. Documentation changes are isolated on `rami`; `main` and teammates' branches should remain untouched.
+`rami` was synchronized with the reviewed main through a branch-local merge on November 12. The Cal GitHub connector can read but cannot write; browser publication uses ramimrad. Main and teammates’ branches remain unchanged.
 
 Sources: [reviewed team main](https://github.com/KristjanDagur/CS329zFinalProject/tree/de2bf383af89a61753248f9638e308d190d096ee), [official BANKING77 source](https://github.com/PolyAI-LDN/task-specific-datasets/tree/57ec275d8078af65b7731c2a98be812d844a6d6b/banking_data), [BANKING77 paper](https://arxiv.org/abs/2003.04807), [CLINC150 source](https://github.com/clinc/oos-eval), [TypeSafe Choice](https://docs.typesafe.ai/primitives/choice), [Jev API guide](https://openrouter.ai/docs/guides/community/jev).
+
+## November 12 execution amendments (before test results)
+
+- Early integration checks were incorporated into development collection, as requested by Rami; there is no separate throwaway smoke-test milestone.
+- The first 30 paired CLI development cases are preserved as engineering diagnostics under signature `f1129bad6a8c26a1`. At eight simultaneous fresh processes, startup caused a 296-second batch and four conservatively reserved transport failures. These runs are not used as the final-method baseline.
+- Native OpenCode server mode replaced repeated CLI startup. The final baseline uses two isolated server databases, at most six fresh sessions per server, and a shared upstream concurrency bound of 24. Explicit per-task session titles prevent an irrelevant automatic title-generation call. This retains the native OpenCode tool loop; the host does not implement a generative loop. Sessions are deleted only after messages and metered receipts are saved. Support-only tools are the sole permitted agent tools.
+- Sixty paired development cases established the final baselines. A development-only validation correction accepted citations returned by either search_examples or lookup_intent while still requiring an actual search. The original validation and raw output are retained; no model replay was needed.
+- All 1,500 development Jev cases selected one threshold, 0.96, with 882 accepted and 25 errors. Independent certification on 1,464 examples accepted 872 with 34 errors, yielding a one-sided upper binomial error bound of 0.0515731. This **fails** the 0.05 target. There was no threshold search on certification.
+- The predeclared certified fallback uses threshold 1.01 and zero Jev acceptance. To fulfill the authorized full benchmark comparison, the original 0.96 candidate is retained as **uncertified**, with an explicit continuation amendment in intent_analysis_plan.json published before any test model queries. This supersedes the proposal’s stop condition for this fixed candidate only; it does not establish a risk guarantee or authorize searching for a better test threshold.
+- The final sample is all 3,080 official test examples. Measured paired development costs project $36.10, or $45.12 with 25% margin, within the $80 evaluation planning allowance and $120 overall ceiling. Frozen source hashes, model metadata, canonical revisions, test IDs, prompts, thresholds, analysis seeds, and certification counts are in intent_frozen.json, published at commit 2ff59fc before test collection.
+- All official test rows are retained. The source audit found 25 distinct normalized train/test overlaps, including 16 support/test overlaps. A secondary nonoverlap result will be reported. Training duplicates stay in one partition; one cross-label normalized group is retained and disclosed. Binomial bounds require independence/exchangeability assumptions that similar utterances and stratification may limit.
+- The dataset is attributed to PolyAI-LDN under its pinned CC BY 4.0 LICENSE. This is a closed-set public benchmark, not a claim about production banking, OOS rejection, or absence of model pretraining contamination.
