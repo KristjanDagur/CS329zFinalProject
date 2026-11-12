@@ -37,6 +37,11 @@ CACHE = ROOT / '.runtime/banking77'
 RUNS = ROOT / 'runs/intent'
 API = 'https://openrouter.ai/api'
 P = json.loads((ROOT / 'intent_protocol.json').read_text())
+DATA_SHA256 = {
+    'train.csv':'b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b',
+    'test.csv':'d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d',
+    'categories.json':'53261da888122daf2d120d925458631d9619e15d82e56052e7a42e535ce32b63',
+}
 
 
 def encoded(value):
@@ -78,6 +83,8 @@ def prepare():
             with urllib.request.urlopen(url, timeout=60) as response:
                 path.write_bytes(response.read())
         receipts[name] = dict(url=url, bytes=path.stat().st_size, sha256=digest(path.read_bytes()))
+        if receipts[name]['sha256'] != DATA_SHA256[name]:
+            raise RuntimeError('Pinned dataset checksum mismatch: '+name)
     labels = read(CACHE / 'categories.json')
     data = {}
     for split, expected in [('train', 10003), ('test', 3080)]:
@@ -162,6 +169,7 @@ class Ledger:
             con.execute('PRAGMA journal_mode=WAL')
             con.execute('CREATE TABLE IF NOT EXISTS calls (id TEXT PRIMARY KEY, job TEXT, phase TEXT, model TEXT, '
                         'reserved REAL, amount REAL, state TEXT, receipt TEXT)')
+            con.execute('CREATE INDEX IF NOT EXISTS calls_job ON calls(job)')
 
     def connection(self):
         return sqlite3.connect(self.path, timeout=60)
@@ -199,12 +207,14 @@ class Ledger:
         return [dict(r, receipt=json.loads(r['receipt'])) for r in rows]
 
     def status(self):
-        rows = self.records()
-        return dict(accounted_usd=sum(r['amount'] for r in rows),
-                    billed_usd=sum(r['amount'] for r in rows if r['state']=='complete'),
-                    reserved_usd=sum(r['amount'] for r in rows if r['state'] in ('reserved', 'unresolved')),
-                    calls=len(rows), states=dict(collections.Counter(r['state'] for r in rows)),
-                    phases={p: sum(r['amount'] for r in rows if r['phase']==p) for p in self.phases})
+        with self.connection() as con:
+            states=list(con.execute('SELECT state,COUNT(*),SUM(amount) FROM calls GROUP BY state'))
+            phases=dict(con.execute('SELECT phase,SUM(amount) FROM calls GROUP BY phase'))
+        return dict(accounted_usd=sum(r[2] for r in states),
+                    billed_usd=sum(r[2] for r in states if r[0]=='complete'),
+                    reserved_usd=sum(r[2] for r in states if r[0] in ('reserved','unresolved')),
+                    calls=sum(r[1] for r in states),states={r[0]:r[1] for r in states},
+                    phases={p:phases.get(p,0) for p in self.phases})
 
 
 def api(key, path, body=None):
@@ -287,6 +297,11 @@ class Collector:
         self.key = key
         self.protocol, self.save = P, dump
         self.catalog = read(CACHE / 'catalog.json')
+        if digest(self.catalog) != read(CACHE/'data_receipt.json')['catalog_hash']:
+            raise RuntimeError('Frozen catalog checksum mismatch')
+        for name,sha in DATA_SHA256.items():
+            if digest((CACHE/name).read_bytes()) != sha:
+                raise RuntimeError('Pinned data changed')
         self.retriever = Retriever(read(CACHE / 'support.json'))
         self.snapshot = read(RUNS / 'model_snapshot.json')
         self.signature = protocol_signature()
@@ -504,7 +519,7 @@ class Collector:
                 result = future.result()
                 completed.append(result)
                 failures += result['status']!='complete'
-                if len(completed)%10==0 or result['status']!='complete' or len(completed)==len(plan):
+                if len(completed)%100==0 or result['status']!='complete' or len(completed)==len(plan):
                     print(json.dumps(dict(done=len(completed),total=len(plan),failures=failures,
                         last={k:result.get(k) for k in ('id','condition','status','elapsed_s','cost_usd','error')},
                         wall_s=round(time.monotonic()-started,1),budget=self.ledger.status())),flush=True)
@@ -518,6 +533,31 @@ class Collector:
         self.native_pool.close()
         self.server.shutdown()
         self.server.server_close()
+
+    def live(self):
+        frozen=read(RUNS/'frozen_protocol.json')
+        assert frozen['signature']==self.signature
+        rows={r['id']:r for r in read(CACHE/'development.json')}
+        # Warm only the native runtime, without a model call; no queue in this check.
+        self.native_pool.start()
+        outputs=[]
+        for rid in frozen['analysis']['live_ids']:
+            out=self.base/'live'/rid/'routed.json'
+            if out.exists():
+                outputs.append(read(out))
+                continue
+            started=time.monotonic()
+            jev=self.run(rows[rid],'live','jev')
+            use_jev=accepted(jev,frozen['effective_threshold'])
+            agent=None if use_jev else self.run(rows[rid],'live','agent')
+            prediction=jev['prediction'] if use_jev else agent['prediction']
+            result=dict(id=rid,route='jev' if use_jev else 'agent',prediction=prediction,
+                        elapsed_s=time.monotonic()-started,cost_usd=jev['cost_usd']+(0 if use_jev else agent['cost_usd']),
+                        correct=prediction==rows[rid]['label'],signature=self.signature)
+            dump(out,result)
+            outputs.append(result)
+            print(json.dumps(result),flush=True)
+        dump(RUNS/'live_evidence.json',dict(note='12 predeclared development examples, serial live cascade; runtime warmed without model calls. Separate from paired test replay latency.',rows=outputs))
 
 
 def protocol_signature():
@@ -581,8 +621,14 @@ def freeze():
     ids = []
     for label in sorted({r['label'] for r in test}):
         ids += [r['id'] for r in ordered([r for r in test if r['label']==label],P['seed'])[:count//77]]
+    observed = collections.defaultdict(set)
+    for call in Ledger(RUNS/'ledger.sqlite3').records():
+        if call['job'].startswith(signature[:16]+'/') and call['state']=='complete':
+            observed[call['model']].add(call['receipt'].get('provider'))
     frozen = dict(signature=signature,source_sha256=digest(Path(__file__).read_bytes()),native_sha256=digest((ROOT/'intent_native.py').read_bytes()),
         harness_binary_sha256=digest((ROOT/'.runtime/opencode').read_bytes()),
+        observed_providers={m:sorted(str(p) for p in ps) for m,ps in observed.items()},
+        execution='OpenCode 1.19.5 native server, two isolated worker databases, up to six independent sessions per worker, explicit session titles, sessions deleted only after raw messages/receipts are saved; host model-request concurrency at most 24.',
         at=dt.datetime.now(dt.timezone.utc).isoformat(),protocol=P,
         data=read(CACHE/'data_receipt.json'),models=read(RUNS/'model_snapshot.json')['models'],
         selected_threshold=threshold,effective_threshold=effective,
@@ -620,7 +666,7 @@ def key_from_environment():
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['prepare','snapshot','collect','select','freeze','status','pack'])
+    parser.add_argument('action',choices=['prepare','snapshot','collect','select','freeze','status','pack','live'])
     parser.add_argument('--split',choices=['development','certification','test'],default='development')
     parser.add_argument('--conditions',nargs='+',choices=['jev','direct','agent'],default=['jev','direct','agent'])
     parser.add_argument('--limit',type=int,default=30,help='0 means the complete partition/frozen sample')
@@ -657,7 +703,10 @@ def main():
             fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
             collector=Collector(key_from_environment(),args.workers)
             try:
-                collector.collect(args.split,args.conditions,args.limit,args.workers,args.offset)
+                if args.action=='live':
+                    collector.live()
+                else:
+                    collector.collect(args.split,args.conditions,args.limit,args.workers,args.offset)
             finally:
                 collector.close()
 

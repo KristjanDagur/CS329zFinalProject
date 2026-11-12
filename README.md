@@ -1,10 +1,17 @@
-# Rami’s active BANKING77 experiment — November 12, 2026
+# Rami’s BANKING77 experiment — November 12, 2026
 
-> **Owner / branch:** Rami with Codex / `rami`; draft PR #3. User authorized implementation, early checks inside development collection, then the full frozen experiment with bounded parallel workers. OpenRouter ceiling: $120 total, including failures/reproduction; no Tinker training.
->
-> **Current work:** Branch synchronization is complete. Implemented a separate BANKING77 runner, native OpenCode retrieval tools, persistent native workers with fresh sessions, atomic parallel spending ledger, and seven offline checks. The first 30 paired development examples are collected and retained. Full test collection has not started. Current main code/results are preserved.
->
-> **Next action:** finish the concurrency measurement, collect all 1,500 development Jev predictions, then select one threshold and independently certify it on 1,464 examples. All examples and API receipts must be resumable. Final test examples remain sealed until the protocol and acceptance threshold are frozen. Teammates’ coding/Verified protocols and their source files are preserved. The proposal is [docs/RAMI_BANKING77_PLAN.md](docs/RAMI_BANKING77_PLAN.md); the standalone smoke-test milestone is superseded by the user’s instruction to integrate early checks into development.
+Owner: Rami with Codex. Branch: `rami`; draft PR #3. Main synchronized and preserved. User authorized the full experiment with bounded parallel collection and a $120 total OpenRouter ceiling; no Tinker training.
+
+Implemented `intent_probe.py`, `intent_native.py`, `intent_tools.js`, `intent_protocol.json`, and seven offline checks. Native OpenCode 1.19.5 runs two isolated server workers with fresh sessions (up to 12 concurrent agent sessions). Persistent workers reduced a 30-example baseline batch from 296 seconds to 29 seconds. An additional 30 examples confirmed bounded parallel collection; 60 paired development examples are retained. The full Jev development set (1,500) and independent certification set (1,464) are complete, with no API failures in those final collections.
+
+**Certification finding:** development selected max-probability threshold 0.96 (882/1,500 accepted; 25 errors). On independent certification it accepted 872/1,464 with 34 errors; the one-sided 95% binomial upper bound is **5.157%**, so the proposed 5% target **failed certification**. The certified fallback has zero Jev coverage and always escalates. Keep the fixed 0.96 candidate as an **uncertified** comparison; do not retune on certification or test. See `intent_analysis_plan.json` for the pre-test continuation amendment.
+
+**Frozen next stage:** all 3,080 official test examples, one Jev, one direct strong, and one native retrieval-agent trajectory each; routed policies reuse the paired trajectories. Development costs project $36.10 total final collection ($45.12 with 25% margin). Spending before test: $1.822 confirmed plus $0.156 conservatively reserved for four prototype transport failures; initial course-key balance $186.657. Current code and frozen settings are published before test queries; raw evidence will be packaged after collection. Formal test results do not exist yet.
+
+Data: official pinned BANKING77, about 1.08 MB; 7,039 support / 1,500 development / 1,464 certification / 3,080 test. Normalized duplicate groups stay together within training. Keep all official test rows; flag 16 normalized support/test overlaps and report a secondary nonoverlap metric. Source license: CC BY 4.0. Retrieval has support access only; no evaluator labels are sent to models.
+
+**Exact next action:** `python3 intent_probe.py collect --split test --limit 0 --workers 24`, with `OPENROUTER_API_KEY` loaded privately. Resume this command to skip completed results without paying again. Preserve all failures, the earlier development protocol, and the failed certification result. Then run the predeclared live development check, offline analysis, evidence packaging, and final README/report handoff. Teammates’ coding/Verified runners and frozen protocols are unchanged.
+
 
 ---
 

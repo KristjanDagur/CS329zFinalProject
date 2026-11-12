@@ -43,6 +43,9 @@ class NativePool:
             if self.started:
                 return
             p = self.collector.protocol
+            version=subprocess.run([str((self.root/'.runtime/opencode').resolve()),'--version'],capture_output=True,text=True,timeout=15,check=True).stdout.strip()
+            if version != p['opencode_version']:
+                raise RuntimeError('Unexpected OpenCode version: '+version)
             for n in range(self.count):
                 home = Path(self.temp.name)/str(n)
                 workspace=home/'workspace'
