@@ -1,0 +1,22 @@
+# Evaluator/test environment for the SWE-bench pydicom experiment (.runtime/coding-venv).
+# Reference machine: Arch Linux x86_64, system Python 3.14.9, uv 0.12.23 (verified 2026-11-06).
+#
+# Two interpreters are used:
+#   - Orchestrator (coding_probe.py, midpoint.py, tests): standard library only, no packages.
+#     Runs on the system python3; verified on 3.14 and 3.12.
+#   - This venv: MUST be Python 3.12. These pins match coding_protocol.json and the historical
+#     pydicom test suites (numpy<2 APIs, pytest 7 nose-style setup). numpy 1.26.4 has no wheels
+#     for Python >= 3.13, so do not install these into a newer interpreter.
+#
+# Setup (same commands on Linux and macOS; install uv first: https://docs.astral.sh/uv/):
+#   uv venv --python 3.12 .runtime/coding-venv
+#   uv pip install --python .runtime/coding-venv/bin/python -r requirements.txt
+#
+# Changing these versions changes the evaluator: treat it as a protocol change, not an upgrade.
+iniconfig==2.3.1
+numpy==1.26.4
+packaging==26.3
+pillow==11.3.0
+pluggy==1.7.0
+pytest==7.4.4
+setuptools==70.3.0

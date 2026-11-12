@@ -64,10 +64,38 @@ def api_request(path, key, payload=None):
         raise RuntimeError(f"OpenRouter HTTP {error.code}") from None
 
 
-def key_from_environment():
-    key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+def read_env_file(path, name):
+    """Return one variable from a dotenv-style file without exporting it.
+
+    The value is never placed in os.environ, so child processes (OpenCode,
+    task tests) cannot inherit it. Supports blank lines, # comments, an
+    optional `export ` prefix, and matching single/double quotes.
+    """
+    path = Path(path)
+    if not path.is_file():
+        return ""
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        variable, value = line.split("=", 1)
+        variable = variable.strip()
+        if variable.startswith("export "):
+            variable = variable[len("export "):].strip()
+        if variable != name:
+            continue
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
+            value = value[1:-1]
+        return value.strip()
+    return ""
+
+
+def key_from_environment(env_file=ROOT / ".env"):
+    """Read OPENROUTER_API_KEY from a shell override, else the project .env."""
+    key = os.environ.get("OPENROUTER_API_KEY", "").strip() or read_env_file(env_file, "OPENROUTER_API_KEY")
     if not key:
-        raise RuntimeError("Set OPENROUTER_API_KEY in your environment; no credentials are stored in this project.")
+        raise RuntimeError(f"Add OPENROUTER_API_KEY=... to {env_file} (gitignored); no credentials are stored in git.")
     return key
 
 
