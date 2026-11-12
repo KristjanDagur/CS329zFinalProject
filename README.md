@@ -1,3 +1,15 @@
+> **Rami workstream handoff — November 12, 2026 (proposal completed)**
+>
+> **Owner / branch:** Rami with Codex / `rami`. Reviewed current `main` at `de2bf383af89a61753248f9638e308d190d096ee`: official Verified pilot, 41-issue v2/v3 runs, 225-issue localization/sweeps/LLM baselines, updated runner and evidence. These records were inspected, not independently rerun this session.
+>
+> **Recommended individual experiment:** [BANKING77 intent decisions with retrieval-agent escalation](docs/RAMI_BANKING77_PLAN.md), returning to the original proposal after the initial coding-harness evidence. Official data: 77 intents, 10,003 train / 3,080 test examples; file metadata totals 1,081,070 bytes. Compare Jev-only, direct strong classification, a real tool-using agent, confidence-gated escalation and random acceptance at matched coverage. Teammates have not chosen their individual final workstreams yet.
+>
+> **Done:** reviewed 31 new main commits / 38 changed paths, checked the committed evidence and official dataset/API documentation, and wrote the end-to-end plan with split isolation, acceptance-risk evaluation, budget gates, baselines and common result fields. **Spend this session:** $0 OpenRouter / $0 Tinker; no new runs, training or checkpoints. Proposed OpenRouter ceiling is $120 including contingency; verify actual allowance and smoke-run prices before execution.
+>
+> **Remaining / exact next action:** settle the team's individual choices, then bring `rami` up to current `main` before implementing a separate intent adapter and frozen protocol. This branch's runner code still predates the teammates' updates: the connector's write/sync attempts were denied, so no successful synchronization is claimed. The earlier README below is historical for this branch; use [current main](https://github.com/KristjanDagur/CS329zFinalProject/tree/main) for the latest coding results. BANKING77 is a proposal, not implemented or evaluated yet. CLINC150 remains an optional later transfer/OOS study; video remains deferred.
+>
+> **Files changed in this handoff:** this README and `docs/RAMI_BANKING77_PLAN.md`. Main, teammates' branches, frozen runner/protocol files and past experiment results were not edited.
+
 > **Integration handoff — November 6, 2026:** Rami authorized merging this implementation into `main`. Keep `rami` for subsequent development. The real-bug pilot is complete: 15 runs, preserved receipts/failures, four-page report draft, and passing offline checks. Remaining: teammate reproduction and report review; video work is deferred. No additional paid experiments are needed for this merge.
 
 # CS329Z Final Project — Rami’s coding experiment
@@ -259,3 +271,4 @@ User-reported allocations remain **$750 Tinker + $600 OpenRouter** across three 
 Update the current state and append a dated entry in every work PR and before handoff. Record completed work with evidence, active owners/branches, remaining dependencies, checks and outcomes, run/checkpoint/artifact locations, spend, blockers, and one exact next action. Distinguish implementation from experiments, local from published files, draft artifacts from submissions, and empirical estimates from guarantees.
 
 </details>
+
