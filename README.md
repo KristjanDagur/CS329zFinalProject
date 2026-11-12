@@ -2,9 +2,9 @@
 
 > **Owner / branch:** Rami with Codex / `rami`; draft PR #3. User authorized implementation, early checks inside development collection, then the full frozen experiment with bounded parallel workers. OpenRouter ceiling: $120 total, including failures/reproduction; no Tinker training.
 >
-> **Current work:** synchronize the branch with main (`de2bf383af89a61753248f9638e308d190d096ee`), implement a separate intent runner and training-only retrieval tools, validate native/direct baselines, measure throughput, select/certify one threshold, and evaluate the frozen BANKING77 test set. The official 1.08 MB data is downloaded. No model calls have been made yet in this workstream.
+> **Current work:** Branch synchronization is complete. Implemented a separate BANKING77 runner, native OpenCode retrieval tools, persistent native workers with fresh sessions, atomic parallel spending ledger, and seven offline checks. The first 30 paired development examples are collected and retained. Full test collection has not started. Current main code/results are preserved.
 >
-> **Next action:** finish integration, validate data isolation/evaluation, then start bounded development runs. All examples and API receipts must be resumable. Final test examples remain sealed until the protocol and acceptance threshold are frozen. Teammates’ coding/Verified protocols and their source files are preserved. The proposal is [docs/RAMI_BANKING77_PLAN.md](docs/RAMI_BANKING77_PLAN.md); the standalone smoke-test milestone is superseded by the user’s instruction to integrate early checks into development.
+> **Next action:** finish the concurrency measurement, collect all 1,500 development Jev predictions, then select one threshold and independently certify it on 1,464 examples. All examples and API receipts must be resumable. Final test examples remain sealed until the protocol and acceptance threshold are frozen. Teammates’ coding/Verified protocols and their source files are preserved. The proposal is [docs/RAMI_BANKING77_PLAN.md](docs/RAMI_BANKING77_PLAN.md); the standalone smoke-test milestone is superseded by the user’s instruction to integrate early checks into development.
 
 ---
 
