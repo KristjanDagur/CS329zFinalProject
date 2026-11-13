@@ -17,6 +17,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Offline correctness checks (no API key or model calls)
         run: python -m unittest -v test_midpoint.py test_coding_probe.py test_verified_probe.py
+      - name: Prepare pinned BANKING77 data (download only, no model calls)
+        run: python intent_probe.py prepare
+      - name: BANKING77 split, concurrency, routing, resume, and analysis checks
+        run: python -m unittest -v test_intent_probe.py test_intent_analysis.py
       - name: Validate all synthetic fixture graders
         run: python midpoint.py verify-fixtures
       - name: Reproduce the frozen real-bug evidence offline
