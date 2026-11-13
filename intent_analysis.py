@@ -138,11 +138,17 @@ def evaluate():
             values['random_matched_seed32977']=v
     all_metrics={c:metrics(gold,v['pred'],v['cost'],v['latency'],labels,v['calls']) for c,v in values.items()}
     # A free nearest-example reference, declared optional in the original plan.
-    retriever=i.Retriever(i.read(i.CACHE/'support.json'))
-    bm25=[]
-    for row in rows:
-        hits=retriever.search(row['text'],1)
-        bm25.append(hits[0]['intent'] if hits else None)
+    bm25_path=i.RUNS/'bm25_reference.json'
+    if bm25_path.exists():
+        cached=i.read(bm25_path)
+        assert cached['signature']==frozen['signature'] and cached['ids']==[r['id'] for r in rows]
+        bm25=cached['predictions']
+    else:
+        retriever=i.Retriever(i.read(i.CACHE/'support.json'))
+        hits=[retriever.search(row['text'],1) for row in rows]
+        bm25=[h[0]['intent'] if h else None for h in hits]
+        i.dump(bm25_path,dict(signature=frozen['signature'],ids=[r['id'] for r in rows],
+            predictions=bm25,hits=hits,note='Optional zero-inference-cost lexical reference. Saved first-pass retrieval output is replayed to preserve float/tie behavior across Python hash seeds.'))
     all_metrics['bm25_nearest']=metrics(gold,bm25,[0]*len(rows),[0]*len(rows),labels)
     paired=paired_bootstrap(rows,gold,values,'agent',frozen['analysis']['bootstrap_replicates'],frozen['analysis']['bootstrap_seed'])
     valid_indices=[n for n,r in enumerate(records['jev']) if r['status']=='complete']
@@ -177,6 +183,19 @@ def evaluate():
                  jev_accepted=mask[n],support_overlap=n not in clean) for n,r in enumerate(rows)
             if values['candidate_uncertified']['pred'][n]!=gold[n]]
     provider_counts=collections.Counter((c['model'],c['receipt'].get('provider')) for c in calls if c['job'].startswith(frozen['signature'][:16]+'/test/') and c['state']=='complete')
+    token_usage={c:collections.Counter() for c in ('jev','direct','agent')}
+    for call in calls:
+        if not call['job'].startswith(frozen['signature'][:16]+'/test/'):
+            continue
+        c=call['job'].rsplit('/',1)[1]
+        usage=call['receipt'].get('usage',{})
+        totals=token_usage[c]
+        totals['requests']+=1
+        totals['input_tokens']+=usage.get('prompt_tokens',usage.get('input_tokens',0))
+        totals['output_tokens']+=usage.get('completion_tokens',usage.get('output_tokens',0))
+        totals['cached_input_tokens']+=usage.get('prompt_tokens_details',{}).get('cached_tokens',0)
+        totals['cache_write_tokens']+=usage.get('prompt_tokens_details',{}).get('cache_write_tokens',0)
+        totals['reasoning_tokens']+=usage.get('completion_tokens_details',{}).get('reasoning_tokens',0)
     result=dict(dataset='BANKING77',signature=frozen['signature'],n=len(rows),certification=frozen['certification'],
         effective_certified_threshold=frozen['effective_threshold'],candidate_threshold=candidate_threshold,
         candidate_certified=False,metrics=all_metrics,paired_vs_agent=paired,
@@ -193,6 +212,7 @@ def evaluate():
             candidate_agent_disagreements=disagreements),confusions=confusions,
         errors=errors,reconciliation=reconcile,research_spending=spending,
         providers=[dict(model=m,provider=p,n=n) for (m,p),n in provider_counts.items()],
+        token_usage={c:dict(v) for c,v in token_usage.items()},
         candidate_targets=dict(certified_5pct_risk=False,
             cost_reduction=1-candidate['mean_usd']/baseline['mean_usd'],
             cost_reduction_at_least_30pct=candidate['mean_usd']<=.7*baseline['mean_usd'],
@@ -206,6 +226,7 @@ def evaluate():
             'Replay/load elapsed times include concurrency and queue effects; they are not measured deployed-cascade latency. Serial live development results are separate.',
             'Prompts/catalog and native-agent overhead differ from the direct baseline by design. A cascade must be assessed against direct strong as well as the agent.',
             'Costs are observed OpenRouter charges including cache/reasoning where billed; unresolved transport attempts remain conservatively reserved.',
+            'Stored tool traces reproduce the actual retrieval decisions. Floating-point lexical ties and model sampling can vary in a new live run; reproduction of reported numbers uses the saved trajectories.',
         ])
     live_path=i.RUNS/'live_evidence.json'
     if live_path.exists():
@@ -225,12 +246,15 @@ def write_report(e):
     lines=['# BANKING77 results','',
         'Rami’s individual experiment. All 3,080 official test examples; settings frozen before test collection. '
         'The fixed 0.96 cascade is **uncertified**: independent certification gave a 5.157% one-sided upper error bound, exceeding the 5% target. '
-        'The predeclared certified fallback always invokes the agent.','',
+        'No positive-coverage Jev policy was certified. The predeclared fallback always invokes the agent; the certification test does not certify the agent’s own error rate.','',
         '| Condition | Correct / 3,080 | Accuracy | Macro-F1 | Mean USD |',
         '|---|---:|---:|---:|---:|']
     for c in ('jev','direct','agent','candidate_uncertified','certified_fallback','random_matched_seed32977','bm25_nearest'):
         r=m[c]
-        lines.append(f"| {c} | {r['correct']} | {r['accuracy']:.2%} | {r['macro_f1']:.4f} | ${r['mean_usd']:.6f} |")
+        label={'jev':'Jev only','direct':'Strong direct','agent':'Native retrieval agent',
+               'candidate_uncertified':'0.96 cascade (uncertified)','certified_fallback':'Default all-agent fallback + Jev overhead',
+               'random_matched_seed32977':'Matched random acceptance (seed 32977)','bm25_nearest':'Nearest support example (BM25)'}[c]
+        lines.append(f"| {label} | {r['correct']} | {r['accuracy']:.2%} | {r['macro_f1']:.4f} | ${r['mean_usd']:.6f} |")
     a=e['candidate_acceptance']; target=e['candidate_targets'];pair=e['paired_vs_agent']['candidate_uncertified']
     lines += ['',f"The fixed candidate accepted {a['n']}/{e['n']} ({a['coverage']:.1%}), with {a['errors']} accepted errors ({a['risk']:.2%}). "
         f"Its observed cost reduction against the always-agent condition was {target['cost_reduction']:.1%}. "
@@ -245,9 +269,10 @@ def write_report(e):
         '',f"Actual research spending, including development/prototype attempts: ${e['research_spending']['billed_usd']:.4f} confirmed "
         f"plus ${e['research_spending']['reserved_usd']:.4f} unresolved reservations. Deployment policy costs in the table count only the calls that policy uses, not every research comparator.",
         '', '## Interpretation and limitations','']
+    lines += ['Observed prompt-cache exposure is part of the measured cost comparison. Token and reasoning totals are recorded per condition in `intent_evidence.json`; do not interpret these batch prices as uncached API prices.','']
     lines += ['- '+t for t in e['limitations']]
     lines += ['', '## Reproduction','',
-        'Prepare the pinned official data, unpack `intent_runs.zip` into the repository root, and run `python3 intent_analysis.py`. '
+        'Prepare the pinned official data, unpack `intent_runs.tar.xz` into the repository root, and run `python3 intent_analysis.py`. '
         'No API key or model calls are needed for analysis. `intent_evidence.json` contains the full metrics, uncertainties, confusion pairs, error rows, provider counts and cost reconciliation.',
         '', '## AI-use and authorship','',
         'Rami selected this workstream and directed the implementation and evaluation. Codex implemented the runner, checks, data collection, analysis, and this draft report text. '
