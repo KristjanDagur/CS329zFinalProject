@@ -21,6 +21,10 @@ jobs:
         run: python intent_probe.py prepare
       - name: BANKING77 split, concurrency, routing, resume, and analysis checks
         run: python -m unittest -v test_intent_probe.py test_intent_analysis.py
+      - name: Install pinned optional statistics dependencies
+        run: python -m pip install -r requirements-intent-stats.txt
+      - name: Paired statistical tests and randomization checks (no API calls)
+        run: python -m unittest -v test_intent_significance.py
       - name: Validate all synthetic fixture graders
         run: python midpoint.py verify-fixtures
       - name: Reproduce the frozen real-bug evidence offline
