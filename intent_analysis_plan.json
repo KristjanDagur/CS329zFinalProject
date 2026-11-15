@@ -1,0 +1,77 @@
+{
+  "frozen_at": "2026-11-12T23:49:11.369212+00:00",
+  "test_queries_before_amendment": 0,
+  "reason": "User authorized the full experiment. Independent certification narrowly failed; retain the original development-selected 0.96 candidate without retuning. Complete the paired benchmark to report its cost/quality tradeoff as an uncertified candidate, alongside the predeclared zero-coverage certified fallback. This supersedes the proposal stop condition for this one fixed candidate, within the same budget.",
+  "primary_certified_policy": {
+    "threshold": 1.01,
+    "positive_coverage": false,
+    "certification": "Failed at candidate threshold; all-agent fallback only."
+  },
+  "fixed_uncertified_candidate": {
+    "threshold": 0.96,
+    "selected_on": "development only",
+    "certification_upper": 0.05157311461214539,
+    "claim": "No 5% risk guarantee; no threshold tuning on certification or test."
+  },
+  "comparisons": [
+    "Jev only",
+    "strong direct",
+    "strong native retrieval agent",
+    "certified all-agent fallback (Jev overhead counted)",
+    "fixed 0.96 candidate cascade (uncertified)",
+    "random acceptance matched to the 0.96 candidate"
+  ],
+  "uncertainty": {
+    "accuracy_margin": 0.02,
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 32977,
+    "conditions": [
+      "jev",
+      "direct",
+      "agent",
+      "hybrid",
+      "random_matched"
+    ],
+    "cost_reduction_target": 0.3,
+    "failures": "Count all frozen examples, including invalid output, timeout, provider errors, and missing predictions, as incorrect. Costs include all attempts and conservative unresolved reservations.",
+    "live_ids": [
+      "train-08518",
+      "train-09789",
+      "train-01812",
+      "train-04242",
+      "train-02196",
+      "train-09561",
+      "train-03163",
+      "train-07332",
+      "train-01728",
+      "train-07324",
+      "train-07488",
+      "train-04889"
+    ],
+    "paired_bootstrap": "Stratified by intent, same resampled IDs for all policies; one-sided 95% lower accuracy-difference bound for the 2-point target.",
+    "random_seeds": [
+      32977,
+      32978,
+      32979,
+      32980,
+      32981,
+      32982,
+      32983,
+      32984,
+      32985,
+      32986,
+      32987,
+      32988,
+      32989,
+      32990,
+      32991,
+      32992,
+      32993,
+      32994,
+      32995,
+      32996
+    ],
+    "risk_target": 0.05
+  },
+  "data_license": "PolyAI-LDN task-specific-datasets pinned repository LICENSE: CC BY 4.0; source utterances retained under that license."
+}
