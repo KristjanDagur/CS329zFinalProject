@@ -1,3 +1,90 @@
+# CS329Z Final Project: Replacing Repository Exploration with Jev Decisions
+
+Team: Kristjan Dagur Egilsson, Ómar Ingi Halldórsson, Rami Ratl Mrad.
+
+We replace one component of an existing coding agent, the repository-exploration subagent of [OpenCode](https://github.com/anomalyco/opencode) 1.19.5, with deterministic file retrieval plus one typed **Jev** decision that picks the files to inspect, and measure repair success, cost and time on real SWE-bench issues. The same strong model (`openai/gpt-6.1-sol`) writes every patch. The midway report is [`report/coding_midpoint.pdf`](report/coding_midpoint.pdf).
+
+## Results at a glance
+
+| Experiment | Data | Finding |
+|---|---|---|
+| Development pilot (v1) | 5 pydicom issues, SWE-bench Lite dev | Native, Jev and search each fixed 2/5; Jev cheaper than native. |
+| Extended development run (v2) | 41 pydicom issues, SWE-bench dev; native, Jev, search, **oracle** | Jev 35% faster (−16.3 s per issue, 95% CI −19.1 to −13.7) and 35% cheaper than native; success unchanged (18–21/41) in every condition, oracle included. |
+| Verified pilot | 10 SWE-bench Verified tasks, official Docker grader | Native 9/10, Jev 9/10, search 8/10; Jev 48% cheaper than native; writer edited the gold file in all 30 runs. |
+| File-selection study | All 225 SWE-bench dev issues, 6 repositories | Jev picks a gold file in its top 3 for 85.3% of issues vs 70.2% for search (+15.1 points, 95% CI 9.8–20.4). |
+| Shortlist sweep | Same 225 issues, 24 and 48 candidates | 24 candidates: 90.2%, no latency tail; 48: 91.1% but 44/225 decisions take ~8 s. |
+| LLM selectors | Same 225 issues and Jev's exact 12 candidates and questions | gpt-6-luna 85.8% (ties Jev) and GPT-6.1-Sol 88.0% (+2.7 points over Jev, 95% CI 0.4–5.3), but 5–6× slower per decision (1.5–1.8 s vs 0.29 s); Sol costs 58× as much. |
+| Restricted writer (v3, option A) | 41 pydicom issues; writer may only read/edit the files chosen before launch, no grep/glob | Oracle 16/41 > Jev 14/41 > search 11/41; a wrong file choice is now nearly always fatal (0/5 Jev and 1/13 search runs passed after a miss); search runs 6.9 s slower than Jev. Directions as expected but not yet significant (Jev vs search 4 wins/1 loss, p = 0.38). |
+
+Summary: replacing the generative explorer saves about a third of the time and cost without changing success, and Jev selects files better than search, about as well as a cheap LLM and nearly as well as a strong one, at a fraction of their latency. With free search tools the writer recovers from poor selections, so selection quality does not change outcomes; once the writer is restricted to the chosen files, it does (oracle > Jev > search), although 41 issues are not yet enough for significance.
+
+## Repository map
+
+| Path | What it is |
+|---|---|
+| `coding_probe.py` | Runner for the development experiments: `prepare`, `check`, `snapshot`, `run`, `batch`, `pack`. `--protocol FILE` selects v1 (default), v2 or v3. |
+| `coding_protocol.json`, `coding_protocol_v2.json`, `coding_protocol_v3.json` | Frozen protocols (v1 pilot, v2 extended run with oracle and timing, v3 restricted writer). |
+| `verified_probe.py`, `verified_protocol.json`, `verified_sample.json` | SWE-bench Verified runner (official Docker harness), protocol and frozen 50-task sample. |
+| `localization_study.py`, `localization_protocol.json`, `localization_sweep_protocol.json`, `localization_llm_protocol.json` | Offline file-selection study, shortlist sweep and LLM-selector baselines. |
+| `analyze_agent_runs.py` | Analysis of the v2 extended run. |
+| `build_coding_report.py`, `build_verified_report.py` | Frozen analyses of the v1 and Verified pilots. |
+| `*_evidence.json`, `*.zip` | Computed results and portable run archives (receipts, patches, test logs, traces). |
+| `report/` | Midway report (`coding_midpoint.tex`) and generated result macros (`*_results.tex`). |
+| `test_*.py` | Offline checks (27), run by CI. |
+
+## Quick start
+
+Requirements: Git, [uv](https://docs.astral.sh/uv/), an OpenRouter API key, macOS or Linux. The orchestration scripts use only the Python standard library; `uv` supplies Python 3.12 for them and for the evaluator environment.
+
+```bash
+git clone https://github.com/KristjanDagur/CS329zFinalProject.git && cd CS329zFinalProject
+echo 'OPENROUTER_API_KEY=your-key-here' > .env            # gitignored; never commit it
+uv run --no-project --python 3.12 python bootstrap.py      # pinned OpenCode 1.19.5, SHA-512 verified
+uv venv --python 3.12 .runtime/coding-venv
+uv pip install --python .runtime/coding-venv/bin/python -r requirements.txt
+uv run --no-project --python 3.12 python -m unittest test_coding_probe.py test_midpoint.py test_verified_probe.py
+```
+
+**Run one task** (v1 protocol, pydicom issue 1256, Jev condition; about $0.05 and 30 s):
+
+```bash
+uv run --no-project --python 3.12 python coding_probe.py prepare     # task rows and upstream snapshots (free)
+uv run --no-project --python 3.12 python coding_probe.py check       # broken base fails, upstream fix passes (free)
+uv run --no-project --python 3.12 python coding_probe.py snapshot    # model catalog, prices, key status (free)
+uv run --no-project --python 3.12 python coding_probe.py run --task pydicom__pydicom-1256 --condition jev --run-id my-1256-jev-01
+```
+
+The run writes `runs/coding/my-1256-jev-01/`: `result.json` (pass/fail, cost, time), `patch.diff`, `evaluation.json` (test log), `localization-0.json` (candidates, Jev scores, selection), `events.jsonl` (agent trace) and every model request/response with its billed usage. Use `--condition native` or `--condition search` for the other conditions, and a new `--run-id` for every fresh run.
+
+The other protocols use the same commands with `--protocol coding_protocol_v2.json` (or `_v3`); `batch --lane N` runs one lane of a protocol's plan. SWE-bench Verified runs need Docker and the official harness; see the Verified handoff entry below and `requirements-swebench.txt`.
+
+## Reproduce the reported results offline (no API calls)
+
+Each command rebuilds its evidence file and report macros from the committed archives. Every reported number matches; raw floating-point values in the JSON can differ from the committed files below 1e-14 because summation order is not fixed.
+
+| Result | Command | Output |
+|---|---|---|
+| v1 development pilot | `uv run --no-project --python 3.12 python build_coding_report.py` | `coding_evidence.json`, `report/coding_results.tex` |
+| v2 extended run (41 issues, oracle, timing) | `uv run --no-project --python 3.12 python analyze_agent_runs.py` | `agent_runs_evidence.json`, `report/agent_results.tex` (restores from `agent_runs_v2.zip`) |
+| v3 restricted writer (41 issues) | `uv run --no-project --python 3.12 python analyze_agent_runs.py --protocol coding_protocol_v3.json` | `agent_runs_v3_evidence.json`, `report/agent_v3_results.tex` (restores from `runs_internal-explore-v3-restricted.zip`) |
+| File-selection study (225 issues) | `uv run --no-project --python 3.12 python localization_study.py analyze` | `localization_evidence.json`, `report/localization_results.tex` (restores from `localization_runs.zip`) |
+| Shortlist sweep (12/24/48) | `uv run --no-project --python 3.12 python localization_study.py sweep` | `localization_sweep_evidence.json`, `report/sweep_results.tex` |
+| LLM selectors (Sol, Luna) | `uv run --no-project --python 3.12 python localization_study.py llm` | `localization_llm_evidence.json`, `report/llm_results.tex` |
+| Verified pilot | `uv run --no-project --python 3.12 python build_verified_report.py` | `verified_evidence.json`, `report/verified_results.tex` (needs the local `runs/verified/` directory; not yet archived) |
+| Report PDF | `cd report && pdflatex coding_midpoint.tex && pdflatex coding_midpoint.tex` | `report/coding_midpoint.pdf` |
+
+## Current status (November 6)
+
+- **Done:** v1 pilot (15 runs), v2 extended run (164 runs), v3 restricted run (123 runs), Verified pilot (30 runs), file-selection study, sweep and LLM-selector baselines (1,125 decisions); combined midway report; 27 offline checks pass.
+- **Done, option A (v3 restricted writer):** 123 runs, $10.80, no errors. The first smoke run stalled because OpenCode's shared session database (162 MB after v2) blocked session creation; an amendment recorded before any v3 outcome gives each run its own OpenCode state directory, and the stalled run is preserved as `runs/coding-v3/v3-793-jev-stalled-before-amendment`. About 60% of runs in each condition attempted a refused read or search, so the restriction was exercised.
+- **Next, Verified arm of option A:** Kristjan's `shared_subset_20` (his sampling rule at N = 20: the 10 pilot tasks plus astropy-13398, django-12965/13516/16100/16333, pylint-8898, pytest-6197, sphinx-10449, sympy-22456, xarray-3095), both arms rerun from the same commit; needs Docker on the machine that runs it.
+- **Team decisions open:** (1) whether to move the v2/v3 runner code into a separate `coding_probe_v2.py` so the Verified runner's fingerprint of `coding_probe.py` stays unchanged; (2) whether the course-issued OpenRouter key is the intended key for project runs (Ómar's runs used it).
+- **Spend:** v1 $1.23 and synthetic pilot $0.13 (Rami); Verified $2.21 (Kristjan); file selection and sweep $0.29, LLM selectors $2.98, v2 $16.71, v3 $10.80 plus about $0.001 for the stalled smoke and debug runs (Ómar); project total about $34.
+
+## Detailed handoff log
+
+The sections below are the team's chronological working notes, kept unchanged.
+
 > **Active claim — November 6, 2026:** `SWE-bench Verified extension (verified-explore-v1) | Kristjan with Claude | kristjan | 2026-11-06 | dependency: frozen v1 method, Docker, swebench 5.0.2 | artifact: verified_protocol.json, verified_sample.json, verified_probe.py, 30-run pilot (10 tasks × 3 conditions)`. Agreed with Rami. Status: code drafted and offline-tested; **no Docker check, smoke run or paid run yet**. See the handoff entry below.
 
 > **Integration handoff — November 6, 2026:** Rami authorized merging this implementation into `main`. Keep `rami` for subsequent development. The real-bug pilot is complete: 15 runs, preserved receipts/failures, four-page report draft, and passing offline checks. Remaining: teammate reproduction and report review; video work is deferred. No additional paid experiments are needed for this merge.
@@ -88,7 +175,47 @@ This selects only the 15 declared primary IDs; teammate/demo runs cannot silentl
 - Plan agreed in the team: on the same 20 SWE-bench Verified tasks, Kristjan runs the writer exactly as in the pilot (read/grep/glob allowed) and a teammate runs a restricted writer without those tools. The teammate's arm needs its own protocol version, its own OpenRouter key/ledger, and the same commit otherwise.
 - `verified_sample.json` gains `shared_subset_20`, drawn by the same rule (re-fetched index verified against the recorded `index_sha256`): django 9, sympy 3, sphinx 2, and one each from astropy, matplotlib, pylint, pytest, scikit-learn, xarray. It contains the 10 pilot tasks and is contained in the 50-task sample.
 - Added `verified_protocol_v2.json` (`verified-explore-v2`): identical to v1 except the task list and a $15 experiment cap on the shared ledger. `verified_probe.py` now selects a protocol with `VERIFIED_PROTOCOL=...` (default remains the frozen pilot file, which is unchanged) and hashes the selected file. 28 offline tests pass.
-- Started: `VERIFIED_PROTOCOL=verified_protocol_v2.json` prepare → check → `batch --prefix v20` (60 runs, images kept on disk), log `runs/verified/v20-batch.log`. Results pending.
+- Started, then stopped during the image download at Kristjan's request (7 of 20 images pulled; no check, no runs, $0 spent). The 20-task batch was never run.
+
+### November 6 handoff — end-to-end agent runs on 41 more pydicom issues (Omar, `omar`)
+
+- **Protocol `internal-explore-v2`** (`coding_protocol_v2.json`, committed 512e9e4 before any run; one amendment before outcomes, recorded in the file): 51 further pydicom dev issues; 41 pass the environment controls (10 need older numpy/Python and are dropped and listed). Four conditions per issue: native, Jev (12 candidates, as v1), search, and an **oracle** given the gold implementation files (upper bound, paths only). Writer, limits and evaluator unchanged from v1. 164 runs, all complete.
+- **Results (41 issues, paired):**
+
+| Condition | Repairs | Mean cost | Mean agent time | Exploration time | Explorer named a gold file |
+|---|---|---|---|---|---|
+| native | 18/41 | $0.139 | 46.5 s | 21.6 s | 98% |
+| Jev | 19/41 | $0.091 | 30.2 s | 1.6 s | 93% |
+| search | 21/41 | $0.087 | 28.7 s | 1.4 s | 63% |
+| oracle | 20/41 | $0.091 | 27.4 s | 0.0 s | 100% |
+
+- **Time and cost:** Jev vs native −16.3 s per issue (−35%; 95% paired bootstrap −19.1 to −13.7 s) and −35% cost. Search and the oracle are similar. Jev vs search: no clear difference (+1.4 s, −0.2 to +3.1; cost +5%).
+- **Repairs:** no condition differs (discordant issues: Jev vs native 1/0, search vs native 3/0, oracle vs native 2/0). Even the oracle does not repair more, so on these issues localization is not the limiting step; the patch writing is. When search's files missed the gold file, 4 of 15 runs passed, against 17 of 26 when they hit, but this is confounded with issue difficulty.
+- **Spend:** $16.71 of the $25 cap (HW1 course key). Two runs were refused by a lane's conservative budget guard and then completed on lane 3's ledger with the same run IDs and settings.
+- **Reproduce offline:** `python3 analyze_agent_runs.py` (restores from `agent_runs_v2.zip` in a fresh clone). The full archive with every request payload (52 MB) is kept outside git.
+- **Changed:** `coding_probe.py` (`--protocol`, oracle, per-phase timing, lanes, `batch`; v1 unchanged by default, 16 offline tests pass), `coding_protocol_v2.json`, `analyze_agent_runs.py`, `agent_runs_evidence.json`, `agent_runs_v2.zip`, `report/agent_results.tex`. Note: `coding_probe.py pack` still writes `coding_runs.zip` (the v1 archive); do not run it with the v2 protocol.
+- **Next action:** add these results to the report; consider repeated rollouts and a harder repository where localization matters more.
+- **Shared-code note (needs a team decision):** `coding_probe.py` gained the v2 options on this branch. v1 behaviour is unchanged when no `--protocol` is given, and all 27 offline checks (including `test_verified_probe.py`) pass. However, `verified_probe.source_hash()` fingerprints `coding_probe.py`, so new Verified runs would carry a different source hash than the 30 frozen `vpilot-*` runs (their recorded results are unaffected). If the team wants the Verified fingerprint unchanged, move the v2 code into a separate `coding_probe_v2.py` and restore `coding_probe.py` to its pre-v2 version.
+- **Merge (November 6):** `main` (Kristjan's Verified extension) was merged into `omar`; the report now combines the Verified pilot, the extended run, the file-selection study and the sweep (5 body pages, over the 4-page midway limit; trimming pending).
+
+### November 6 handoff — shortlist sweep, 24 and 48 candidates (Omar, `omar`)
+
+- **Question:** does a longer shortlist let Jev recover gold files that search ranks just below 12, and at what cost in time? Protocol `localization_sweep_protocol.json` committed before outcomes; 12-candidate results reused.
+- **Result (225 issues):** Jev hit@3 **85.3% / 90.2% / 91.1%** at 12 / 24 / 48 candidates (search 70.2%). 24 vs 12: +4.9 points (95% bootstrap 1.3 to 8.4; 14 wins, 3 losses, p = 0.013). 48 vs 12: +5.8 points (2.2 to 9.8; 16/3, p = 0.004). Of the 25 issues whose gold file was outside the 12 candidates, Jev recovers 13 at 24 and 15 at 48 (2 are files created by the fix). Of the 192 issues already right at 12, 189 stay right at 24 and 48. Accuracy when a gold file is listed dips slightly (96.0 / 94.9 / 93.6%).
+- **Time and cost per decision:** median latency 0.29 / 0.34 / 0.40 s; at 48 candidates 44 of 225 calls took about 8 s (none above 0.63 s at 24). Mean cost $0.00022 / $0.00039 / $0.00069.
+- **Recommendation:** 24 candidates — almost all of the gain, no latency tail.
+- **Spend:** $0.088 (24) + $0.156 (48); study total including v1 $0.293. HW1 course key, no failures.
+- **Changed:** `localization_sweep_protocol.json`, `localization_study.py` (`run --candidates`, `sweep`), `localization_sweep_evidence.json`, `report/sweep_results.tex`, `localization_runs.zip`.
+- **Next action:** end-to-end agent runs on the 51 further pydicom dev issues (native, Jev, search, oracle), logging wall time per run.
+
+### November 6 handoff — offline file-selection study (Omar, `omar`)
+
+- **Question:** does Jev choose the right files more often than search alone? Measured directly, without the coding agent, on all 225 SWE-bench dev issues (six repositories). Protocol `localization_protocol.json` was committed (0562636) before any Jev request.
+- **Result:** Jev hit@3 **85.3%** vs search **70.2%** (+15.1 points, 95% paired bootstrap 9.8 to 20.4; 38 wins vs 4 losses, sign test p < 0.001); 96% vs 79% when retrieval found a gold file. Retrieval recall@12 is 88.9%. In the 15 pilot runs every final patch edited the gold file, even when the explorer's report missed it, so end-to-end success hides localization quality.
+- **Verified:** the generalized retrieval reproduces all 10 archived pilot candidate lists exactly (`python3 localization_study.py verify`). Analysis reproduces offline from `localization_runs.zip` with `python3 localization_study.py analyze`.
+- **Spend:** $0.049086 for 225 Jev decisions, on the HW1 course OpenRouter key at the user's choice (team should confirm this is allowed); no failures or retries.
+- **Changed:** `localization_protocol.json`, `localization_study.py`, `localization_evidence.json`, `localization_runs.zip`, `report/localization_results.tex`, `report/coding_midpoint.tex`/`.pdf` (new metric, Table 2, revised control interpretation, uncertainty plan, AI disclosure), `docs/DATA_SOURCES.md`.
+- **Next action:** end-to-end runs on the 51 further pydicom dev issues under a new protocol version (needs `coding_probe.py prepare` generalized to the full dev split).
 
 ### November 6 handoff — SWE-bench Verified extension drafted (Kristjan with Claude, `kristjan`)
 

@@ -1,0 +1,3616 @@
+{
+ "protocol": "localization-offline-v1",
+ "dataset_revision": "e48e2bd1e9fecd5bbd641e9414ac59da9f2e69f6",
+ "instances_total": 225,
+ "excluded_no_implementation_gold": [],
+ "jev_failed": [],
+ "spend_usd": 0.04908556800000001,
+ "overall": {
+  "n": 225,
+  "candidate_recall": 0.8888888888888888,
+  "search_hit_at_3": 0.7022222222222222,
+  "jev_hit_at_3": 0.8533333333333334,
+  "random_hit_at_3": 0.3076363636363634,
+  "search_all_at_3": 0.4444444444444444,
+  "jev_all_at_3": 0.5688888888888889,
+  "conditional_n": 200,
+  "search_conditional_hit": 0.79,
+  "jev_conditional_hit": 0.96,
+  "jev_wins": 38,
+  "jev_losses": 4,
+  "ties": 183,
+  "sign_test_p": 5.65314621780999e-08,
+  "diff_hit_at_3": 0.1511111111111111,
+  "diff_ci95": [
+   0.09777777777777778,
+   0.20444444444444446
+  ]
+ },
+ "by_repo": {
+  "marshmallow-code/marshmallow": {
+   "n": 9,
+   "candidate_recall": 1.0,
+   "search_hit_at_3": 1.0,
+   "jev_hit_at_3": 1.0,
+   "random_hit_at_3": 0.32323232323232326,
+   "search_all_at_3": 0.8888888888888888,
+   "jev_all_at_3": 1.0,
+   "conditional_n": 9,
+   "search_conditional_hit": 1.0,
+   "jev_conditional_hit": 1.0,
+   "jev_wins": 0,
+   "jev_losses": 0,
+   "ties": 9,
+   "sign_test_p": 1.0,
+   "diff_hit_at_3": 0.0,
+   "diff_ci95": [
+    0.0,
+    0.0
+   ]
+  },
+  "pvlib/pvlib-python": {
+   "n": 63,
+   "candidate_recall": 0.9523809523809523,
+   "search_hit_at_3": 0.8888888888888888,
+   "jev_hit_at_3": 0.9365079365079365,
+   "random_hit_at_3": 0.3225829725829726,
+   "search_all_at_3": 0.6507936507936508,
+   "jev_all_at_3": 0.6984126984126984,
+   "conditional_n": 60,
+   "search_conditional_hit": 0.9333333333333333,
+   "jev_conditional_hit": 0.9833333333333333,
+   "jev_wins": 4,
+   "jev_losses": 1,
+   "ties": 58,
+   "sign_test_p": 0.375,
+   "diff_hit_at_3": 0.047619047619047616,
+   "diff_ci95": [
+    -0.015873015873015872,
+    0.12698412698412698
+   ]
+  },
+  "pydicom/pydicom": {
+   "n": 56,
+   "candidate_recall": 0.9285714285714286,
+   "search_hit_at_3": 0.6785714285714286,
+   "jev_hit_at_3": 0.8571428571428571,
+   "random_hit_at_3": 0.30454545454545456,
+   "search_all_at_3": 0.4642857142857143,
+   "jev_all_at_3": 0.625,
+   "conditional_n": 52,
+   "search_conditional_hit": 0.7307692307692307,
+   "jev_conditional_hit": 0.9230769230769231,
+   "jev_wins": 11,
+   "jev_losses": 1,
+   "ties": 44,
+   "sign_test_p": 0.00634765625,
+   "diff_hit_at_3": 0.17857142857142858,
+   "diff_ci95": [
+    0.07142857142857142,
+    0.2857142857142857
+   ]
+  },
+  "pylint-dev/astroid": {
+   "n": 31,
+   "candidate_recall": 0.9032258064516129,
+   "search_hit_at_3": 0.6129032258064516,
+   "jev_hit_at_3": 0.8709677419354839,
+   "random_hit_at_3": 0.33944281524926695,
+   "search_all_at_3": 0.2903225806451613,
+   "jev_all_at_3": 0.5806451612903226,
+   "conditional_n": 28,
+   "search_conditional_hit": 0.6785714285714286,
+   "jev_conditional_hit": 0.9642857142857143,
+   "jev_wins": 8,
+   "jev_losses": 0,
+   "ties": 23,
+   "sign_test_p": 0.0078125,
+   "diff_hit_at_3": 0.25806451612903225,
+   "diff_ci95": [
+    0.12903225806451613,
+    0.41935483870967744
+   ]
+  },
+  "pyvista/pyvista": {
+   "n": 16,
+   "candidate_recall": 0.75,
+   "search_hit_at_3": 0.4375,
+   "jev_hit_at_3": 0.6875,
+   "random_hit_at_3": 0.2798295454545455,
+   "search_all_at_3": 0.1875,
+   "jev_all_at_3": 0.1875,
+   "conditional_n": 12,
+   "search_conditional_hit": 0.5833333333333334,
+   "jev_conditional_hit": 0.9166666666666666,
+   "jev_wins": 5,
+   "jev_losses": 1,
+   "ties": 10,
+   "sign_test_p": 0.21875,
+   "diff_hit_at_3": 0.25,
+   "diff_ci95": [
+    0.0,
+    0.5
+   ]
+  },
+  "sqlfluff/sqlfluff": {
+   "n": 50,
+   "candidate_recall": 0.78,
+   "search_hit_at_3": 0.58,
+   "jev_hit_at_3": 0.76,
+   "random_hit_at_3": 0.2786363636363637,
+   "search_all_at_3": 0.26,
+   "jev_all_at_3": 0.38,
+   "conditional_n": 39,
+   "search_conditional_hit": 0.7435897435897436,
+   "jev_conditional_hit": 0.9743589743589743,
+   "jev_wins": 10,
+   "jev_losses": 1,
+   "ties": 39,
+   "sign_test_p": 0.01171875,
+   "diff_hit_at_3": 0.18,
+   "diff_ci95": [
+    0.06,
+    0.3
+   ]
+  }
+ },
+ "pilot_in_situ": [
+  {
+   "run_id": "e0-1139-jev-v1",
+   "instance": "pydicom__pydicom-1139",
+   "condition": "jev",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "explorer_reported": [
+    "pydicom/charset.py",
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ],
+   "explorer_hit": false,
+   "patch_files": [
+    "pydicom/valuerep.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-1139-native-v1",
+   "instance": "pydicom__pydicom-1139",
+   "condition": "native",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "explorer_reported": [
+    "pydicom/valuerep.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/valuerep.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-1139-search-v1",
+   "instance": "pydicom__pydicom-1139",
+   "condition": "search",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "explorer_reported": [
+    "pydicom/_private_dict.py",
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py"
+   ],
+   "explorer_hit": false,
+   "patch_files": [
+    "pydicom/valuerep.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-1256-jev-v1",
+   "instance": "pydicom__pydicom-1256",
+   "condition": "jev",
+   "gold": [
+    "pydicom/jsonrep.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/jsonrep.py"
+   ],
+   "patch_hit": true,
+   "passed": true
+  },
+  {
+   "run_id": "e0-1256-native-v1",
+   "instance": "pydicom__pydicom-1256",
+   "condition": "native",
+   "gold": [
+    "pydicom/jsonrep.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/jsonrep.py"
+   ],
+   "patch_hit": true,
+   "passed": true
+  },
+  {
+   "run_id": "e0-1256-search-v1",
+   "instance": "pydicom__pydicom-1256",
+   "condition": "search",
+   "gold": [
+    "pydicom/jsonrep.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/jsonrep.py"
+   ],
+   "patch_hit": true,
+   "passed": true
+  },
+  {
+   "run_id": "e0-1413-jev-v1",
+   "instance": "pydicom__pydicom-1413",
+   "condition": "jev",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/valuerep.py"
+   ],
+   "explorer_hit": false,
+   "patch_files": [
+    "pydicom/dataelem.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-1413-native-v1",
+   "instance": "pydicom__pydicom-1413",
+   "condition": "native",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataelem.py",
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/dataelem.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-1413-search-v1",
+   "instance": "pydicom__pydicom-1413",
+   "condition": "search",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataset.py",
+    "pydicom/fileset.py",
+    "pydicom/filewriter.py"
+   ],
+   "explorer_hit": false,
+   "patch_files": [
+    "pydicom/dataelem.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-1694-jev-v1",
+   "instance": "pydicom__pydicom-1694",
+   "condition": "jev",
+   "gold": [
+    "pydicom/dataset.py"
+   ],
+   "explorer_reported": [
+    "pydicom/config.py",
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/dataset.py"
+   ],
+   "patch_hit": true,
+   "passed": true
+  },
+  {
+   "run_id": "e0-1694-native-v1",
+   "instance": "pydicom__pydicom-1694",
+   "condition": "native",
+   "gold": [
+    "pydicom/dataset.py"
+   ],
+   "explorer_reported": [
+    "pydicom/dataset.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/dataset.py"
+   ],
+   "patch_hit": true,
+   "passed": true
+  },
+  {
+   "run_id": "e0-1694-search-v1",
+   "instance": "pydicom__pydicom-1694",
+   "condition": "search",
+   "gold": [
+    "pydicom/dataset.py"
+   ],
+   "explorer_reported": [
+    "pydicom/data/data_manager.py",
+    "pydicom/dataset.py",
+    "pydicom/fileset.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/dataset.py"
+   ],
+   "patch_hit": true,
+   "passed": true
+  },
+  {
+   "run_id": "e0-901-jev-v1",
+   "instance": "pydicom__pydicom-901",
+   "condition": "jev",
+   "gold": [
+    "pydicom/config.py"
+   ],
+   "explorer_reported": [
+    "pydicom/config.py",
+    "pydicom/filereader.py",
+    "pydicom/pixel_data_handlers/pillow_handler.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/config.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-901-native-v1",
+   "instance": "pydicom__pydicom-901",
+   "condition": "native",
+   "gold": [
+    "pydicom/config.py"
+   ],
+   "explorer_reported": [
+    "pydicom/__init__.py",
+    "pydicom/config.py",
+    "pydicom/data/charset_files/charlist.py",
+    "pydicom/dataelem.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/config.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  },
+  {
+   "run_id": "e0-901-search-v1",
+   "instance": "pydicom__pydicom-901",
+   "condition": "search",
+   "gold": [
+    "pydicom/config.py"
+   ],
+   "explorer_reported": [
+    "pydicom/benchmarks/bench_handler_numpy.py",
+    "pydicom/config.py",
+    "pydicom/dataset.py"
+   ],
+   "explorer_hit": true,
+   "patch_files": [
+    "pydicom/config.py"
+   ],
+   "patch_hit": true,
+   "passed": false
+  }
+ ],
+ "rows": [
+  {
+   "instance_id": "sqlfluff__sqlfluff-4764",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/cli/formatters.py",
+    "src/sqlfluff/core/linter/linted_dir.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2862",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/linter/common.py",
+    "src/sqlfluff/core/linter/linted_file.py",
+    "src/sqlfluff/core/parser/lexer.py",
+    "src/sqlfluff/core/parser/segments/base.py",
+    "src/sqlfluff/core/rules/base.py",
+    "src/sqlfluff/core/templaters/slicers/tracer.py",
+    "src/sqlfluff/rules/L009.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2336",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/rules/analysis/select.py",
+    "src/sqlfluff/core/rules/reference.py",
+    "src/sqlfluff/dialects/dialect_ansi.py",
+    "src/sqlfluff/dialects/dialect_bigquery.py",
+    "src/sqlfluff/rules/L025.py",
+    "src/sqlfluff/rules/L026.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-5074",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/errors.py",
+    "src/sqlfluff/core/parser/markers.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3436",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/slicers/tracer.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2849",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/base.py",
+    "src/sqlfluff/core/templaters/slicers/tracer.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-884",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/dialects/dialect_ansi.py",
+    "src/sqlfluff/core/parser/lexer.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4151",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3354",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/placeholder.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3700",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/parser/segments/base.py",
+    "src/sqlfluff/rules/L028.py",
+    "src/sqlfluff/rules/L042.py",
+    "src/sqlfluff/utils/analysis/select_crawler.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3608",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/__init__.py",
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/cli/formatters.py",
+    "src/sqlfluff/core/linter/linting_result.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3435",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/L027.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3904",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/click_deprecated_option.py",
+    "src/sqlfluff/cli/commands.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4753",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/layout/LT12.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4778",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/linter/linter.py",
+    "src/sqlfluff/core/templaters/slicers/tracer.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2907",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/jinja.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4051",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-905",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/rules/std/L036.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-1625",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/L031.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2326",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/parser/__init__.py",
+    "src/sqlfluff/core/parser/grammar/__init__.py",
+    "src/sqlfluff/core/parser/grammar/anyof.py",
+    "src/sqlfluff/dialects/dialect_ansi.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3220",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2419",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/L060.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3170",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": false,
+   "search_all": true,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2846",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/slicers/tracer.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3662",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/cli/formatters.py",
+    "src/sqlfluff/core/linter/linter.py",
+    "src/sqlfluff/core/linter/runner.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.7454545454545455,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4997",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/core/config.py",
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2998",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/L027.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-1733",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/L039.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3648",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/slicers/tracer.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4043",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2509",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/linter/common.py",
+    "src/sqlfluff/core/linter/linter.py",
+    "src/sqlfluff/core/templaters/jinja.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-5206",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/parser/segments/base.py",
+    "src/sqlfluff/core/rules/base.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-1577",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/base.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2386",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/rules/base.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3411",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/cli/formatters.py",
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2641",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/rules/analysis/select_crawler.py",
+    "src/sqlfluff/rules/L045.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4777",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/core/linter/linted_dir.py",
+    "src/sqlfluff/core/linter/linted_file.py",
+    "src/sqlfluff/core/linter/linter.py",
+    "src/sqlfluff/core/linter/linting_result.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-1517",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/parser/helpers.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-880",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/linter.py",
+    "src/sqlfluff/core/rules/base.py",
+    "src/sqlfluff/core/rules/std/L001.py",
+    "src/sqlfluff/core/rules/std/L002.py",
+    "src/sqlfluff/core/rules/std/L003.py",
+    "src/sqlfluff/core/rules/std/L004.py",
+    "src/sqlfluff/core/rules/std/L005.py",
+    "src/sqlfluff/core/rules/std/L006.py",
+    "src/sqlfluff/core/rules/std/L007.py",
+    "src/sqlfluff/core/rules/std/L008.py",
+    "src/sqlfluff/core/rules/std/L009.py",
+    "src/sqlfluff/core/rules/std/L010.py",
+    "src/sqlfluff/core/rules/std/L011.py",
+    "src/sqlfluff/core/rules/std/L013.py",
+    "src/sqlfluff/core/rules/std/L015.py",
+    "src/sqlfluff/core/rules/std/L017.py",
+    "src/sqlfluff/core/rules/std/L018.py",
+    "src/sqlfluff/core/rules/std/L019.py",
+    "src/sqlfluff/core/rules/std/L020.py",
+    "src/sqlfluff/core/rules/std/L021.py",
+    "src/sqlfluff/core/rules/std/L022.py",
+    "src/sqlfluff/core/rules/std/L023.py",
+    "src/sqlfluff/core/rules/std/L029.py",
+    "src/sqlfluff/core/rules/std/L031.py",
+    "src/sqlfluff/core/rules/std/L032.py",
+    "src/sqlfluff/core/rules/std/L033.py",
+    "src/sqlfluff/core/rules/std/L034.py",
+    "src/sqlfluff/core/rules/std/L035.py",
+    "src/sqlfluff/core/rules/std/L036.py",
+    "src/sqlfluff/core/rules/std/L037.py",
+    "src/sqlfluff/core/rules/std/L038.py",
+    "src/sqlfluff/core/rules/std/L039.py",
+    "src/sqlfluff/core/rules/std/L041.py",
+    "src/sqlfluff/core/rules/std/L042.py",
+    "src/sqlfluff/core/rules/std/L043.py",
+    "src/sqlfluff/core/rules/std/L044.py",
+    "src/sqlfluff/core/rules/std/L045.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.9090909090909091,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4041",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/errors.py",
+    "src/sqlfluff/core/linter/linted_file.py",
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4834",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/layout/LT12.py",
+    "src/sqlfluff/utils/reflow/sequence.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-5170",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/parser/grammar/base.py",
+    "src/sqlfluff/core/parser/grammar/greedy.py",
+    "src/sqlfluff/core/parser/grammar/sequence.py",
+    "src/sqlfluff/core/parser/match_algorithms.py",
+    "src/sqlfluff/core/parser/match_logging.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3066",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/templaters/slicers/tracer.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2625",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-891",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/errors.py",
+    "src/sqlfluff/core/linter.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-2573",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/config.py",
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3109",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/cli/commands.py",
+    "src/sqlfluff/cli/formatters.py",
+    "src/sqlfluff/cli/outputstream.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-1763",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/linter/linted_file.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-4084",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/core/linter/linter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "sqlfluff__sqlfluff-3330",
+   "repo": "sqlfluff/sqlfluff",
+   "gold": [
+    "src/sqlfluff/rules/L065.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1164",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/fields.py",
+    "src/marshmallow/schema.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1252",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/utils.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1359",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/fields.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.2727272727272727,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1343",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/schema.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-2123",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/fields.py",
+    "src/marshmallow/validate.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1229",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/fields.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.2727272727272727,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1810",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/base.py",
+    "src/marshmallow/fields.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1702",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/fields.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "marshmallow-code__marshmallow-1524",
+   "repo": "marshmallow-code/marshmallow",
+   "gold": [
+    "src/marshmallow/validate.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1160",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1738",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/soiling.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1782",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/singlediode.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1719",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/ivtools/sdm.py",
+    "pvlib/pvsystem.py",
+    "pvlib/singlediode.py",
+    "pvlib/tools.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.7454545454545455,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1426",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/forecast.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-807",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/scaling.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1138",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1213",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/scaling.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1707",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iam.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1395",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/__init__.py",
+    "pvlib/iotools/pvgis.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1216",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1191",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/irradiance.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-823",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1368",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/crn.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1448",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/crn.py",
+    "pvlib/solarposition.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1589",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/bifacial/infinite_sheds.py",
+    "pvlib/shading.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1031",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1349",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/spectrum/spectrl2.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-980",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/soiling.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1048",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/ivtools/__init__.py",
+    "pvlib/ivtools/sde.py",
+    "pvlib/ivtools/sdm.py",
+    "pvlib/ivtools/utility.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1623",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/tmy.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1273",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1186",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/__init__.py",
+    "pvlib/iotools/pvgis.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1822",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py",
+    "pvlib/singlediode.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1165",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1026",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/crn.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1616",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iam.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1740",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/sodapro.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1225",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/irradiance.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1093",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1193",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1176",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1157",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1737",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/tmy.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1852",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1469",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/clearsky.py",
+    "pvlib/irradiance.py",
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.8409090909090909,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1666",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/bifacial/infinite_sheds.py",
+    "pvlib/bifacial/utils.py",
+    "pvlib/shading.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1764",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/singlediode.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1478",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/clearsky.py",
+    "pvlib/irradiance.py",
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.8409090909090909,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1072",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/temperature.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1073",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1181",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1606",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/tools.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1480",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/tools.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1682",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/bifacial/infinite_sheds.py",
+    "pvlib/bifacial/utils.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1832",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iam.py",
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1089",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/ivtools/sdm.py",
+    "pvlib/tools.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1033",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-718",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/__init__.py",
+    "pvlib/ivtools.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1653",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/snow.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1854",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1140",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1296",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/spectrum/__init__.py",
+    "pvlib/spectrum/mismatch.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1739",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/pvgis.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1224",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-763",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/pvsystem.py",
+    "pvlib/singlediode.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-907",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/__init__.py",
+    "pvlib/iotools/pvgis.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1053",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/location.py",
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py",
+    "pvlib/tracking.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.7454545454545455,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1518",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/clearsky.py",
+    "pvlib/location.py",
+    "pvlib/tools.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1239",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/irradiance.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1458",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/iotools/sodapro.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1218",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/modelchain.py",
+    "pvlib/pvsystem.py",
+    "pvlib/temperature.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pvlib__pvlib-python-1154",
+   "repo": "pvlib/pvlib-python",
+   "gold": [
+    "pvlib/irradiance.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1741",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/arguments.py",
+    "astroid/bases.py",
+    "astroid/brain/brain_builtin_inference.py",
+    "astroid/brain/brain_dataclasses.py",
+    "astroid/brain/brain_functools.py",
+    "astroid/brain/brain_namedtuple_enum.py",
+    "astroid/brain/brain_typing.py",
+    "astroid/builder.py",
+    "astroid/constraint.py",
+    "astroid/helpers.py",
+    "astroid/inference.py",
+    "astroid/inference_tip.py",
+    "astroid/interpreter/objectmodel.py",
+    "astroid/nodes/node_classes.py",
+    "astroid/nodes/scoped_nodes/scoped_nodes.py",
+    "astroid/protocols.py",
+    "astroid/typing.py",
+    "astroid/util.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.9818181818181818,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1616",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_builtin_inference.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1978",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/raw_building.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-934",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/inference.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1962",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/raw_building.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-2240",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/arguments.py",
+    "astroid/nodes/node_classes.py",
+    "astroid/nodes/scoped_nodes/scoped_nodes.py",
+    "astroid/protocols.py",
+    "astroid/rebuilder.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.7454545454545455,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-941",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_namedtuple_enum.py",
+    "astroid/scoped_nodes.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1417",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/decorators.py",
+    "astroid/mixins.py",
+    "astroid/nodes/node_classes.py",
+    "astroid/nodes/node_ng.py",
+    "astroid/nodes/scoped_nodes/scoped_nodes.py",
+    "astroid/objects.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.7454545454545455,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1364",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/const.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-2023",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/nodes/node_classes.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1719",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/raw_building.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1614",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_builtin_inference.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-984",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/interpreter/_import/spec.py",
+    "astroid/manager.py",
+    "astroid/modutils.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1164",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/nodes/__init__.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1030",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/__pkginfo__.py",
+    "astroid/helpers.py",
+    "astroid/node_classes.py",
+    "astroid/transforms.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1333",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/modutils.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1903",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_builtin_inference.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1196",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/nodes/node_classes.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-2307",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_typing.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-927",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/context.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1866",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_builtin_inference.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1092",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/bases.py",
+    "astroid/protocols.py",
+    "astroid/scoped_nodes.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-2309",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_typing.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-2219",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/brain/brain_datetime.py",
+    "astroid/brain/brain_typing.py",
+    "astroid/const.py",
+    "astroid/inference.py",
+    "astroid/nodes/__init__.py",
+    "astroid/nodes/as_string.py",
+    "astroid/nodes/node_classes.py",
+    "astroid/nodes/scoped_nodes/scoped_nodes.py",
+    "astroid/rebuilder.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-983",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/bases.py",
+    "astroid/scoped_nodes.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1268",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/nodes/as_string.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-946",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/builder.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-2015",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/_backport_stdlib_names.py",
+    "astroid/manager.py",
+    "astroid/modutils.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1262",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/nodes/scoped_nodes.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1351",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/nodes/node_ng.py",
+    "astroid/rebuilder.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pylint-dev__astroid-1959",
+   "repo": "pylint-dev/astroid",
+   "gold": [
+    "astroid/raw_building.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pyvista__pyvista-4853",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/utilities/geometric_objects.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4648",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/filters/data_set.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pyvista__pyvista-4808",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/filters/poly_data.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pyvista__pyvista-4311",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/datasetattributes.py",
+    "pyvista/core/filters/rectilinear_grid.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4414",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/filters/poly_data.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": false,
+   "search_all": true,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4417",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/composite.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4406",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/filters/rectilinear_grid.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4226",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/plotting/_property.py",
+    "pyvista/plotting/composite_mapper.py",
+    "pyvista/themes.py",
+    "pyvista/utilities/misc.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-3750",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/filters/data_set.py",
+    "pyvista/plotting/widgets.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-3747",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/composite.py",
+    "pyvista/plotting/actor.py",
+    "pyvista/plotting/plotting.py",
+    "pyvista/plotting/renderer.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4329",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/pointset.py",
+    "pyvista/demos/logo.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4225",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/errors.py",
+    "pyvista/core/pointset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-432",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/filters.py",
+    "pyvista/core/objects.py",
+    "pyvista/plotting/helpers.py",
+    "pyvista/plotting/plotting.py",
+    "pyvista/plotting/qt_plotting.py",
+    "pyvista/plotting/widgets.py",
+    "pyvista/utilities/__init__.py",
+    "pyvista/utilities/errors.py",
+    "pyvista/utilities/geometric_objects.py",
+    "pyvista/utilities/parametric_objects.py",
+    "pyvista/utilities/utilities.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.9090909090909091,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-3710",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/utilities/geometric_objects.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pyvista__pyvista-3675",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/_vtk.py",
+    "pyvista/plotting/actor.py",
+    "pyvista/plotting/mapper.py",
+    "pyvista/plotting/plotting.py",
+    "pyvista/plotting/prop3d.py",
+    "pyvista/plotting/volume.py",
+    "pyvista/plotting/volume_property.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pyvista__pyvista-4315",
+   "repo": "pyvista/pyvista",
+   "gold": [
+    "pyvista/core/grid.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-996",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1241",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/encaps.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-866",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/pixel_data_handlers/numpy_handler.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1050",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-944",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py",
+    "pydicom/values.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1255",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/_version.py",
+    "pydicom/filebase.py",
+    "pydicom/jsonrep.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1017",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1048",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/data/data_manager.py",
+    "pydicom/dataset.py",
+    "pydicom/dicomdir.py",
+    "pydicom/filereader.py",
+    "pydicom/fileutil.py",
+    "pydicom/filewriter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1608",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-839",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filewriter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-995",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/pixel_data_handlers/util.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1416",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/pixel_data_handlers/util.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1000",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filereader.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1069",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/pixel_data_handlers/util.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1439",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/pixel_data_handlers/rle_handler.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-900",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-897",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/multival.py",
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-903",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filewriter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1033",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1076",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filewriter.py",
+    "pydicom/values.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1458",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/pixel_data_handlers/numpy_handler.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1720",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataset.py",
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.6181818181818182,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-816",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/charset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-916",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/jsonrep.py",
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1674",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/cli/main.py",
+    "pydicom/util/codify.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1228",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/dataset.py",
+    "pydicom/jsonrep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1365",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-965",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/config.py",
+    "pydicom/dataelem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1375",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1334",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-958",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/charset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-863",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/charset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1694",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1562",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/datadict.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1413",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1090",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filereader.py",
+    "pydicom/filewriter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-800",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/uid.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-938",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1194",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filewriter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-997",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/encaps.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-811",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filereader.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1539",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/filewriter.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-901",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/config.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1598",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/fileset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1139",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-793",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/values.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1192",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/charset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1236",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/pixel_data_handlers/__init__.py",
+    "pydicom/pixel_data_handlers/util.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-955",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py",
+    "pydicom/pixel_data_handlers/util.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-1031",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataelem.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": false,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1555",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/encoders/base.py",
+    "pydicom/filebase.py",
+    "pydicom/fileset.py",
+    "pydicom/filewriter.py",
+    "pydicom/pixel_data_handlers/util.py",
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.9090909090909091,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-809",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filewriter.py",
+    "pydicom/sequence.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": false,
+   "jev_all": false
+  },
+  {
+   "instance_id": "pydicom__pydicom-933",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/dataset.py",
+    "pydicom/filereader.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.4545454545454546,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1633",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/valuerep.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1428",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/fileset.py"
+   ],
+   "gold_in_candidates": true,
+   "random_hit": 0.25,
+   "search_hit": true,
+   "jev_hit": true,
+   "search_all": true,
+   "jev_all": true
+  },
+  {
+   "instance_id": "pydicom__pydicom-1256",
+   "repo": "pydicom/pydicom",
+   "gold": [
+    "pydicom/jsonrep.py"
+   ],
+   "gold_in_candidates": false,
+   "random_hit": 0.0,
+   "search_hit": false,
+   "jev_hit": false,
+   "search_all": false,
+   "jev_all": false
+  }
+ ]
+}
